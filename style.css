@@ -1,0 +1,52 @@
+body { margin:0; font-family: Arial, sans-serif; background:#000; color:#7a0000; }
+
+/* Navbar */
+.navbar { display:flex; justify-content:space-between; align-items:center; padding:10px 20px; background:#111; position:fixed; top:0; width:100%; z-index:100; }
+.nav-left img { width:60px; }
+.nav-right { display:flex; align-items:center; justify-content:flex-end; gap:20px; }
+.nav-right .icon { font-size:32px; color:#fff; cursor:pointer; }
+
+/* Hamburger */
+.hamburger { display:flex; flex-direction:column; justify-content:space-between; width:36px; height:28px; cursor:pointer; }
+.hamburger span { display:block; height:8px; background:#fff; border-radius:3px; width:100%; }
+
+/* Menü panel */
+.menu-panel { display:none; position:fixed; top:0; right:0; width:50%; height:100%; background:#222; padding:20px; box-shadow:-4px 0 10px rgba(0,0,0,0.7); z-index:200; flex-direction:column; gap:15px; }
+.menu-panel button { padding:15px; font-size:18px; background:#7a0000; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+.menu-panel button:hover { background:#300000; }
+
+/* Animasyon */
+@keyframes slideIn { from{transform:translateX(100%);} to{transform:translateX(0);} }
+@keyframes slideOut { from{transform:translateX(0);} to{transform:translateX(100%);} }
+.menu-panel.slide-in { animation:slideIn 0.3s forwards; }
+.menu-panel.slide-out { animation:slideOut 0.3s forwards; }
+
+/* Modal */
+#modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; }
+.modal-box { background:#7a0000; padding:30px; border-radius:16px; display:flex; flex-direction:column; }
+
+/* Modal animasyon */
+@keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
+@keyframes fadeOut { from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(0.9);} }
+#modal.fade-in .modal-box { animation:fadeIn 0.3s forwards; }
+#modal.fade-out .modal-box { animation:fadeOut 0.3s forwards; }
+
+.modal-box input { width:100%; padding:12px; margin-bottom:12px; border:none; border-radius:6px; }
+
+/* Ana içerik */
+.main-content { margin-top:120px; text-align:center; animation:fadeContent 1s ease; }
+.main-content h1 { font-size:64px; font-weight:900; font-style:italic; animation:fadeContent 1.2s ease forwards; }
+@keyframes fadeContent { from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
+
+/* Footer */
+.footer { position:fixed; bottom:10px; width:100%; text-align:center; font-size:12px; color:#400000; z-index:10; }
+
+/* Responsive */
+@media screen and (max-width:600px){
+  .navbar { padding:10px 15px; }
+  .nav-right .icon { font-size:36px; }
+  .hamburger { width:40px; height:32px; }
+  .hamburger span { height:8px; }
+  .main-content h1 { font-size:48px; }
+  .menu-panel { width:70%; }
+}
