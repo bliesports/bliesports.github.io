@@ -71,9 +71,9 @@ const firebaseConfig = {
   measurementId: "G-T1PHQ0Z45M"
 };
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const analytics = firebase.analytics();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // Menü paneli
 const menuPanel = document.getElementById('menuPanel');
