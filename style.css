@@ -135,16 +135,6 @@ body {
 }
 @keyframes fadeContent { from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
 
-/* Footer altındaki yazı */
-.coming-soon-text {
-  text-align: center;
-  color: #e60000; /* Bordo / dikkat çekici */
-  font-size: 20px;
-  font-weight: bold;
-  font-style: italic;
-  margin-top: 500px; /* çok aşağıda görünmesi için */
-  margin-bottom: 50px;
-}
 
 /* Responsive */
 @media screen and (max-width:600px){
