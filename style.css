@@ -1,123 +1,82 @@
 /* Temel ayarlar */
-body {
+body, html {
   margin:0;
+  padding:0;
+  height:100%;
   font-family: Arial, sans-serif;
   color:#fff;
-  background: url('background.jpg.jpg') no-repeat center center fixed;
-  background-size: cover;
+  overflow-x:hidden;
 }
 
-/* Navbar */
-.navbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 20px;
-  background:#111;
-  position:fixed;
+/* Video arka plan */
+#bgVideo {
+  position: fixed;
   top:0;
+  left:0;
   width:100%;
-  z-index:100;
-}
-.nav-left img { width:60px; cursor:pointer; }
-.nav-center h2 { color:#e60000; font-weight:bold; margin:0; }
-.nav-right { display:flex; align-items:center; justify-content:flex-end; gap:20px; }
-.nav-right .icon { font-size:32px; color:#fff; cursor:pointer; }
-
-/* Hamburger */
-.hamburger { display:flex; flex-direction:column; justify-content:space-between; width:36px; height:28px; cursor:pointer; }
-.hamburger span { display:block; height:8px; background:#fff; border-radius:3px; width:100%; }
-
-/* Menü panel */
-.menu-panel {
-  display:none;
-  position:fixed;
-  top:0;
-  right:0;
-  width:50%;
   height:100%;
-  background:#222;
-  padding:20px;
-  box-shadow:-4px 0 10px rgba(0,0,0,0.7);
-  z-index:200;
-  flex-direction:column;
-  gap:15px;
+  object-fit:cover;
+  z-index:-1;
 }
-.menu-panel button {
-  padding:15px;
-  font-size:18px;
-  background:#7a0000;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-.menu-panel button:hover { background:#300000; }
-.menu-panel.slide-in { animation:slideIn 0.3s forwards; }
-.menu-panel.slide-out { animation:slideOut 0.3s forwards; }
-@keyframes slideIn { from{transform:translateX(100%);} to{transform:translateX(0);} }
-@keyframes slideOut { from{transform:translateX(0);} to{transform:translateX(100%);} }
 
-/* Modal */
-#modal {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-}
-.modal-box {
-  background:#7a0000;
-  padding:30px;
-  border-radius:16px;
-  display:flex;
-  flex-direction:column;
-}
-#modal.fade-in .modal-box { animation:fadeIn 0.3s forwards; }
-#modal.fade-out .modal-box { animation:fadeOut 0.3s forwards; }
-@keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
-@keyframes fadeOut { from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(0.9);} }
-.modal-box input { width:100%; padding:12px; margin-bottom:12px; border:none; border-radius:6px; }
-
-/* Ana içerik sol kısmı */
+/* Sol içerik */
 .main-content-left {
   position: absolute;
-  top: 50%;
-  left: 20px;
+  top:50%;
+  left:20px;
   transform: translateY(-50%);
   max-width: 300px;
 }
-.main-content-left p { font-size:20px; font-weight:bold; margin-bottom:15px; }
-.info-button {
-  display: inline-block;
-  padding: 12px 20px;
-  background: #e60000;
-  color: #fff;
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: 0.3s;
+.main-content-left p {
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:15px;
 }
-.info-button:hover { background: #a00000; }
+.info-button {
+  display:inline-block;
+  padding:12px 20px;
+  background:#e60000;
+  color:#fff;
+  font-weight:bold;
+  border-radius:8px;
+  text-decoration:none;
+  transition:0.3s;
+}
+.info-button:hover { background:#a00000; }
 
 /* Footer */
 .footer {
-  position:fixed;
-  bottom:10px;
+  position: fixed;
+  bottom:0;
   width:100%;
+  background: rgba(0,0,0,0.5);
   text-align:center;
-  font-size:12px;
-  color:#400000;
-  z-index:10;
+  padding:10px 0;
 }
+.footer p {
+  margin:0 0 5px 0;
+  font-size:14px;
+}
+.social-icons a {
+  color:#fff;
+  margin:0 10px;
+  font-size:24px;
+  transition:0.3s;
+}
+.social-icons a:hover { color:#e60000; }
 
 /* Responsive */
 @media screen and (max-width:600px){
-  .navbar { padding:10px 15px; }
-  .nav-right .icon { font-size:36px; }
-  .hamburger { width:40px; height:32px; }
-  .hamburger span { height:8px; }
-  .main-content-left { position:relative; top:auto; left:auto; transform:none; margin:20px; }
-  .menu-panel { width:70%; }
+  .main-content-left {
+    position:relative;
+    top:auto;
+    left:auto;
+    transform:none;
+    margin:20px;
+  }
+  .info-button {
+    padding:10px 15px;
+  }
+  .social-icons a { font-size:20px; }
 }
+
