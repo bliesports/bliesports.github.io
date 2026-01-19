@@ -9,7 +9,7 @@ const firebaseConfig = {
   measurementId: "G-T1PHQ0Z45M"
 };
 
-// Initialize Firebase
+// Firebase Initialize
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const analytics = firebase.analytics();
@@ -18,6 +18,7 @@ const analytics = firebase.analytics();
 const menuPanel = document.getElementById('menuPanel');
 menuPanel.style.display = 'none';
 
+// Hamburger menü aç/kapa
 function toggleDropdown(){
   if(menuPanel.style.display === 'block'){
     menuPanel.classList.remove('slide-in');
@@ -30,18 +31,20 @@ function toggleDropdown(){
   }
 }
 
+// Menü butonları
 function menuAction(action){
   toggleDropdown();
+
   if(action === 'login' || action === 'register'){
     openModal(action);
   } else if(action === 'support'){
-    alert('Destek sayfası');
+    alert('Destek sayfası (demo)');
   } else if(action === 'account'){
-    alert('Hesabım sayfası (demo)');
+    goToAccount();
   }
 }
 
-// Modal
+// Modal aç/kapa
 function openModal(type){
   const modal = document.getElementById('modal');
   modal.style.display='flex';
@@ -57,27 +60,68 @@ function closeModal(){
   setTimeout(()=> modal.style.display='none', 300);
 }
 
+// Modal form submit
 function submitModal(){
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const type = document.getElementById('modalTitle').innerText;
 
   if(type==='Kayıt Ol'){
-    firebase.auth().createUserWithEmailAndPassword(email,password)
-      .then(()=> { alert('Hesap oluşturuldu!'); closeModal(); })
+    auth.createUserWithEmailAndPassword(email,password)
+      .then(()=> { alert('Hesap oluşturuldu!'); closeModal(); updateMenu(); })
       .catch(error=> alert(error.message));
   } else {
-    firebase.auth().signInWithEmailAndPassword(email,password)
-      .then(()=> { alert('Giriş başarılı!'); closeModal(); })
+    auth.signInWithEmailAndPassword(email,password)
+      .then(()=> { alert('Giriş başarılı!'); closeModal(); updateMenu(); })
       .catch(error=> alert(error.message));
   }
 }
 
+// Çıkış yap
 function logout(){
-  firebase.auth().signOut().then(()=>{ alert('Çıkış yapıldı!'); });
+  auth.signOut().then(()=>{
+    alert('Çıkış yapıldı!');
+    updateMenu();
+  });
 }
 
-// Logo tıklandığında ana menüye scroll
+// Kullanıcı avatar tıklama yönlendirme
+function goToAccount(){
+  const user = auth.currentUser;
+  if(user){
+    const email = user.email;
+    window.location.href = "https://accounts.bliesports.github.io/tr/my-account?email=" + encodeURIComponent(email);
+  } else {
+    alert("Lütfen önce giriş yapın!");
+  }
+}
+
+// Menü butonları güncelle (giriş/çıkış durumuna göre)
+function updateMenu(){
+  const user = auth.currentUser;
+  const loginBtn = menuPanel.querySelector("button[onclick*='login']");
+  const registerBtn = menuPanel.querySelector("button[onclick*='register']");
+  const accountBtn = menuPanel.querySelector("button[onclick*='account']");
+  const logoutBtn = menuPanel.querySelector("button[onclick*='logout']");
+
+  if(user){
+    loginBtn.style.display = 'none';
+    registerBtn.style.display = 'none';
+    accountBtn.style.display = 'block';
+    logoutBtn.style.display = 'block';
+  } else {
+    loginBtn.style.display = 'block';
+    registerBtn.style.display = 'block';
+    accountBtn.style.display = 'none';
+    logoutBtn.style.display = 'none';
+  }
+}
+
+// Sayfa yüklenince menüyü güncelle
+window.addEventListener('load', ()=>{ updateMenu(); });
+
+// Logo tıklandığında ana sayfaya scroll
 function scrollToTop(){
   window.scrollTo({ top:0, behavior: 'smooth' });
 }
+
