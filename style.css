@@ -3,8 +3,7 @@ body {
   margin:0;
   font-family: Arial, sans-serif;
   color:#fff;
-  background: url('background.jpg.jpg') no-repeat center center fixed;
-  background-size: cover;
+  background:#111;
 }
 
 /* Navbar */
@@ -19,38 +18,14 @@ body {
   width:100%;
   z-index:100;
 }
-.nav-left img {
-  width:60px;
-  cursor:pointer;
-}
-.nav-right {
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:20px;
-}
-.nav-right .icon {
-  font-size:32px;
-  color:#fff;
-  cursor:pointer;
-}
+.nav-left img { width:60px; cursor:pointer; }
+.nav-center h1 { font-size:28px; color:#e60000; font-weight:bold; text-align:center; }
+.nav-right { display:flex; align-items:center; justify-content:flex-end; gap:20px; }
+.nav-right .icon { font-size:32px; color:#fff; cursor:pointer; }
 
 /* Hamburger */
-.hamburger {
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  width:36px;
-  height:28px;
-  cursor:pointer;
-}
-.hamburger span {
-  display:block;
-  height:8px;
-  background:#fff;
-  border-radius:3px;
-  width:100%;
-}
+.hamburger { display:flex; flex-direction:column; justify-content:space-between; width:36px; height:28px; cursor:pointer; }
+.hamburger span { display:block; height:8px; background:#fff; border-radius:3px; width:100%; }
 
 /* Menü panel */
 .menu-panel {
@@ -77,6 +52,8 @@ body {
   cursor:pointer;
 }
 .menu-panel button:hover { background:#300000; }
+
+/* Menü animasyon */
 .menu-panel.slide-in { animation:slideIn 0.3s forwards; }
 .menu-panel.slide-out { animation:slideOut 0.3s forwards; }
 @keyframes slideIn { from{transform:translateX(100%);} to{transform:translateX(0);} }
@@ -98,11 +75,6 @@ body {
   display:flex;
   flex-direction:column;
 }
-#modal.fade-in .modal-box { animation:fadeIn 0.3s forwards; }
-#modal.fade-out .modal-box { animation:fadeOut 0.3s forwards; }
-@keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
-@keyframes fadeOut { from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(0.9);} }
-
 .modal-box input {
   width:100%;
   padding:12px;
@@ -110,47 +82,36 @@ body {
   border:none;
   border-radius:6px;
 }
+#modal.fade-in .modal-box { animation:fadeIn 0.3s forwards; }
+#modal.fade-out .modal-box { animation:fadeOut 0.3s forwards; }
+@keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
+@keyframes fadeOut { from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(0.9);} }
 
-/* Ana içerik */
-.main-content {
-  margin-top:120px;
-  text-align:center;
-  animation:fadeContent 1s ease;
-}
-.main-content h1 {
-  font-size:64px;
-  font-weight:900;
-  font-style:italic;
-  color:#e60000;
-  animation:fadeContent 1.2s ease forwards;
-}
-@keyframes fadeContent { from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
-
-/* Sol yazı ve buton */
+/* Ana içerik sol kısmı */
 .main-content-left {
-  position: absolute;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-  max-width: 300px;
+  position:absolute;
+  top:50%;
+  left:20px;
+  transform:translateY(-50%);
+  max-width:300px;
 }
 .main-content-left p {
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-  margin-bottom: 15px;
+  font-size:20px;
+  color:#fff;
+  font-weight:bold;
+  margin-bottom:15px;
 }
 .info-button {
-  display: inline-block;
-  padding: 12px 20px;
-  background: #e60000;
-  color: #fff;
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: 0.3s;
+  display:inline-block;
+  padding:12px 20px;
+  background:#e60000;
+  color:#fff;
+  font-weight:bold;
+  border-radius:8px;
+  text-decoration:none;
+  transition:0.3s;
 }
-.info-button:hover { background: #a00000; }
+.info-button:hover { background:#a00000; }
 
 /* Footer */
 .footer {
@@ -162,8 +123,6 @@ body {
   color:#400000;
   z-index:10;
 }
-
-/* Footer alt yazı */
 .coming-soon-text {
   text-align:center;
   color:#e60000;
@@ -179,7 +138,8 @@ body {
   .nav-right .icon { font-size:36px; }
   .hamburger { width:40px; height:32px; }
   .hamburger span { height:8px; }
-  .main-content h1 { font-size:48px; }
-  .menu-panel { width:70%; }
   .main-content-left { position:relative; top:auto; left:auto; transform:none; margin:20px; }
+  .menu-panel { width:70%; }
+  .nav-center h1 { font-size:24px; }
 }
+
