@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>BLI Esports</title>
 <link rel="stylesheet" href="style.css">
-<link rel="icon" type="image/png" href="favicon.png"> <!-- Favicon buraya -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -18,11 +17,15 @@
 <!-- Navbar -->
 <div class="navbar">
   <div class="nav-left">
-    <img src="logo.png.jpeg" alt="BLI Logo" onclick="scrollToTop()" style="cursor:pointer;">
+    <img src="logo.jpeg" alt="BLI Logo" onclick="scrollToTop()" style="cursor:pointer; width:60px;">
+  </div>
+  <div class="nav-center">
+    <h2>BLI</h2>
   </div>
   <div class="nav-right">
     <i class="fas fa-magnifying-glass icon"></i>
-    <i class="fas fa-user icon" onclick="goToAccount()"></i>
+    <img src="logo.jpeg" alt="Kullanıcı" class="user-icon" onclick="goToAccount()">
+    <!-- Hamburger -->
     <div class="hamburger" onclick="toggleDropdown()">
       <span></span>
       <span></span>
@@ -51,7 +54,7 @@
   </div>
 </div>
 
-<!-- Ana içerik sol kısmı -->
+<!-- Sol içerik -->
 <div class="main-content-left">
   <p>Sitemiz yakın zamanda kullanıma açılacaktır</p>
   <a href="detayli-bilgi/index.html" class="info-button">Detaylı Bilgi</a>
@@ -67,6 +70,13 @@
   <p>&copy; 2026 BLI Esports</p>
 </div>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
+
+<!-- Script -->
 <script src="script.js"></script>
+
 </body>
 </html>
