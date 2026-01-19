@@ -8,44 +8,11 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-  <div class="nav-left">
-    <img src="logo.png.jpeg" alt="BLI Logo" onclick="scrollToTop()" style="cursor:pointer;">
-  </div>
-  <div class="nav-center">
-  </div>
-  <div class="nav-right">
-    <i class="fas fa-magnifying-glass icon"></i>
-    <i class="fas fa-user icon" onclick="goToAccount()"></i>
-    <!-- Hamburger -->
-    <div class="hamburger" onclick="toggleDropdown()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-</div>
-
-<!-- Açılır Menü Panel -->
-<div class="menu-panel" id="menuPanel">
-  <button onclick="menuAction('login')">Giriş Yap</button>
-  <button onclick="menuAction('register')">Kayıt Ol</button>
-  <button onclick="menuAction('support')">Destek</button>
-  <button onclick="menuAction('account')">Hesabım</button>
-  <button onclick="logout()">Çıkış Yap</button>
-  <button onclick="toggleDropdown()">✖</button>
-</div>
-
-<!-- Modal -->
-<div id="modal" onclick="closeModal()">
-  <div class="modal-box" onclick="event.stopPropagation()">
-    <h3 id="modalTitle">Giriş Yap</h3>
-    <input type="email" id="email" placeholder="E-posta">
-    <input type="password" id="password" placeholder="Şifre">
-    <button onclick="submitModal()">Devam</button>
-  </div>
-</div>
+<!-- Video Arka Plan -->
+<video autoplay muted loop id="bgVideo">
+  <source src="background.mp4" type="video/mp4">
+  Tarayıcınız video etiketini desteklemiyor.
+</video>
 
 <!-- Ana içerik sol kısmı -->
 <div class="main-content-left">
@@ -53,19 +20,14 @@
   <a href="detayli-bilgi/index.html" class="info-button">Detaylı Bilgi</a>
 </div>
 
-<!-- Footer -->
+<!-- Footer sosyal medya -->
 <div class="footer">
-  &copy; 2026 BLI Esports
+  <p>Sosyal medya hesaplarımız:</p>
+  <div class="social-icons">
+    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+  </div>
 </div>
-
-<!-- Firebase (compat sürüm) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
-
-<!-- Script -->
-<script src="script.js"></script>
 
 </body>
 </html>
-
