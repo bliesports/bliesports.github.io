@@ -3,7 +3,8 @@ body {
   margin:0;
   font-family: Arial, sans-serif;
   color:#fff;
-  background:#111;
+  background: url('background.jpg.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Navbar */
@@ -19,7 +20,7 @@ body {
   z-index:100;
 }
 .nav-left img { width:60px; cursor:pointer; }
-.nav-center h1 { font-size:28px; color:#e60000; font-weight:bold; text-align:center; }
+.nav-center h2 { color:#e60000; font-weight:bold; margin:0; }
 .nav-right { display:flex; align-items:center; justify-content:flex-end; gap:20px; }
 .nav-right .icon { font-size:32px; color:#fff; cursor:pointer; }
 
@@ -52,8 +53,6 @@ body {
   cursor:pointer;
 }
 .menu-panel button:hover { background:#300000; }
-
-/* Menü animasyon */
 .menu-panel.slide-in { animation:slideIn 0.3s forwards; }
 .menu-panel.slide-out { animation:slideOut 0.3s forwards; }
 @keyframes slideIn { from{transform:translateX(100%);} to{transform:translateX(0);} }
@@ -75,43 +74,32 @@ body {
   display:flex;
   flex-direction:column;
 }
-.modal-box input {
-  width:100%;
-  padding:12px;
-  margin-bottom:12px;
-  border:none;
-  border-radius:6px;
-}
 #modal.fade-in .modal-box { animation:fadeIn 0.3s forwards; }
 #modal.fade-out .modal-box { animation:fadeOut 0.3s forwards; }
 @keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
 @keyframes fadeOut { from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(0.9);} }
+.modal-box input { width:100%; padding:12px; margin-bottom:12px; border:none; border-radius:6px; }
 
 /* Ana içerik sol kısmı */
 .main-content-left {
-  position:absolute;
-  top:50%;
-  left:20px;
-  transform:translateY(-50%);
-  max-width:300px;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  max-width: 300px;
 }
-.main-content-left p {
-  font-size:20px;
-  color:#fff;
-  font-weight:bold;
-  margin-bottom:15px;
-}
+.main-content-left p { font-size:20px; font-weight:bold; margin-bottom:15px; }
 .info-button {
-  display:inline-block;
-  padding:12px 20px;
-  background:#e60000;
-  color:#fff;
-  font-weight:bold;
-  border-radius:8px;
-  text-decoration:none;
-  transition:0.3s;
+  display: inline-block;
+  padding: 12px 20px;
+  background: #e60000;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
 }
-.info-button:hover { background:#a00000; }
+.info-button:hover { background: #a00000; }
 
 /* Footer */
 .footer {
@@ -123,14 +111,6 @@ body {
   color:#400000;
   z-index:10;
 }
-.coming-soon-text {
-  text-align:center;
-  color:#e60000;
-  font-size:20px;
-  font-weight:bold;
-  font-style:italic;
-  padding:10px 0;
-}
 
 /* Responsive */
 @media screen and (max-width:600px){
@@ -140,6 +120,4 @@ body {
   .hamburger span { height:8px; }
   .main-content-left { position:relative; top:auto; left:auto; transform:none; margin:20px; }
   .menu-panel { width:70%; }
-  .nav-center h1 { font-size:24px; }
 }
-
