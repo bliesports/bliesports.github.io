@@ -13,6 +13,9 @@
   <div class="nav-left">
     <img src="logo.png.jpeg" alt="BLI Logo" onclick="scrollToTop()" style="cursor:pointer;">
   </div>
+  <div class="nav-center">
+    <h2>BLI</h2>
+  </div>
   <div class="nav-right">
     <i class="fas fa-magnifying-glass icon"></i>
     <i class="fas fa-user icon"></i>
@@ -27,11 +30,11 @@
 
 <!-- Açılır Menü Panel -->
 <div class="menu-panel" id="menuPanel">
-  <button onclick="menuAction('login')">Giriş Yap</button>
-  <button onclick="menuAction('register')">Kayıt Ol</button>
-  <button onclick="menuAction('support')">Destek</button>
-  <button onclick="menuAction('account')">Hesabım</button>
-  <button onclick="logout()">Çıkış Yap</button>
+  <button class="guest" onclick="menuAction('login')">Giriş Yap</button>
+  <button class="guest" onclick="menuAction('register')">Kayıt Ol</button>
+  <button class="guest" onclick="menuAction('support')">Destek</button>
+  <button class="user" onclick="menuAction('account')">Hesabım</button>
+  <button class="user" onclick="logout()">Çıkış Yap</button>
   <button onclick="toggleDropdown()">✖</button>
 </div>
 
@@ -51,15 +54,12 @@
   <a href="detayli-bilgi/index.html" class="info-button">Detaylı Bilgi</a>
 </div>
 
-
 <!-- Footer -->
 <div class="footer">
   &copy; 2026 BLI Esports
 </div>
 
-
-
-<!-- Firebase (compat sürüm) -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
@@ -79,9 +79,12 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const analytics = firebase.analytics();
 
-// Menü paneli
+// Menü panel
 const menuPanel = document.getElementById('menuPanel');
 menuPanel.style.display = 'none';
+
+// Başlangıçta sadece guest sınıfı göster
+document.querySelectorAll('.user').forEach(el => el.style.display = 'none');
 
 function toggleDropdown(){
   if(menuPanel.style.display === 'block'){
@@ -97,11 +100,11 @@ function toggleDropdown(){
 
 function menuAction(action){
   toggleDropdown();
-  if(action === 'login' || action === 'register'){
+  if(action==='login' || action==='register'){
     openModal(action);
-  } else if(action === 'support'){
+  } else if(action==='support'){
     alert('Destek sayfası');
-  } else if(action === 'account'){
+  } else if(action==='account'){
     alert('Hesabım sayfası (demo)');
   }
 }
@@ -128,20 +131,37 @@ function submitModal(){
   const type = document.getElementById('modalTitle').innerText;
 
   if(type==='Kayıt Ol'){
-    firebase.auth().createUserWithEmailAndPassword(email,password)
-      .then(()=> { alert('Hesap oluşturuldu!'); closeModal(); })
+    auth.createUserWithEmailAndPassword(email,password)
+      .then(()=> {
+        alert('Hesap oluşturuldu!');
+        toggleUserMenu(true);
+        closeModal();
+      })
       .catch(error=> alert(error.message));
   } else {
-    firebase.auth().signInWithEmailAndPassword(email,password)
-      .then(()=> { alert('Giriş başarılı!'); closeModal(); })
+    auth.signInWithEmailAndPassword(email,password)
+      .then(()=> {
+        alert('Giriş başarılı!');
+        toggleUserMenu(true);
+        closeModal();
+      })
       .catch(error=> alert(error.message));
   }
 }
 
 function logout(){
-  firebase.auth().signOut().then(()=>{ alert('Çıkış yapıldı!'); });
+  auth.signOut().then(()=>{
+    alert('Çıkış yapıldı!');
+    toggleUserMenu(false);
+  });
+}
+
+// Guest / User menü gösterimi
+function toggleUserMenu(isUser){
+  document.querySelectorAll('.guest').forEach(el=>el.style.display = isUser ? 'none':'block');
+  document.querySelectorAll('.user').forEach(el=>el.style.display = isUser ? 'block':'none');
 }
 </script>
-
 </body>
 </html>
+
