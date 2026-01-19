@@ -11,13 +11,14 @@ body, html {
 /* Video arka plan */
 #bgVideo {
   position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:-1;
+  top: 0;
+  left: 0;
+  width: 100vw;    /* viewport genişliği */
+  height: 100vh;   /* viewport yüksekliği */
+  object-fit: cover; /* ekranı tamamen kaplar, kırpar ama tüm alanı doldurur */
+  z-index: -1;
 }
+
 
 /* Sol içerik */
 .main-content-left {
