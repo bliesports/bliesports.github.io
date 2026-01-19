@@ -9,17 +9,16 @@
 <body>
 
 <!-- Navbar -->
-<!-- Navbar -->
 <div class="navbar">
   <div class="nav-left">
     <img src="logo.png.jpeg" alt="BLI Logo" onclick="scrollToTop()" style="cursor:pointer;">
   </div>
   <div class="nav-center">
+    <h2>BLI</h2>
   </div>
   <div class="nav-right">
     <i class="fas fa-magnifying-glass icon"></i>
-    <!-- Kullanıcı avatar / ikon -->
-    <i class="fas fa-user icon" id="userAvatar" onclick="goToAccount()" title="Hesabım"></i>
+    <i class="fas fa-user icon" onclick="goToAccount()"></i>
     <!-- Hamburger -->
     <div class="hamburger" onclick="toggleDropdown()">
       <span></span>
@@ -31,13 +30,11 @@
 
 <!-- Açılır Menü Panel -->
 <div class="menu-panel" id="menuPanel">
-  <!-- Guest -->
-  <button class="guest" onclick="menuAction('login')">Giriş Yap</button>
-  <button class="guest" onclick="menuAction('register')">Kayıt Ol</button>
-  <button class="guest" onclick="menuAction('support')">Destek</button>
-  <!-- User -->
-  <button class="user" onclick="menuAction('account')">Hesabım</button>
-  <button class="user" onclick="logout()">Çıkış Yap</button>
+  <button onclick="menuAction('login')">Giriş Yap</button>
+  <button onclick="menuAction('register')">Kayıt Ol</button>
+  <button onclick="menuAction('support')">Destek</button>
+  <button onclick="menuAction('account')">Hesabım</button>
+  <button onclick="logout()">Çıkış Yap</button>
   <button onclick="toggleDropdown()">✖</button>
 </div>
 
@@ -62,96 +59,14 @@
   &copy; 2026 BLI Esports
 </div>
 
-<!-- Firebase -->
+<!-- Firebase (compat sürüm) -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8",
-  authDomain: "bliesports.firebaseapp.com",
-  projectId: "bliesports",
-  storageBucket: "bliesports.firebasestorage.app",
-  messagingSenderId: "880767104142",
-  appId: "1:880767104142:web:5edbe111f42f16ab1545df",
-  measurementId: "G-T1PHQ0Z45M"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const analytics = firebase.analytics();
+<!-- Script -->
+<script src="script.js"></script>
 
-const menuPanel = document.getElementById('menuPanel');
-menuPanel.style.display = 'none';
-
-// Menü aç/kapa
-function toggleDropdown(){
-  if(menuPanel.style.display==='block'){
-    menuPanel.classList.remove('slide-in');
-    menuPanel.classList.add('slide-out');
-    setTimeout(()=>menuPanel.style.display='none',300);
-  } else {
-    menuPanel.style.display='block';
-    menuPanel.classList.remove('slide-out');
-    menuPanel.classList.add('slide-in');
-  }
-}
-
-// Menü aksiyonları
-function menuAction(action){
-  toggleDropdown();
-  if(action==='login'||action==='register'){ openModal(action); }
-  else if(action==='support'){ alert('Destek sayfası (demo)'); }
-  else if(action==='account'){ alert('Hesabım sayfası (demo)'); }
-}
-
-// Modal aç/kapa
-function openModal(type){
-  const modal=document.getElementById('modal');
-  modal.style.display='flex';
-  modal.classList.remove('fade-out');
-  modal.classList.add('fade-in');
-  document.getElementById('modalTitle').innerText=type==='login'?'Giriş Yap':'Kayıt Ol';
-}
-function closeModal(){
-  const modal=document.getElementById('modal');
-  modal.classList.remove('fade-in');
-  modal.classList.add('fade-out');
-  setTimeout(()=>modal.style.display='none',300);
-}
-
-// Modal submit
-function submitModal(){
-  const email=document.getElementById('email').value;
-  const password=document.getElementById('password').value;
-  const type=document.getElementById('modalTitle').innerText;
-  if(type==='Kayıt Ol'){
-    firebase.auth().createUserWithEmailAndPassword(email,password)
-      .then(()=> { alert('Hesap oluşturuldu!'); toggleUserMenu(true); closeModal(); })
-      .catch(error=> alert(error.message));
-  } else {
-    firebase.auth().signInWithEmailAndPassword(email,password)
-      .then(()=> { alert('Giriş başarılı!'); toggleUserMenu(true); closeModal(); })
-      .catch(error=> alert(error.message));
-  }
-}
-
-// Çıkış yap
-function logout(){
-  firebase.auth().signOut().then(()=>{ alert('Çıkış yapıldı!'); toggleUserMenu(false); });
-}
-
-// Guest/User görünürlüğü
-function toggleUserMenu(isUser){
-  document.querySelectorAll('.guest').forEach(el=>el.style.display = isUser?'none':'block');
-  document.querySelectorAll('.user').forEach(el=>el.style.display = isUser?'block':'none');
-}
-
-// Sayfa yüklendiğinde guest menü
-toggleUserMenu(false);
-
-// Scroll top (logo tıklayınca)
-function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
-</script>
 </body>
 </html>
+
