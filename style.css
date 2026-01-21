@@ -1,42 +1,58 @@
-/* Temel ayarlar */
-html, body {
+/* ================= RESET ================= */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= BODY ================= */
+html, body {
   width: 100%;
   height: 100%;
-  font-family: Arial, sans-serif;
-  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ffffff;
   overflow-x: hidden;
 }
 
-/* Video arka plan */
+/* ================= VIDEO BACKGROUND ================= */
 #bgVideo {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: cover;
+  object-fit: cover;   /* tam ekran */
+  z-index: -2;
+}
+
+/* Video üstü karartma (okunabilirlik) */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   z-index: -1;
 }
 
-/* Navbar */
+/* ================= NAVBAR ================= */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 64px;
+  padding: 0 24px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  background: rgba(17,17,17,0.8);
-  z-index: 100;
+
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 10;
 }
 
 .nav-left img {
-  height: 45px;
+  height: 42px;
   cursor: pointer;
 }
 
@@ -46,95 +62,141 @@ html, body {
   gap: 20px;
 }
 
-.nav-right .icon {
-  font-size: 22px;
+.nav-icon {
+  font-size: 20px;
   cursor: pointer;
-  color: #fff;
 }
 
-/* Hamburger */
+/* ================= HAMBURGER ================= */
 .hamburger {
   width: 28px;
   height: 20px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   cursor: pointer;
 }
 
 .hamburger span {
   height: 3px;
-  background: #fff;
+  width: 100%;
+  background: #ffffff;
   border-radius: 2px;
 }
 
-/* Sol içerik */
-.main-content-left {
+/* ================= SIDE MENU ================= */
+.side-menu {
+  position: fixed;
+  top: 64px;
+  right: -240px;
+
+  width: 240px;
+  height: calc(100vh - 64px);
+
+  background: rgba(20, 20, 20, 0.95);
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  transition: right 0.3s ease;
+  z-index: 9;
+}
+
+.side-menu.open {
+  right: 0;
+}
+
+.side-menu a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.side-menu a:hover {
+  background: #e60000;
+}
+
+/* ================= MAIN CONTENT ================= */
+.content {
   position: absolute;
   top: 50%;
-  left: 20px;
+  left: 60px;
   transform: translateY(-50%);
-  max-width: 320px;
-  z-index: 1;
+
+  max-width: 420px;
 }
 
-.main-content-left p {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 15px;
+.content h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
 }
 
-.info-button {
+.content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.btn {
   display: inline-block;
-  padding: 12px 20px;
+  padding: 12px 24px;
+
   background: #e60000;
-  color: #fff;
-  font-weight: bold;
-  border-radius: 8px;
+  color: #ffffff;
   text-decoration: none;
+  font-weight: bold;
+
+  border-radius: 8px;
   transition: 0.3s;
 }
 
-.info-button:hover {
-  background: #a00000;
+.btn:hover {
+  background: #b00000;
 }
 
-/* Footer */
+/* ================= FOOTER ================= */
 .footer {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  background: rgba(0,0,0,0.5);
-  text-align: center;
-  padding: 10px 0;
-  z-index: 2;
-}
 
-.footer p {
-  margin: 5px 0;
+  padding: 12px 0;
+  background: rgba(0, 0, 0, 0.6);
+
+  text-align: center;
   font-size: 14px;
 }
 
-.social-icons a {
-  color: #fff;
-  margin: 0 10px;
+.socials {
+  margin: 6px 0;
+}
+
+.socials a {
+  color: #ffffff;
   font-size: 22px;
+  margin: 0 10px;
   transition: 0.3s;
 }
 
-.social-icons a:hover {
+.socials a:hover {
   color: #e60000;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .main-content-left {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin: 100px 20px 20px;
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .content {
+    left: 20px;
+    right: 20px;
+  }
+
+  .content h1 {
+    font-size: 32px;
   }
 }
-
-
