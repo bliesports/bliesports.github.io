@@ -1,82 +1,66 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>BLI Esports</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <title>BLI Esports</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<!-- Video Arka Plan -->
-<video autoplay muted loop id="bgVideo">
-  <source src="background.mp4" type="video/mp4">
-  Tarayıcınız video etiketini desteklemiyor.
-</video>
+  <!-- Video Arka Plan -->
+  <video autoplay muted loop playsinline id="bgVideo">
+    <source src="background.mp4" type="video/mp4">
+  </video>
 
-<!-- Navbar -->
-<div class="navbar">
-  <div class="nav-left">
-    <img src="logo.jpeg" alt="BLI Logo" onclick="scrollToTop()" style="cursor:pointer; width:60px;">
-  </div>
-  <div class="nav-center">
-    <h2>BLI</h2>
-  </div>
-  <div class="nav-right">
-    <i class="fas fa-magnifying-glass icon"></i>
-    <img src="logo.jpeg" alt="Kullanıcı" class="user-icon" onclick="goToAccount()">
-    <!-- Hamburger -->
-    <div class="hamburger" onclick="toggleDropdown()">
-      <span></span>
-      <span></span>
-      <span></span>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-left">
+      <img src="logo.jpeg" alt="BLI Logo" class="logo">
     </div>
+
+    <div class="nav-right">
+      <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+      <i class="fa-solid fa-user nav-icon"></i>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Yan Menü -->
+  <div class="side-menu" id="sideMenu">
+    <a href="#">Giriş Yap</a>
+    <a href="#">Kayıt Ol</a>
+    <a href="#">Destek</a>
+    <a href="#">Hesabım</a>
   </div>
-</div>
 
-<!-- Açılır Menü Panel -->
-<div class="menu-panel" id="menuPanel">
-  <button onclick="menuAction('login')">Giriş Yap</button>
-  <button onclick="menuAction('register')">Kayıt Ol</button>
-  <button onclick="menuAction('support')">Destek</button>
-  <button onclick="menuAction('account')">Hesabım</button>
-  <button onclick="logout()">Çıkış Yap</button>
-  <button onclick="toggleDropdown()">✖</button>
-</div>
-
-<!-- Modal -->
-<div id="modal" onclick="closeModal()">
-  <div class="modal-box" onclick="event.stopPropagation()">
-    <h3 id="modalTitle">Giriş Yap</h3>
-    <input type="email" id="email" placeholder="E-posta">
-    <input type="password" id="password" placeholder="Şifre">
-    <button onclick="submitModal()">Devam</button>
+  <!-- Sol içerik -->
+  <div class="main-content">
+    <h1>BLI Esports</h1>
+    <p>Sitemiz yakında yayında</p>
+    <a href="#" class="btn">Detaylı Bilgi</a>
   </div>
-</div>
 
-<!-- Sol içerik -->
-<div class="main-content-left">
-  <p>Sitemiz yakın zamanda kullanıma açılacaktır</p>
-  <a href="detayli-bilgi/index.html" class="info-button">Detaylı Bilgi</a>
-</div>
+  <!-- Script -->
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const sideMenu = document.getElementById("sideMenu");
 
-<!-- Footer -->
-<div class="footer">
-  <p>Sosyal medya hesaplarımız:</p>
-  <div class="social-icons">
-    <a href="https://www.instagram.com/bliesportts/" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
-  </div>
-  <p>&copy; 2026 BLI Esports</p>
-</div>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
-
-<!-- Script -->
-<script src="script.js"></script>
+    hamburger.addEventListener("click", () => {
+      sideMenu.classList.toggle("active");
+    });
+  </script>
 
 </body>
 </html>
+
