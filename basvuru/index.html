@@ -3,133 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Başvuru | BLI Esports</title>
-    
-    <link rel="icon" type="image/png" href="logo16.png">
-    
+    <title>Başvuru Formu | BLI Esports</title>
     <style>
-        /* Karanlık ve Espor Teması */
-        body { 
-            background-color: #0b0b0b; 
-            color: white; 
-            font-family: 'Poppins', sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0;
-            padding: 20px;
-        }
-
-        .card { 
-            background: #141414; 
-            padding: 40px; 
-            border-radius: 20px; 
-            border: 1px solid rgba(255, 0, 0, 0.3); 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 0, 0, 0.1); 
-            width: 100%; 
-            max-width: 450px; 
-            text-align: center; 
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            border-color: #ff0000;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
-        }
-
-        .logo-img { 
-            width: 80px; 
-            height: auto;
-            margin-bottom: 15px; 
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
-        }
-
-        h2 { 
-            margin: 0 0 10px 0; 
-            color: #ff0000; 
-            text-transform: uppercase; 
-            letter-spacing: 3px; 
-            font-size: 24px;
-        }
-
-        p { color: #888; margin-bottom: 25px; font-size: 14px; }
-
-        input, select, textarea { 
-            width: 100%; 
-            padding: 14px; 
-            margin: 8px 0; 
-            border: 1px solid #222; 
-            background: #080808; 
-            color: white; 
-            border-radius: 8px; 
-            box-sizing: border-box; 
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus, select:focus, textarea:focus { 
-            border-color: #ff0000; 
-            background: #0d0d0d;
-        }
-
-        button { 
-            width: 100%; 
-            padding: 16px; 
-            background: #ff0000; 
-            border: none; 
-            color: white; 
-            font-weight: bold; 
-            text-transform: uppercase;
-            cursor: pointer; 
-            border-radius: 8px; 
-            transition: 0.3s; 
-            margin-top: 15px;
-            letter-spacing: 1px;
-        }
-
-        button:hover { 
-            background: #d40000; 
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
-        }
-
-        button:active { transform: translateY(0); }
-
-        /* Mobil uyum için */
-        @media (max-width: 480px) {
-            .card { padding: 25px; }
-        }
+        body { background-color: #0b0b0b; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #141414; padding: 40px; border-radius: 15px; border: 1px solid #ff0000; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 20px rgba(255,0,0,0.2); }
+        h2 { color: #ff0000; margin-bottom: 20px; letter-spacing: 2px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #ff0000; }
+        button { width: 100%; padding: 15px; background: #ff0000; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #cc0000; }
+        .footer-link { display: block; margin-top: 20px; color: #666; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <img src="logo16.png" alt="BLI Logo" class="logo-img">
-    
-    <h2>BAŞVURU FORMU</h2>
-    <p>BLI Esports ekibine katılmak için bilgilerini eksiksiz doldur.</p>
-
-    <form action="https://formspree.io/f/mojnyoqb" method="POST">
-        <input type="text" name="isim" placeholder="Ad Soyad" required>
-        
-        <input type="email" name="email" placeholder="E-posta Adresin" required>
-
-        <input type="text" name="discord" placeholder="Discord Kullanıcı Adı (Örn: bli#0001)" required>
-        
-        <select name="brans" required>
-            <option value="" disabled selected>Hangi alanda başvuruyorsun?</option>
-            <option value="oyuncu">Valorant Oyuncusu</option>
-            <option value="editor">Video Editör</option>
-            <option value="tasarimci">Grafik Tasarımcı</option>
-            <option value="koc">Koç / Analist</option>
+    <h2>BAŞVURU YAP</h2>
+    <form id="formBli" action="https://formspree.io/f/mojnyoqb" method="POST">
+        <input type="text" name="isim" id="ad_soyad" placeholder="Ad Soyad" required>
+        <input type="text" name="discord" id="discord_id" placeholder="Discord ID" required>
+        <select name="brans" id="secilen_brans">
+            <option value="Valorant Oyuncusu">Valorant Oyuncusu</option>
+            <option value="Editör">Editör</option>
+            <option value="Tasarımcı">Tasarımcı</option>
         </select>
+        <textarea name="mesaj" placeholder="Neden sizi seçmeliyiz?" rows="4"></textarea>
         
-        <textarea name="tecrube" rows="4" placeholder="Daha önceki tecrübelerin ve kendinden bahset..."></textarea>
+        <input type="hidden" name="_next" value="https://bliesports.github.io">
         
-        <button type="submit">BAŞVURUYU GÖNDER</button>
+        <button type="submit">GÖNDER</button>
     </form>
+    <a href="../index.html" class="footer-link">Vazgeç ve Geri Dön</a>
 </div>
+
+<script>
+    document.getElementById("formBli").onsubmit = function() {
+        // Form gönderilirken verileri tarayıcı hafızasına (LocalStorage) kaydet
+        const basvuruBilgisi = {
+            isim: document.getElementById("ad_soyad").value,
+            brans: document.getElementById("secilen_brans").value,
+            tarih: new Date().toLocaleDateString()
+        };
+        
+        // Bu anahtarı ana sayfa kontrol edecek
+        localStorage.setItem("bli_basvuru_tamamlandi", JSON.stringify(basvuruBilgisi));
+    };
+</script>
 
 </body>
 </html>
