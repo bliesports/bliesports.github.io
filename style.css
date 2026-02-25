@@ -185,6 +185,13 @@ html, body {
   transition: 0.3s;
 }
 
+.site-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 .socials a:hover {
   color: #e60000;
 }
