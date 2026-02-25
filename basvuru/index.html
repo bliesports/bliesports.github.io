@@ -6,46 +6,52 @@
     <title>Başvuru Formu | BLI Esports</title>
     <style>
         body { background-color: #0b0b0b; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: #141414; padding: 40px; border-radius: 15px; border: 1px solid #ff0000; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 20px rgba(255,0,0,0.2); }
-        h2 { color: #ff0000; margin-bottom: 20px; letter-spacing: 2px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; box-sizing: border-box; outline: none; }
-        input:focus { border-color: #ff0000; }
-        button { width: 100%; padding: 15px; background: #ff0000; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.3s; margin-top: 10px; }
+        .card { background: #141414; padding: 40px; border-radius: 15px; border: 1px solid #ff0000; width: 100%; max-width: 400px; text-align: center; }
+        h2 { color: #ff0000; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .row { display: flex; gap: 10px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #ff0000; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; transition: 0.3s; }
         button:hover { background: #cc0000; }
-        .footer-link { display: block; margin-top: 20px; color: #666; text-decoration: none; font-size: 14px; }
+        .back-link { display: block; margin-top: 20px; color: #555; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>BAŞVURU YAP</h2>
+    <h2>OYUNCU BAŞVURUSU</h2>
     <form id="formBli" action="https://formspree.io/f/mojnyoqb" method="POST">
-        <input type="text" name="isim" id="ad_soyad" placeholder="Ad Soyad" required>
-        <input type="text" name="discord" id="discord_id" placeholder="Discord ID" required>
-        <select name="brans" id="secilen_brans">
-            <option value="Valorant Oyuncusu">Valorant Oyuncusu</option>
-            <option value="Editör">Editör</option>
-            <option value="Tasarımcı">Tasarımcı</option>
+        
+        <div class="row">
+            <input type="text" name="ad" id="f_ad" placeholder="Adınız" required>
+            <input type="text" name="soyad" id="f_soyad" placeholder="Soyadınız" required>
+        </div>
+        
+        <input type="email" name="email" id="f_email" placeholder="Gmail Adresiniz" required>
+        
+        <select name="oyun" id="f_oyun">
+            <option value="Valorant">Valorant</option>
+            <option value="League of Legends">League of Legends</option>
+            <option value="PUBG Mobile">PUBG Mobile</option>
         </select>
-        <textarea name="mesaj" placeholder="Neden sizi seçmeliyiz?" rows="4"></textarea>
+        
+        <textarea name="mesaj" placeholder="Kısaca oyun tecrübelerinizden bahsedin..." rows="3"></textarea>
         
         <input type="hidden" name="_next" value="https://bliesports.github.io">
         
-        <button type="submit">GÖNDER</button>
+        <button type="submit">BAŞVURUYU GÖNDER</button>
     </form>
-    <a href="../index.html" class="footer-link">Vazgeç ve Geri Dön</a>
+    <a href="https://bliesports.github.io" class="back-link">Vazgeç ve Ana Sayfaya Dön</a>
 </div>
 
 <script>
     document.getElementById("formBli").onsubmit = function() {
-        // Form gönderilirken verileri tarayıcı hafızasına (LocalStorage) kaydet
         const basvuruBilgisi = {
-            isim: document.getElementById("ad_soyad").value,
-            brans: document.getElementById("secilen_brans").value,
-            tarih: new Date().toLocaleDateString()
+            ad: document.getElementById("f_ad").value,
+            soyad: document.getElementById("f_soyad").value,
+            email: document.getElementById("f_email").value,
+            oyun: document.getElementById("f_oyun").value
         };
         
-        // Bu anahtarı ana sayfa kontrol edecek
         localStorage.setItem("bli_basvuru_tamamlandi", JSON.stringify(basvuruBilgisi));
     };
 </script>
