@@ -2,13 +2,13 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>BLI Esports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLI Esports | Official</title>
   <link rel="icon" type="image/png" href="logo16.png">
-  
   <link rel="stylesheet" href="style.css">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head> <body>
+</head> 
+<body>
 
 <video id="bgVideo" autoplay muted loop playsinline>
   <source src="background.mp4" type="video/mp4">
@@ -20,14 +20,10 @@
   <div class="nav-left">
     <img src="logo.jpeg" alt="BLI Logo">
   </div>
-
   <div class="nav-right">
     <i class="fa-solid fa-magnifying-glass nav-icon"></i>
-
     <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
   </div>
 </header>
@@ -35,7 +31,12 @@
 <nav class="side-menu" id="sideMenu">
   <a href="#">Giriş Yap</a>
   <a href="#">Kayıt Ol</a>
- <a href="basvuru/index.html" style="color: #ff0000; font-weight: bold;">Başvuru Yap</a>
+  
+  <a href="basvuru/index.html" id="nav-basvuru" style="color: #ff0000; font-weight: bold; display: block;">Başvuru Yap</a>
+  
+  <a href="javascript:void(0)" id="nav-durum" style="color: #00ff00; font-weight: bold; display: none;">Başvuruyu Görüntüle</a>
+  
+  <a href="detayli-bilgi/index.html">Detaylı Bilgi</a>
   <a href="#">Destek</a>
 </nav>
 
@@ -48,12 +49,8 @@
 <footer class="footer">
   <span>Sosyal medya hesaplarımız</span>
   <div class="socials">
-    <a href="https://www.instagram.com/bliesportts/" target="_blank">
-      <i class="fa-brands fa-instagram"></i>
-    </a>
-    <a href="https://youtube.com" target="_blank">
-      <i class="fa-brands fa-youtube"></i>
-    </a>
+    <a href="https://www.instagram.com/bliesportts/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
   </div>
   <small>© 2026 BLI Esports</small>
 </footer>
@@ -61,10 +58,34 @@
 <script>
   const hamburger = document.getElementById("hamburger");
   const sideMenu = document.getElementById("sideMenu");
+  const basvuruBtn = document.getElementById("nav-basvuru");
+  const durumBtn = document.getElementById("nav-durum");
 
+  // Hamburger Menü Aç/Kapat
   hamburger.addEventListener("click", () => {
     sideMenu.classList.toggle("open");
   });
+
+  // SAYFA YÜKLENDİĞİNDE KONTROL ET
+  window.onload = function() {
+    // Tarayıcı hafızasında başvuru verisi var mı bak
+    const kayıtlıVeri = localStorage.getItem("bli_basvuru_tamamlandi");
+
+    if (kayıtlıVeri) {
+      const data = JSON.parse(kayıtlıVeri);
+      
+      // Başvuru Yap butonunu tamamen kaldır
+      basvuruBtn.style.display = "none";
+      
+      // Görüntüle butonunu aktif et ve göster
+      durumBtn.style.display = "block";
+      
+      // Görüntüle butonuna basınca detayları göster
+      durumBtn.onclick = () => {
+        alert("BAŞVURU BİLGİLERİNİZ\n--------------------------\nİsim: " + data.isim + "\nBranş: " + data.brans + "\nDurum: İNCELENİYOR ⏳\n\nBaşvurunuz başarıyla sisteme kaydedildi. Discord üzerinden dönüş bekleyiniz.");
+      };
+    }
+  };
 </script>
 
 </body>
