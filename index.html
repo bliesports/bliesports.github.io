@@ -41,7 +41,7 @@
 <main class="content">
   <h1>BLI ESPORTS</h1>
   <p>Sitemiz yakında kullanıma açılacaktır.</p>
-  <a href="basvuru/index.html" class="btn">ŞİMDİ BAŞVUR</a>
+  <a href="detayli-bilgi/index.html" class="btn">Detaylı Bilgi</a>
 </main>
 
 <footer class="footer">
@@ -54,9 +54,37 @@
 </footer>
 
 <script>
+  // HAMBURGER MENÜ TAMİRİ VE KONTROLLER
   const hamburger = document.getElementById("hamburger");
   const sideMenu = document.getElementById("sideMenu");
   const basvuruBtn = document.getElementById("nav-basvuru");
   const durumBtn = document.getElementById("nav-durum");
 
-  hamburger.addEventListener("click",
+  // Menü açma/kapama fonksiyonu (Eksik olan kısım buydu)
+  hamburger.addEventListener("click", () => {
+    sideMenu.classList.toggle("open");
+  });
+
+  // Sayfa dışına tıklandığında menüyü kapat (Opsiyonel ama iyidir)
+  document.addEventListener("click", (e) => {
+    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
+      sideMenu.classList.remove("open");
+    }
+  });
+
+  // BAŞVURU HAFIZA KONTROLÜ
+  window.onload = function() {
+    const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
+    if (kayitliVeri) {
+      const data = JSON.parse(kayitliVeri);
+      basvuruBtn.style.display = "none";
+      durumBtn.style.display = "block";
+      durumBtn.onclick = () => {
+        alert("BAŞVURU KAYDINIZ\n--------------------------\nİsim: " + data.ad + " " + data.soyad + "\nE-posta: " + data.email + "\nOyun: " + data.oyun + "\n\nDurum: İNCELENİYOR ⏳");
+      };
+    }
+  }
+</script>
+
+</body>
+</html>
