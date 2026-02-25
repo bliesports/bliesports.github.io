@@ -33,17 +33,15 @@
   <a href="#">Kayıt Ol</a>
   
   <a href="basvuru/index.html" id="nav-basvuru" style="color: #ff0000; font-weight: bold; display: block;">Başvuru Yap</a>
-  
   <a href="javascript:void(0)" id="nav-durum" style="color: #00ff00; font-weight: bold; display: none;">Başvuruyu Görüntüle</a>
   
-  <a href="detayli-bilgi/index.html">Detaylı Bilgi</a>
   <a href="#">Destek</a>
 </nav>
 
 <main class="content">
   <h1>BLI ESPORTS</h1>
   <p>Sitemiz yakında kullanıma açılacaktır.</p>
-  <a href="detayli-bilgi/index.html" class="btn">Detaylı Bilgi</a>
+  <a href="basvuru/index.html" class="btn">ŞİMDİ BAŞVUR</a>
 </main>
 
 <footer class="footer">
@@ -61,32 +59,4 @@
   const basvuruBtn = document.getElementById("nav-basvuru");
   const durumBtn = document.getElementById("nav-durum");
 
-  // Hamburger Menü Aç/Kapat
-  hamburger.addEventListener("click", () => {
-    sideMenu.classList.toggle("open");
-  });
-
-  // SAYFA YÜKLENDİĞİNDE KONTROL ET
-  window.onload = function() {
-    // Tarayıcı hafızasında başvuru verisi var mı bak
-    const kayıtlıVeri = localStorage.getItem("bli_basvuru_tamamlandi");
-
-    if (kayıtlıVeri) {
-      const data = JSON.parse(kayıtlıVeri);
-      
-      // Başvuru Yap butonunu tamamen kaldır
-      basvuruBtn.style.display = "none";
-      
-      // Görüntüle butonunu aktif et ve göster
-      durumBtn.style.display = "block";
-      
-      // Görüntüle butonuna basınca detayları göster
-      durumBtn.onclick = () => {
-        alert("BAŞVURU BİLGİLERİNİZ\n--------------------------\nİsim: " + data.isim + "\nBranş: " + data.brans + "\nDurum: İNCELENİYOR ⏳\n\nBaşvurunuz başarıyla sisteme kaydedildi. Discord üzerinden dönüş bekleyiniz.");
-      };
-    }
-  };
-</script>
-
-</body>
-</html>
+  hamburger.addEventListener("click",
