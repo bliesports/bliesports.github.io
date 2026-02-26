@@ -52,6 +52,16 @@
   <a href="#">Destek</a>
 </nav>
 
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h3>SEPETİM</h3>
+        <i class="fa-solid fa-xmark close-cart" id="closeCart"></i>
+    </div>
+    <div class="cart-content">
+        <p>Sepetiniz şu an boş.</p>
+    </div>
+</div>
+
 <main class="content">
   <h1>BLI ESPORTS</h1>
   <p>Sitemiz yakında kullanıma açılacaktır.</p>
@@ -73,26 +83,39 @@
   const basvuruBtn = document.getElementById("nav-basvuru");
   const durumBtn = document.getElementById("nav-durum");
   const cartBtn = document.getElementById("cartBtn");
+  const cartSidebar = document.getElementById("cartSidebar");
+  const closeCart = document.getElementById("closeCart");
 
   // HAMBURGER MENÜ KONTROLÜ
   hamburger.addEventListener("click", (e) => {
-    e.stopPropagation(); // Tıklamanın dışarı sızmasını engelle
+    e.stopPropagation();
     sideMenu.classList.toggle("open");
+    cartSidebar.classList.remove("open"); 
   });
 
-  // SEPET TIKLAMA
-  cartBtn.addEventListener("click", () => {
-    alert("Sepetiniz şu an boş.");
+  // SEPET PANELİ AÇILIŞ (ALERT YERİNE PANEL)
+  cartBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    cartSidebar.classList.add("open");
+    sideMenu.classList.remove("open");
   });
 
-  // DIŞARI TIKLANDIĞINDA MENÜYÜ KAPAT
+  // SEPET KAPAT (X İKONU)
+  closeCart.addEventListener("click", () => {
+    cartSidebar.classList.remove("open");
+  });
+
+  // DIŞARI TIKLANDIĞINDA KAPATMA
   document.addEventListener("click", (e) => {
     if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
       sideMenu.classList.remove("open");
     }
+    if (!cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) {
+      cartSidebar.classList.remove("open");
+    }
   });
 
-  // BAŞVURU HAFIZA KONTROLÜ
+  // BAŞVURU HAFIZA SİSTEMİ
   window.onload = function() {
     const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
     if (kayitliVeri) {
