@@ -21,11 +21,10 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: cover;   /* tam ekran */
+  object-fit: cover;
   z-index: -2;
 }
 
-/* Video üstü karartma (okunabilirlik) */
 .overlay {
   position: fixed;
   inset: 0;
@@ -41,14 +40,12 @@ html, body {
   width: 100%;
   height: 64px;
   padding: 0 24px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   background: rgba(15, 15, 15, 0.85);
   backdrop-filter: blur(6px);
-  z-index: 10;
+  z-index: 100; /* Menülerin üstünde kalması için */
 }
 
 .nav-left img {
@@ -65,17 +62,41 @@ html, body {
 .nav-icon {
   font-size: 20px;
   cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-icon:hover {
+  color: #e60000;
+}
+
+/* ================= SEPET İKONU VE SAYACI ================= */
+.cart-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #e60000;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  border: 1px solid #000;
 }
 
 /* ================= HAMBURGER ================= */
 .hamburger {
   width: 28px;
   height: 20px;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   cursor: pointer;
 }
 
@@ -86,24 +107,20 @@ html, body {
   border-radius: 2px;
 }
 
-/* ================= SIDE MENU ================= */
+/* ================= SIDE MENU (HAMBURGER) ================= */
 .side-menu {
   position: fixed;
   top: 64px;
-  right: -240px;
-
+  right: -260px; /* Biraz daha genişlik payı */
   width: 240px;
   height: calc(100vh - 64px);
-
-  background: rgba(20, 20, 20, 0.95);
+  background: rgba(20, 20, 20, 0.98);
   padding: 20px;
-
   display: flex;
   flex-direction: column;
   gap: 15px;
-
-  transition: right 0.3s ease;
-  z-index: 9;
+  transition: right 0.4s ease-in-out;
+  z-index: 90;
 }
 
 .side-menu.open {
@@ -114,13 +131,75 @@ html, body {
   color: #ffffff;
   text-decoration: none;
   font-size: 18px;
-
   padding: 10px;
   border-radius: 6px;
+  transition: 0.3s;
 }
 
 .side-menu a:hover {
   background: #e60000;
+}
+
+/* ================= SEPET PANELİ (DRAWER) ================= */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -350px; /* Başta gizli */
+  width: 320px;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.98);
+  border-left: 2px solid #e60000;
+  transition: right 0.4s ease-in-out;
+  z-index: 1000; /* En üstte */
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-sidebar.open {
+  right: 0;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 15px;
+}
+
+.cart-header h3 {
+  color: #e60000;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.close-cart {
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.close-cart:hover {
+  color: #e60000;
+  transform: rotate(90deg);
+}
+
+.cart-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cart-content p {
+  color: #888888; /* Gri yazı */
+  font-size: 16px;
+  font-style: italic;
 }
 
 /* ================= MAIN CONTENT ================= */
@@ -129,7 +208,6 @@ html, body {
   top: 50%;
   left: 60px;
   transform: translateY(-50%);
-
   max-width: 420px;
 }
 
@@ -146,12 +224,10 @@ html, body {
 .btn {
   display: inline-block;
   padding: 12px 24px;
-
   background: #e60000;
   color: #ffffff;
   text-decoration: none;
   font-weight: bold;
-
   border-radius: 8px;
   transition: 0.3s;
 }
@@ -166,10 +242,8 @@ html, body {
   bottom: 0;
   left: 0;
   width: 100%;
-
   padding: 12px 0;
   background: rgba(0, 0, 0, 0.6);
-
   text-align: center;
   font-size: 14px;
 }
@@ -185,13 +259,6 @@ html, body {
   transition: 0.3s;
 }
 
-.site-logo {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-
 .socials a:hover {
   color: #e60000;
 }
@@ -202,8 +269,11 @@ html, body {
     left: 20px;
     right: 20px;
   }
-
   .content h1 {
     font-size: 32px;
+  }
+  .cart-sidebar {
+    width: 100%; /* Mobilde tam ekran açılır */
+    right: -100%;
   }
 }
