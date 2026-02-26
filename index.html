@@ -7,6 +7,14 @@
   <link rel="icon" type="image/png" href="logo16.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Navbar ikonlarını yan yana düzgün dizmek için ekleme */
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .cart-wrapper { position: relative; cursor: pointer; }
+    #cart-count { position: absolute; top: -10px; right: -10px; background: #ff0000; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
+    .nav-icon { cursor: pointer; transition: 0.3s; }
+    .nav-icon:hover { color: #ff0000; }
+  </style>
 </head> 
 <body>
 
@@ -21,7 +29,13 @@
     <img src="logo.jpeg" alt="BLI Logo">
   </div>
   <div class="nav-right">
+    <div class="cart-wrapper" id="cartBtn">
+      <i class="fa-solid fa-cart-shopping nav-icon"></i>
+      <span id="cart-count">0</span>
+    </div>
+
     <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+
     <div class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </div>
@@ -54,18 +68,24 @@
 </footer>
 
 <script>
-  // HAMBURGER MENÜ TAMİRİ VE KONTROLLER
   const hamburger = document.getElementById("hamburger");
   const sideMenu = document.getElementById("sideMenu");
   const basvuruBtn = document.getElementById("nav-basvuru");
   const durumBtn = document.getElementById("nav-durum");
+  const cartBtn = document.getElementById("cartBtn");
 
-  // Menü açma/kapama fonksiyonu (Eksik olan kısım buydu)
-  hamburger.addEventListener("click", () => {
+  // HAMBURGER MENÜ KONTROLÜ
+  hamburger.addEventListener("click", (e) => {
+    e.stopPropagation(); // Tıklamanın dışarı sızmasını engelle
     sideMenu.classList.toggle("open");
   });
 
-  // Sayfa dışına tıklandığında menüyü kapat (Opsiyonel ama iyidir)
+  // SEPET TIKLAMA
+  cartBtn.addEventListener("click", () => {
+    alert("Sepetiniz şu an boş.");
+  });
+
+  // DIŞARI TIKLANDIĞINDA MENÜYÜ KAPAT
   document.addEventListener("click", (e) => {
     if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
       sideMenu.classList.remove("open");
