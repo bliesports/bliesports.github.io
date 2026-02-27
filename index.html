@@ -4,9 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BLI Esports | Official</title>
+  
+  <meta name="description" content="BLI Esports resmi web sitesi. E-spor başvuruları, turnuvalar ve güncel haberler için takipte kalın.">
+  <meta property="og:title" content="BLI Esports | Official">
+  <meta property="og:description" content="E-spor dünyasındaki en güncel haberler ve başvurular.">
+  <meta property="og:image" content="logo.jpeg">
+  <meta property="og:url" content="https://bliesports.github.io/">
+  <meta property="og:type" content="website">
+
   <link rel="icon" type="image/png" href="logo16.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
   <style>
     /* Navbar ikonlarını yan yana düzgün dizmek için ekleme */
     .nav-right { display: flex; align-items: center; gap: 20px; }
@@ -72,63 +81,4 @@
   <span>Sosyal medya hesaplarımız</span>
   <div class="socials">
     <a href="https://www.instagram.com/bliesportts/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-  </div>
-  <small>© 2026 BLI Esports</small>
-</footer>
-
-<script>
-  const hamburger = document.getElementById("hamburger");
-  const sideMenu = document.getElementById("sideMenu");
-  const basvuruBtn = document.getElementById("nav-basvuru");
-  const durumBtn = document.getElementById("nav-durum");
-  const cartBtn = document.getElementById("cartBtn");
-  const cartSidebar = document.getElementById("cartSidebar");
-  const closeCart = document.getElementById("closeCart");
-
-  // HAMBURGER MENÜ KONTROLÜ
-  hamburger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    sideMenu.classList.toggle("open");
-    cartSidebar.classList.remove("open"); // Sepet açıksa kapat
-  });
-
-  // SEPET PANELİ KONTROLÜ
-  cartBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    cartSidebar.classList.toggle("open");
-    sideMenu.classList.remove("open"); // Menü açıksa kapat
-  });
-
-  closeCart.addEventListener("click", () => {
-    cartSidebar.classList.remove("open");
-  });
-
-  // DIŞARI TIKLANDIĞINDA KAPATMA
-  document.addEventListener("click", (e) => {
-    // Menüyü kapat
-    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
-      sideMenu.classList.remove("open");
-    }
-    // Sepeti kapat
-    if (!cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) {
-      cartSidebar.classList.remove("open");
-    }
-  });
-
-  // BAŞVURU HAFIZA KONTROLÜ
-  window.onload = function() {
-    const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
-    if (kayitliVeri) {
-      const data = JSON.parse(kayitliVeri);
-      basvuruBtn.style.display = "none";
-      durumBtn.style.display = "block";
-      durumBtn.onclick = () => {
-        alert("BAŞVURU KAYDINIZ\n--------------------------\nİsim: " + data.ad + " " + data.soyad + "\nE-posta: " + data.email + "\nOyun: " + data.oyun + "\n\nDurum: İNCELENİYOR ⏳");
-      };
-    }
-  }
-</script>
-
-</body>
-</html>
+    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank"><i class="fa-brands fa-
