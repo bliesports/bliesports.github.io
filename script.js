@@ -16,7 +16,8 @@ const analytics = firebase.analytics();
 
 // Menü paneli
 const menuPanel = document.getElementById('menuPanel');
-menuPanel.style.display = 'none';
+// Eğer menuPanel null ise hata vermemesi için kontrol ekledik
+if(menuPanel) menuPanel.style.display = 'none';
 
 // Hamburger menü aç/kapa
 function toggleDropdown(){
@@ -98,6 +99,7 @@ function goToAccount(){
 
 // Menü butonları güncelle (giriş/çıkış durumuna göre)
 function updateMenu(){
+  if(!menuPanel) return;
   const user = auth.currentUser;
   const loginBtn = menuPanel.querySelector("button[onclick*='login']");
   const registerBtn = menuPanel.querySelector("button[onclick*='register']");
@@ -105,15 +107,15 @@ function updateMenu(){
   const logoutBtn = menuPanel.querySelector("button[onclick*='logout']");
 
   if(user){
-    loginBtn.style.display = 'none';
-    registerBtn.style.display = 'none';
-    accountBtn.style.display = 'block';
-    logoutBtn.style.display = 'block';
+    if(loginBtn) loginBtn.style.display = 'none';
+    if(registerBtn) registerBtn.style.display = 'none';
+    if(accountBtn) accountBtn.style.display = 'block';
+    if(logoutBtn) logoutBtn.style.display = 'block';
   } else {
-    loginBtn.style.display = 'block';
-    registerBtn.style.display = 'block';
-    accountBtn.style.display = 'none';
-    logoutBtn.style.display = 'none';
+    if(loginBtn) loginBtn.style.display = 'block';
+    if(registerBtn) registerBtn.style.display = 'block';
+    if(accountBtn) accountBtn.style.display = 'none';
+    if(logoutBtn) logoutBtn.style.display = 'none';
   }
 }
 
@@ -125,3 +127,38 @@ function scrollToTop(){
   window.scrollTo({ top:0, behavior: 'smooth' });
 }
 
+/* ================= NIKE SEARCH LOGIC (YENİ) ================= */
+// Bu kısım senin arama barını canlandıracak
+document.addEventListener('DOMContentLoaded', () => {
+  const searchBtn = document.getElementById("searchBtn");
+  const searchInput = document.getElementById("searchInput");
+  const searchWrapper = document.getElementById("searchWrapper");
+  const closeSearch = document.getElementById("closeSearch");
+  
+  // Gizlenecek olan diğer elemanlar
+  const cartBtnElem = document.getElementById("cartBtn");
+  const hamburgerElem = document.getElementById("hamburger");
+
+  if(searchBtn && searchInput && searchWrapper) {
+    searchBtn.addEventListener("click", () => {
+      if (!searchWrapper.classList.contains("active")) {
+        searchWrapper.classList.add("active");
+        if(cartBtnElem) cartBtnElem.style.display = "none";
+        if(hamburgerElem) hamburgerElem.style.display = "none";
+        if(closeSearch) closeSearch.style.display = "block";
+        searchInput.focus();
+      }
+    });
+
+    if(closeSearch) {
+      closeSearch.addEventListener("click", (e) => {
+        e.stopPropagation();
+        searchWrapper.classList.remove("active");
+        if(cartBtnElem) cartBtnElem.style.display = "flex";
+        if(hamburgerElem) hamburgerElem.style.display = "flex";
+        closeSearch.style.display = "none";
+        searchInput.value = "";
+      });
+    }
+  }
+});
