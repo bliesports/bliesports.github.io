@@ -57,6 +57,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-grow: 1; /* Arama barının uzaması için eklendi */
+  justify-content: flex-end;
 }
 
 .nav-icon {
@@ -276,4 +278,37 @@ html, body {
     width: 100%; /* Mobilde tam ekran açılır */
     right: -100%;
   }
+}
+
+/* ================= NIKE STYLE SEARCH BAR (YENİ EKLEME) ================= */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border-radius: 50px;
+  padding: 6px 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-wrapper.active {
+  background: rgba(255, 255, 255, 0.15);
+  width: 100%;
+  margin-left: 15px;
+}
+
+#searchInput {
+  width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  transition: 0.3s;
+  opacity: 0;
+}
+
+.search-wrapper.active #searchInput {
+  width: 100%;
+  opacity: 1;
+  margin-left: 10px;
 }
