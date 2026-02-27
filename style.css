@@ -1,279 +1,279 @@
 /* ================= RESET ================= */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* ================= BODY ================= */
 html, body {
-  width: 100%;
-  height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #ffffff;
-  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  overflow-x: hidden;
 }
 
 /* ================= VIDEO BACKGROUND ================= */
 #bgVideo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -2;
 }
 
 .overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: -1;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: -1;
 }
 
 /* ================= NAVBAR ================= */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 64px;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(15, 15, 15, 0.85);
-  backdrop-filter: blur(6px);
-  z-index: 100; /* Menülerin üstünde kalması için */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 100;
 }
 
 .nav-left img {
-  height: 42px;
-  cursor: pointer;
+  height: 42px;
+  cursor: pointer;
 }
 
 .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .nav-icon {
-  font-size: 20px;
-  cursor: pointer;
-  transition: color 0.3s;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
 .nav-icon:hover {
-  color: #e60000;
+  color: #e60000;
 }
 
 /* ================= SEPET İKONU VE SAYACI ================= */
 .cart-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 #cart-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #e60000;
-  color: white;
-  font-size: 10px;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 50%;
-  border: 1px solid #000;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #e60000;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  border: 1px solid #000;
 }
 
 /* ================= HAMBURGER ================= */
 .hamburger {
-  width: 28px;
-  height: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
+  width: 28px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .hamburger span {
-  height: 3px;
-  width: 100%;
-  background: #ffffff;
-  border-radius: 2px;
+  height: 3px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 2px;
 }
 
 /* ================= SIDE MENU (HAMBURGER) ================= */
 .side-menu {
-  position: fixed;
-  top: 64px;
-  right: -260px; /* Biraz daha genişlik payı */
-  width: 240px;
-  height: calc(100vh - 64px);
-  background: rgba(20, 20, 20, 0.98);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  transition: right 0.4s ease-in-out;
-  z-index: 90;
+  position: fixed;
+  top: 64px;
+  right: -260px;
+  width: 240px;
+  height: calc(100vh - 64px);
+  background: rgba(20, 20, 20, 0.98);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: right 0.4s ease-in-out;
+  z-index: 90;
 }
 
 .side-menu.open {
-  right: 0;
+  right: 0;
 }
 
 .side-menu a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 18px;
-  padding: 10px;
-  border-radius: 6px;
-  transition: 0.3s;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 6px;
+  transition: 0.3s;
 }
 
 .side-menu a:hover {
-  background: #e60000;
+  background: #e60000;
 }
 
 /* ================= SEPET PANELİ (DRAWER) ================= */
 .cart-sidebar {
-  position: fixed;
-  top: 0;
-  right: -350px; /* Başta gizli */
-  width: 320px;
-  height: 100%;
-  background: rgba(10, 10, 10, 0.98);
-  border-left: 2px solid #e60000;
-  transition: right 0.4s ease-in-out;
-  z-index: 1000; /* En üstte */
-  padding: 24px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 320px;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.98);
+  border-left: 2px solid #e60000;
+  transition: right 0.4s ease-in-out;
+  z-index: 1000;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .cart-sidebar.open {
-  right: 0;
+  right: 0;
 }
 
 .cart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #222;
-  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 15px;
 }
 
 .cart-header h3 {
-  color: #e60000;
-  font-size: 20px;
-  letter-spacing: 1px;
+  color: #e60000;
+  font-size: 20px;
+  letter-spacing: 1px;
 }
 
 .close-cart {
-  font-size: 24px;
-  cursor: pointer;
-  transition: transform 0.3s;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
 .close-cart:hover {
-  color: #e60000;
-  transform: rotate(90deg);
+  color: #e60000;
+  transform: rotate(90deg);
 }
 
 .cart-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .cart-content p {
-  color: #888888; /* Gri yazı */
-  font-size: 16px;
-  font-style: italic;
+  color: #888888;
+  font-size: 16px;
+  font-style: italic;
 }
 
 /* ================= MAIN CONTENT ================= */
 .content {
-  position: absolute;
-  top: 50%;
-  left: 60px;
-  transform: translateY(-50%);
-  max-width: 420px;
+  position: absolute;
+  top: 50%;
+  left: 60px;
+  transform: translateY(-50%);
+  max-width: 420px;
 }
 
 .content h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
+  font-size: 42px;
+  margin-bottom: 10px;
 }
 
 .content p {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 
 .btn {
-  display: inline-block;
-  padding: 12px 24px;
-  background: #e60000;
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 8px;
-  transition: 0.3s;
+  display: inline-block;
+  padding: 12px 24px;
+  background: #e60000;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: 0.3s;
 }
 
 .btn:hover {
-  background: #b00000;
+  background: #b00000;
 }
 
 /* ================= FOOTER ================= */
 .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 12px 0;
-  background: rgba(0, 0, 0, 0.6);
-  text-align: center;
-  font-size: 14px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 0;
+  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  font-size: 14px;
 }
 
 .socials {
-  margin: 6px 0;
+  margin: 6px 0;
 }
 
 .socials a {
-  color: #ffffff;
-  font-size: 22px;
-  margin: 0 10px;
-  transition: 0.3s;
+  color: #ffffff;
+  font-size: 22px;
+  margin: 0 10px;
+  transition: 0.3s;
 }
 
 .socials a:hover {
-  color: #e60000;
+  color: #e60000;
 }
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-  .content {
-    left: 20px;
-    right: 20px;
-  }
-  .content h1 {
-    font-size: 32px;
-  }
-  .cart-sidebar {
-    width: 100%; /* Mobilde tam ekran açılır */
-    right: -100%;
-  }
+  .content {
+    left: 20px;
+    right: 20px;
+  }
+  .content h1 {
+    font-size: 32px;
+  }
+  .cart-sidebar {
+    width: 100%;
+    right: -100%;
+  }
 }
