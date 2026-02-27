@@ -1,133 +1,130 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLI Esports | Official</title>
-  <link rel="icon" type="image/png" href="logo16.png">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* Navbar ikonlarını yan yana düzgün dizmek için ekleme */
-    .nav-right { display: flex; align-items: center; gap: 20px; }
-    .cart-wrapper { position: relative; cursor: pointer; }
-    #cart-count { position: absolute; top: -10px; right: -10px; background: #ff0000; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
-    .nav-icon { cursor: pointer; transition: 0.3s; }
-    .nav-icon:hover { color: #ff0000; }
-  </style>
-</head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLI Esports | Official</title>
+  <link rel="icon" type="image/png" href="logo16.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Navbar ikonlarını yan yana düzgün dizmek için */
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .cart-wrapper { position: relative; cursor: pointer; }
+    #cart-count { position: absolute; top: -10px; right: -10px; background: #ff0000; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
+    .nav-icon { cursor: pointer; transition: 0.3s; }
+    .nav-icon:hover { color: #ff0000; }
+  </style>
+</head> 
 <body>
 
 <video id="bgVideo" autoplay muted loop playsinline>
-  <source src="background.mp4" type="video/mp4">
+  <source src="background.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
 <header class="navbar">
-  <div class="nav-left">
-    <img src="logo.jpeg" alt="BLI Logo">
-  </div>
-  <div class="nav-right">
-    <div class="cart-wrapper" id="cartBtn">
-      <i class="fa-solid fa-cart-shopping nav-icon"></i>
-      <span id="cart-count">0</span>
-    </div>
+  <div class="nav-left">
+    <img src="logo.jpeg" alt="BLI Logo">
+  </div>
+  <div class="nav-right">
+    <div class="cart-wrapper" id="cartBtn">
+      <i class="fa-solid fa-cart-shopping nav-icon"></i>
+      <span id="cart-count">0</span>
+    </div>
 
-    <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+    <i class="fa-solid fa-magnifying-glass nav-icon"></i>
 
-    <div class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
 </header>
-  
+  
 <nav class="side-menu" id="sideMenu">
-  <a href="#">Giriş Yap</a>
-  <a href="#">Kayıt Ol</a>
-  
-  <a href="basvuru/index.html" id="nav-basvuru" style="color: #ff0000; font-weight: bold; display: block;">Başvuru Yap</a>
-  <a href="javascript:void(0)" id="nav-durum" style="color: #00ff00; font-weight: bold; display: none;">Başvuruyu Görüntüle</a>
-  
-  <a href="#">Destek</a>
+  <a href="#">Giriş Yap</a>
+  <a href="#">Kayıt Ol</a>
+  
+  <a href="basvuru/index.html" id="nav-basvuru" style="color: #ff0000; font-weight: bold; display: block;">Başvuru Yap</a>
+  <a href="javascript:void(0)" id="nav-durum" style="color: #00ff00; font-weight: bold; display: none;">Başvuruyu Görüntüle</a>
+  
+  <a href="#">Destek</a>
 </nav>
 
 <div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-        <h3>SEPETİM</h3>
-        <i class="fa-solid fa-xmark close-cart" id="closeCart"></i>
-    </div>
-    <div class="cart-content">
-        <p>Sepetiniz şu an boş.</p>
-    </div>
+    <div class="cart-header">
+        <h3>SEPETİM</h3>
+        <i class="fa-solid fa-xmark close-cart" id="closeCart"></i>
+    </div>
+    <div class="cart-content">
+        <p>Sepetiniz şu an boş.</p>
+    </div>
 </div>
 
 <main class="content">
-  <h1>BLI ESPORTS</h1>
-  <p>Sitemiz yakında kullanıma açılacaktır.</p>
-  <a href="detayli-bilgi/index.html" class="btn">Detaylı Bilgi</a>
+  <h1>BLI ESPORTS</h1>
+  <p>Sitemiz yakında kullanıma açılacaktır.</p>
+  <a href="detayli-bilgi/index.html" class="btn">Detaylı Bilgi</a>
 </main>
 
 <footer class="footer">
-  <span>Sosyal medya hesaplarımız</span>
-  <div class="socials">
-    <a href="https://www.instagram.com/bliesportts/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-  </div>
-  <small>© 2026 BLI Esports</small>
+  <span>Sosyal medya hesaplarımız</span>
+  <div class="socials">
+    <a href="https://www.instagram.com/bliesportts/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+  </div>
+  <small>© 2026 BLI Esports</small>
 </footer>
 
 <script>
-  const hamburger = document.getElementById("hamburger");
-  const sideMenu = document.getElementById("sideMenu");
-  const basvuruBtn = document.getElementById("nav-basvuru");
-  const durumBtn = document.getElementById("nav-durum");
-  const cartBtn = document.getElementById("cartBtn");
-  const cartSidebar = document.getElementById("cartSidebar");
-  const closeCart = document.getElementById("closeCart");
+  const hamburger = document.getElementById("hamburger");
+  const sideMenu = document.getElementById("sideMenu");
+  const basvuruBtn = document.getElementById("nav-basvuru");
+  const durumBtn = document.getElementById("nav-durum");
+  const cartBtn = document.getElementById("cartBtn");
+  const cartSidebar = document.getElementById("cartSidebar");
+  const closeCart = document.getElementById("closeCart");
 
-  // HAMBURGER MENÜ KONTROLÜ
-  hamburger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    sideMenu.classList.toggle("open");
-    cartSidebar.classList.remove("open"); // Sepet açıksa kapat
-  });
+  // HAMBURGER MENÜ
+  hamburger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sideMenu.classList.toggle("open");
+    cartSidebar.classList.remove("open");
+  });
 
-  // SEPET PANELİ KONTROLÜ
-  cartBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    cartSidebar.classList.toggle("open");
-    sideMenu.classList.remove("open"); // Menü açıksa kapat
-  });
+  // SEPET
+  cartBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    cartSidebar.classList.toggle("open");
+    sideMenu.classList.remove("open");
+  });
 
-  closeCart.addEventListener("click", () => {
-    cartSidebar.classList.remove("open");
-  });
+  closeCart.addEventListener("click", () => {
+    cartSidebar.classList.remove("open");
+  });
 
-  // DIŞARI TIKLANDIĞINDA KAPATMA
-  document.addEventListener("click", (e) => {
-    // Menüyü kapat
-    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
-      sideMenu.classList.remove("open");
-    }
-    // Sepeti kapat
-    if (!cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) {
-      cartSidebar.classList.remove("open");
-    }
-  });
+  document.addEventListener("click", (e) => {
+    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
+      sideMenu.classList.remove("open");
+    }
+    if (!cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) {
+      cartSidebar.classList.remove("open");
+    }
+  });
 
-  // BAŞVURU HAFIZA KONTROLÜ
-  window.onload = function() {
-    const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
-    if (kayitliVeri) {
-      const data = JSON.parse(kayitliVeri);
-      basvuruBtn.style.display = "none";
-      durumBtn.style.display = "block";
-      durumBtn.onclick = () => {
-        alert("BAŞVURU KAYDINIZ\n--------------------------\nİsim: " + data.ad + " " + data.soyad + "\nE-posta: " + data.email + "\nOyun: " + data.oyun + "\n\nDurum: İNCELENİYOR ⏳");
-      };
-    }
-  }
+  // BAŞVURU KONTROL
+  window.onload = function() {
+    const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
+    if (kayitliVeri) {
+      const data = JSON.parse(kayitliVeri);
+      basvuruBtn.style.display = "none";
+      durumBtn.style.display = "block";
+      durumBtn.onclick = () => {
+        alert("BAŞVURU KAYDINIZ\n--------------------------\nİsim: " + data.ad + " " + data.soyad + "\nE-posta: " + data.email + "\nOyun: " + data.oyun + "\n\nDurum: İNCELENİYOR ⏳");
+      };
+    }
+  }
 </script>
 
 </body>
