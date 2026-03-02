@@ -4,128 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLI V1 PRO | Galeri</title>
-    <link rel="stylesheet" href="../../../style.css"> <style>
-        /* Sayfa Düzeni */
-        body { background-color: #0f0f0f; color: white; font-family: sans-serif; margin: 0; padding: 0; }
-        .product-page { padding: 100px 20px; text-align: center; }
-        
-        /* Kaydırmalı Galeri (Swiper Yapısı) */
-        .swiper-container {
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
-            overflow: hidden; /* Taşmayı gizler */
-            position: relative;
-        }
-        .swiper-wrapper {
-            display: flex;
-            transition: transform 0.3s ease-out; /* Kayma efekti */
-            cursor: grab; /* Mouse imleci */
-        }
-        .swiper-wrapper:active { cursor: grabbing; } /* Tıklayınca imleç */
-        
-        .swiper-slide {
-            flex: 0 0 100%; /* Her fotoğraf tam genişlik kaplar */
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .swiper-slide img {
-            width: 90%;
-            max-height: 500px;
-            border-radius: 20px;
-            border: 2px solid #333;
-            pointer-events: none; /* Mouse ile resmi seçmeyi engeller */
-        }
-
-        /* Renk Dotları */
-        .colors { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
-        .color-dot { width: 35px; height: 35px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; transition: 0.3s; }
+    <style>
+        body { background-color: #0f0f0f; color: white; font-family: sans-serif; margin: 0; text-align: center; overflow-x: hidden;}
+        .container { padding: 80px 20px; }
+        .swiper-container { width: 100%; max-width: 500px; margin: auto; overflow: hidden; position: relative; border-radius: 20px;}
+        .swiper-wrapper { display: flex; transition: transform 0.4s ease-in-out; }
+        .swiper-slide { flex: 0 0 100%; }
+        .swiper-slide img { width: 90%; border-radius: 20px; border: 2px solid #333; }
+        .colors { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
+        .color-dot { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; transition: 0.2s; }
         .color-dot:hover { transform: scale(1.1); }
-        .color-dot.active { border-color: #e60000; } /* Seçili renk */
-
-        /* Durum Etiketi */
-        .status-tag { background: #e60000; color: white; padding: 15px 30px; border-radius: 50px; display: inline-block; font-weight: bold; font-size: 1.1rem; text-transform: uppercase; margin-top: 20px; }
+        .active { border-color: #e60000; transform: scale(1.1); }
+        .status-tag { background: #e60000; color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold; display: inline-block; font-size: 1.1rem;}
     </style>
 </head>
 <body>
-
-    <div class="product-page">
+    <div class="container">
         <h1>BLI V1 PRO</h1>
 
-        <div class="swiper-container" id="swiperContainer">
-            <div class="swiper-wrapper" id="swiperWrapper">
-                <div class="swiper-slide"><img src="../../../siyah.jpg" alt="BLI V1 Pro Siyah"></div>
-                <div class="swiper-slide"><img src="../../../beyaz.png" alt="BLI V1 Pro Beyaz"></div>
-                <div class="swiper-slide"><img src="../../../turuncu.png" alt="BLI V1 Pro Turuncu"></div>
-                <div class="swiper-slide"><img src="../../../pembe.png" alt="BLI V1 Pro Pembe"></div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper" id="galeri">
+                <div class="swiper-slide"><img src="../../../siyah.jpg"></div>
+                <div class="swiper-slide"><img src="../../../beyaz.jpg"></div>
+                <div class="swiper-slide"><img src="../../../turuncu.jpg"></div>
+                <div class="swiper-slide"><img src="../../../pembe.jpg"></div>
             </div>
         </div>
 
         <div class="colors">
-            <div class="color-dot active" style="background: #111;" onclick="slideTo(0)"></div> <div class="color-dot" style="background: #eee;" onclick="slideTo(1)"></div> <div class="color-dot" style="background: #ff6600;" onclick="slideTo(2)"></div> <div class="color-dot" style="background: #ff66cc;" onclick="slideTo(3)"></div> </div>
+            <div class="color-dot" style="background: #111;" onclick="git(0)"></div>
+            <div class="color-dot" style="background: #eee;" onclick="git(1)"></div>
+            <div class="color-dot" style="background: #ff6600;" onclick="git(2)"></div>
+            <div class="color-dot" style="background: #ff66cc;" onclick="git(3)"></div>
+        </div>
 
         <div class="status-tag">YAKINDA SINIRLI STOKLARLA</div>
     </div>
 
     <script>
-        const container = document.getElementById('swiperContainer');
-        const wrapper = document.getElementById('swiperWrapper');
-        const dots = document.querySelectorAll('.color-dot');
-        let isDragging = false;
-        let startX, currentTranslate, previousTranslate = 0;
-        let currentIndex = 0;
-
-        // Mouse ve Dokunma Olayları
-        container.addEventListener('mousedown', dragStart);
-        container.addEventListener('touchstart', dragStart);
-        container.addEventListener('mousemove', dragMove);
-        container.addEventListener('touchmove', dragMove);
-        container.addEventListener('mouseup', dragEnd);
-        container.addEventListener('touchend', dragEnd);
-        container.addEventListener('mouseleave', dragEnd);
-
-        function dragStart(e) {
-            isDragging = true;
-            startX = getPositionX(e);
-            container.classList.add('grabbing');
-        }
-
-        function dragMove(e) {
-            if (!isDragging) return;
-            const currentX = getPositionX(e);
-            currentTranslate = previousTranslate + currentX - startX;
-            wrapper.style.transform = `translateX(${currentTranslate}px)`;
-        }
-
-        function dragEnd() {
-            isDragging = false;
-            const movedBy = currentTranslate - previousTranslate;
+        function git(index) {
+            const wrapper = document.getElementById('galeri');
+            const genislik = document.querySelector('.swiper-slide').clientWidth;
+            wrapper.style.transform = `translateX(${-index * genislik}px)`;
             
-            // Yeterince kaydırıldıysa sonraki/önceki fotoğrafa geç
-            if (movedBy < -100 && currentIndex < 3) currentIndex++;
-            if (movedBy > 100 && currentIndex > 0) currentIndex--;
-
-            slideTo(currentIndex);
-            container.classList.remove('grabbing');
+            const dots = document.querySelectorAll('.color-dot');
+            dots.forEach(d => d.classList.remove('active'));
+            dots[index].classList.add('active');
         }
-
-        function getPositionX(e) {
-            return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        }
-
-        // Belirli bir fotoğrafa kaydıran fonksiyon (Dotlar için)
-        function slideTo(index) {
-            currentIndex = index;
-            previousTranslate = currentIndex * -container.offsetWidth;
-            wrapper.style.transform = `translateX(${previousTranslate}px)`;
-            
-            // Aktif dotu güncelle
-            dots.forEach(dot => dot.classList.remove('active'));
-            dots[currentIndex].classList.add('active');
-        }
+        // Sayfa açıldığında siyahı aktif et
+        window.onload = () => git(0);
     </script>
-
 </body>
 </html>
