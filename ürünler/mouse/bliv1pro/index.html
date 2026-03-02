@@ -6,51 +6,122 @@
     <title>BLI V1 PRO | Galeri</title>
     <link rel="icon" type="image/png" href="../../../logo1616.png">
     <style>
-        body { background-color: #0f0f0f; color: white; font-family: sans-serif; margin: 0; text-align: center; }
-        .container { padding: 60px 20px; }
-        .swiper-container { width: 100%; max-width: 450px; margin: auto; overflow: hidden; border-radius: 20px; border: 1px solid #333; }
-        .swiper-wrapper { display: flex; transition: transform 0.5s ease; }
-        .swiper-slide { flex: 0 0 100%; }
-        .swiper-slide img { width: 100%; display: block; }
-        .colors { display: flex; justify-content: center; gap: 20px; margin: 30px 0; }
-        .color-dot { width: 45px; height: 45px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; }
-        .active { border-color: #e60000; transform: scale(1.1); }
-        .status-tag { background: #e60000; color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold; display: inline-block; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0f0f0f; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        
+        .product-container { width: 100%; max-width: 500px; text-align: center; padding: 20px; }
+        h1 { margin-bottom: 20px; letter-spacing: 2px; }
+
+        /* Nike Tarzı Slider Alanı */
+        .slider-viewport { width: 100%; overflow: hidden; position: relative; border-radius: 20px; background: #1a1a1a; touch-action: pan-y; cursor: grab; }
+        .slider-viewport:active { cursor: grabbing; }
+        
+        .slider-wrapper { display: flex; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); width: 400%; }
+        .slide { width: 25%; flex-shrink: 0; display: flex; justify-content: center; align-items: center; }
+        .slide img { width: 100%; height: auto; pointer-events: none; }
+
+        /* Navigasyon Okları (Nike gibi yanda) */
+        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 20px; transition: 0.3s; }
+        .nav-arrow:hover { background: #e60000; }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        /* Alt Noktalar (Paginator) */
+        .dots-container { display: flex; justify-content: center; gap: 12px; margin: 25px 0; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #444; cursor: pointer; transition: 0.3s; border: 2px solid transparent; }
+        .dot.active { background: #e60000; transform: scale(1.3); border-color: white; }
+
+        .status-tag { background: #e60000; color: white; padding: 15px 35px; border-radius: 50px; font-weight: bold; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>BLI V1 PRO</h1>
+
+<div class="product-container">
+    <h1>BLI V1 PRO</h1>
+
+    <div class="slider-viewport" id="viewport">
+        <button class="nav-arrow prev" onclick="moveSlide(-1)">❮</button>
+        <button class="nav-arrow next" onclick="moveSlide(1)">❯</button>
         
-<div class="swiper-wrapper" id="galeri">
-    <div class="swiper-slide"><img src="../siyah.jpg" alt="Siyah"></div>
-    <div class="swiper-slide"><img src="../beyaz.png" alt="Beyaz"></div>
-    <div class="swiper-slide"><img src="../turuncu.png" alt="Turuncu"></div>
-    <div class="swiper-slide"><img src="../pembe.png" alt="Pembe"></div>
-</div>
-
-    
-        <div class="colors">
-            <div class="color-dot" style="background: #111;" onclick="git(0)"></div>
-            <div class="color-dot" style="background: #ffffff;" onclick="git(1)"></div>
-            <div class="color-dot" style="background: #ff8000;" onclick="git(2)"></div>
-            <div class="color-dot" style="background: #ff66cc;" onclick="git(3)"></div>
+        <div class="slider-wrapper" id="wrapper">
+            <div class="slide"><img src="../siyah.jpg" alt="Siyah"></div>
+            <div class="slide"><img src="../beyaz.png" alt="Beyaz"></div>
+            <div class="slide"><img src="../turuncu.png" alt="Turuncu"></div>
+            <div class="slide"><img src="../pembe.png" alt="Pembe"></div>
         </div>
-
-        <div class="status-tag">YAKINDA SINIRLI STOKLARLA</div>
     </div>
 
-    <script>
-        function git(index) {
-            const wrapper = document.getElementById('galeri');
-            const genislik = document.querySelector('.swiper-container').offsetWidth;
-            wrapper.style.transform = `translateX(${-index * genislik}px)`;
-            
-            const dots = document.querySelectorAll('.color-dot');
-            dots.forEach(d => d.classList.remove('active'));
-            dots[index].classList.add('active');
+    <div class="dots-container">
+        <div class="dot active" onclick="goToSlide(0)"></div>
+        <div class="dot" onclick="goToSlide(1)"></div>
+        <div class="dot" onclick="goToSlide(2)"></div>
+        <div class="dot" onclick="goToSlide(3)"></div>
+    </div>
+
+    <div class="status-tag">YAKINDA SINIRLI STOKLARLA</div>
+</div>
+
+<script>
+    const wrapper = document.getElementById('wrapper');
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+    let startX = 0;
+    let isDragging = false;
+
+    // Slide'a gitme fonksiyonu
+    function goToSlide(index) {
+        currentIndex = index;
+        if (currentIndex < 0) currentIndex = 3;
+        if (currentIndex > 3) currentIndex = 0;
+        
+        wrapper.style.transform = `translateX(-${currentIndex * 25}%)`;
+        
+        // Noktaları güncelle
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentIndex].classList.add('active');
+    }
+
+    // Oklar için
+    function moveSlide(direction) {
+        goToSlide(currentIndex + direction);
+    }
+
+    // Dokunmatik Kaydırma (Swipe) Mantığı
+    const viewport = document.getElementById('viewport');
+
+    viewport.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+
+    viewport.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        let endX = e.changedTouches[0].clientX;
+        let diff = startX - endX;
+
+        if (Math.abs(diff) > 50) { // En az 50px kaydırılmalı
+            if (diff > 0) moveSlide(1); // Sola kaydırınca sonraki
+            else moveSlide(-1); // Sağa kaydırınca önceki
         }
-        window.onload = () => git(0);
-    </script>
+        isDragging = false;
+    });
+
+    // Mouse ile kaydırma (PC için)
+    viewport.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        isDragging = true;
+    });
+
+    viewport.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        let diff = startX - e.clientX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) moveSlide(1);
+            else moveSlide(-1);
+        }
+        isDragging = false;
+    });
+</script>
+
 </body>
 </html>
