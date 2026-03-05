@@ -1,0 +1,20 @@
+{
+  "name": "BLI Esports Official",
+  "short_name": "BLI Esports",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#e60000",
+  "icons": [
+    {
+      "src": "logo1616.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo1616.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
