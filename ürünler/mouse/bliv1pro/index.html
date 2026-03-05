@@ -3,124 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLI V1 PRO | Galeri</title>
+    <title>BLI V1 PRO | Profesyonel Gaming Mouse</title>
     <link rel="icon" type="image/png" href="../../../logo1616.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0f0f0f; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        
-        .product-container { width: 100%; max-width: 500px; text-align: center; padding: 20px; }
-        h1 { margin-bottom: 20px; letter-spacing: 2px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #fff; color: #111; overflow-x: hidden; }
 
-        /* Nike Tarzı Slider Alanı */
-        .slider-viewport { width: 100%; overflow: hidden; position: relative; border-radius: 20px; background: #1a1a1a; touch-action: pan-y; cursor: grab; }
-        .slider-viewport:active { cursor: grabbing; }
-        
-        .slider-wrapper { display: flex; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); width: 400%; }
-        .slide { width: 25%; flex-shrink: 0; display: flex; justify-content: center; align-items: center; }
-        .slide img { width: 100%; height: auto; pointer-events: none; }
+        /* Ana Sayfa Düzeni */
+        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1400px; margin: 80px auto; }
 
-        /* Navigasyon Okları (Nike gibi yanda) */
-        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 20px; transition: 0.3s; }
-        .nav-arrow:hover { background: #e60000; }
-        .prev { left: 10px; }
-        .next { right: 10px; }
+        /* Sol: Dikey Galeri (Nike Tarzı) */
+        .gallery-container { display: flex; flex: 1.5; gap: 20px; }
+        .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
+        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f7f7f7; padding: 5px; }
+        .thumb:hover { opacity: 0.7; }
 
-        /* Alt Noktalar (Paginator) */
-        .dots-container { display: flex; justify-content: center; gap: 12px; margin: 25px 0; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; background: #444; cursor: pointer; transition: 0.3s; border: 2px solid transparent; }
-        .dot.active { background: #e60000; transform: scale(1.3); border-color: white; }
+        .main-display { flex: 1; background: #f7f7f7; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 500px; }
+        .main-display img { width: 90%; transition: 0.3s; }
 
-        .status-tag { background: #e60000; color: white; padding: 15px 35px; border-radius: 50px; font-weight: bold; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
+        /* Sağ: Satın Alma Alanı */
+        .product-info { flex: 1; padding: 0 40px; min-width: 350px; }
+        .brand-tag { color: #e60000; font-weight: bold; font-size: 14px; text-transform: uppercase; }
+        .product-title { font-size: 32px; font-weight: 800; margin: 10px 0; }
+        .product-price { font-size: 24px; font-weight: 600; margin-bottom: 30px; }
+
+        /* Renk Seçimi */
+        .option-label { font-weight: bold; margin-bottom: 15px; display: block; }
+        .color-options { display: flex; gap: 15px; margin-bottom: 40px; }
+        .color-box { width: 70px; height: 70px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; padding: 5px; transition: 0.2s; }
+        .color-box.active { border-color: #111; }
+        .color-box img { width: 100%; }
+
+        /* Sepete Ekle Butonu (Nike Stili) */
+        .add-to-cart { width: 100%; padding: 18px; background: #111; color: white; border: none; border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; }
+        .add-to-cart:hover { background: #444; }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 968px) {
+            .product-page { flex-direction: column; margin: 20px; }
+            .gallery-container { flex-direction: column-reverse; }
+            .side-thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
+            .thumb { width: 70px; }
+            .product-info { padding: 40px 0; }
+        }
     </style>
 </head>
 <body>
 
-<div class="product-container">
-    <h1>BLI V1 PRO</h1>
-
-    <div class="slider-viewport" id="viewport">
-        <button class="nav-arrow prev" onclick="moveSlide(-1)">❮</button>
-        <button class="nav-arrow next" onclick="moveSlide(1)">❯</button>
-        
-        <div class="slider-wrapper" id="wrapper">
-            <div class="slide"><img src="../siyah.jpg" alt="Siyah"></div>
-            <div class="slide"><img src="../beyaz.png" alt="Beyaz"></div>
-            <div class="slide"><img src="../turuncu.png" alt="Turuncu"></div>
-            <div class="slide"><img src="../pembe.png" alt="Pembe"></div>
+<div class="product-page">
+    <div class="gallery-container">
+        <div class="side-thumbnails">
+            <img src="../siyah.jpg" class="thumb" onclick="changeImage('../siyah.jpg')">
+            <img src="../beyaz.png" class="thumb" onclick="changeImage('../beyaz.png')">
+            <img src="../turuncu.png" class="thumb" onclick="changeImage('../turuncu.png')">
+            <img src="../pembe.png" class="thumb" onclick="changeImage('../pembe.png')">
+        </div>
+        <div class="main-display">
+            <img id="mainImg" src="../siyah.jpg" alt="V1 PRO">
         </div>
     </div>
 
-    <div class="dots-container">
-        <div class="dot active" onclick="goToSlide(0)"></div>
-        <div class="dot" onclick="goToSlide(1)"></div>
-        <div class="dot" onclick="goToSlide(2)"></div>
-        <div class="dot" onclick="goToSlide(3)"></div>
-    </div>
+    <div class="product-info">
+        <span class="brand-tag">Yeni Üye Özel</span>
+        <h1 class="product-title">BLI V1 PRO</h1>
+        <p style="color: #666; margin-bottom: 10px;">Profesyonel E-Spor Mouse</p>
+        <div class="product-price">1.599,00₺</div>
 
-    <div class="status-tag">YAKINDA SINIRLI STOKLARLA</div>
+        <span class="option-label">Renk Seç</span>
+        <div class="color-options">
+            <div class="color-box active" onclick="changeImage('../siyah.jpg', this)"><img src="../siyah.jpg"></div>
+            <div class="color-box" onclick="changeImage('../beyaz.png', this)"><img src="../beyaz.png"></div>
+            <div class="color-box" onclick="changeImage('../turuncu.png', this)"><img src="../turuncu.png"></div>
+            <div class="color-box" onclick="changeImage('../pembe.png', this)"><img src="../pembe.png"></div>
+        </div>
+
+        <button class="add-to-cart">Sepete Ekle</button>
+        <button style="width: 100%; padding: 18px; background: #fff; border: 1px solid #ccc; border-radius: 50px; font-weight: bold; cursor: pointer;">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
+        
+        <p style="margin-top: 30px; line-height: 1.6; color: #444;">
+            Hız ve hassasiyetin yeni tanımı. V1 Pro, profesyonel oyuncular için geliştirilmiş ultra hafif yapısı ve yüksek tarama hızıyla rakiplerinizin bir adım önünde olmanızı sağlar.
+        </p>
+    </div>
 </div>
 
 <script>
-    const wrapper = document.getElementById('wrapper');
-    const dots = document.querySelectorAll('.dot');
-    let currentIndex = 0;
-    let startX = 0;
-    let isDragging = false;
-
-    // Slide'a gitme fonksiyonu
-    function goToSlide(index) {
-        currentIndex = index;
-        if (currentIndex < 0) currentIndex = 3;
-        if (currentIndex > 3) currentIndex = 0;
+    function changeImage(src, element) {
+        document.getElementById('mainImg').src = src;
         
-        wrapper.style.transform = `translateX(-${currentIndex * 25}%)`;
-        
-        // Noktaları güncelle
-        dots.forEach(dot => dot.classList.remove('active'));
-        dots[currentIndex].classList.add('active');
-    }
-
-    // Oklar için
-    function moveSlide(direction) {
-        goToSlide(currentIndex + direction);
-    }
-
-    // Dokunmatik Kaydırma (Swipe) Mantığı
-    const viewport = document.getElementById('viewport');
-
-    viewport.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-    });
-
-    viewport.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        let endX = e.changedTouches[0].clientX;
-        let diff = startX - endX;
-
-        if (Math.abs(diff) > 50) { // En az 50px kaydırılmalı
-            if (diff > 0) moveSlide(1); // Sola kaydırınca sonraki
-            else moveSlide(-1); // Sağa kaydırınca önceki
+        // Aktif renk kutusunu güncelle
+        if(element) {
+            document.querySelectorAll('.color-box').forEach(box => box.classList.remove('active'));
+            element.classList.add('active');
         }
-        isDragging = false;
-    });
-
-    // Mouse ile kaydırma (PC için)
-    viewport.addEventListener('mousedown', (e) => {
-        startX = e.clientX;
-        isDragging = true;
-    });
-
-    viewport.addEventListener('mouseup', (e) => {
-        if (!isDragging) return;
-        let diff = startX - e.clientX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) moveSlide(1);
-            else moveSlide(-1);
-        }
-        isDragging = false;
-    });
+    }
 </script>
 
 </body>
