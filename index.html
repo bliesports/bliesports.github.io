@@ -93,7 +93,7 @@
 </footer>
 
 <script>
-  // --- 1. SEPET SİSTEMİ (HATASIZ & RESİMLİ) ---
+  // --- 1. SEPET SİSTEMİ (TEK VE HATASIZ) ---
   let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
 
   function sepetiGuncelle() {
@@ -109,12 +109,12 @@
       } else {
           let html = '<div style="padding:15px; color:white;">';
           sepet.forEach((item) => {
-              // Resim yolundaki Türkçe karakteri de güvenli hale getiriyoruz
-              let güvenliResim = item.resim.replace('ürünler', '%C3%BCr%C3%BCnler');
+              // 'ürünler' klasöründeki resimleri 404 vermeden gösterir
+              let guvenliResim = item.resim.replace('ürünler', '%C3%BCr%C3%BCnler');
               
               html += `
                 <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
-                    <img src="${güvenliResim}" style="width:60px; height:60px; border-radius:8px; background:#111; object-fit:contain; border:1px solid #333;">
+                    <img src="${guvenliResim}" class="cart-item-img">
                     <div style="flex:1;">
                         <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad} (${item.renk})</p>
                         <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
@@ -128,47 +128,10 @@
   }
 
   function sepetiBosalt() {
-      sepet = [];
-      sepetiGuncelle();
-  }
-  
-  // Sayfa açıldığında sepeti yükle
-  sepetiGuncelle();
-</script>
-  // --- 1. SEPET SİSTEMİ ---
-  let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-
-  function sepetiGuncelle() {
-      const cartCount = document.getElementById('cart-count');
-      const cartContent = document.querySelector('.cart-content');
-      
-      if(cartCount) cartCount.innerText = sepet.length;
-
-      if (!cartContent) return;
-
-      if (sepet.length === 0) {
-          cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz şu an boş.</p>';
-      } else {
-          let html = '<div style="padding:15px; color:white;">';
-          sepet.forEach((item) => {
-              html += `
-                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
-                    <img src="${item.resim}" class="cart-item-img">
-                    <div style="flex:1;">
-                        <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad} (${item.renk})</p>
-                        <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
-                    </div>
-                </div>`;
-          });
-          html += '<button onclick="sepetiBosalt()" style="width:100%; background:#ffffff; color:#000; border:none; padding:15px; cursor:pointer; margin-top:10px; border-radius:5px; font-weight:bold;">SEPETİ BOŞALT</button></div>';
-          cartContent.innerHTML = html;
+      if(confirm("Sepeti boşaltmak istediğinize emin misiniz?")) {
+        sepet = [];
+        sepetiGuncelle();
       }
-      localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-  }
-
-  function sepetiBosalt() {
-      sepet = [];
-      sepetiGuncelle();
   }
 
   // --- 2. MENÜ KONTROLLERİ ---
@@ -178,25 +141,31 @@
   const cartSidebar = document.getElementById("cartSidebar");
   const closeCart = document.getElementById("closeCart");
 
-  hamburger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    sideMenu.classList.toggle("open");
-    cartSidebar.classList.remove("open");
-  });
+  if(hamburger) {
+    hamburger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      sideMenu.classList.toggle("open");
+      cartSidebar.classList.remove("open");
+    });
+  }
 
-  cartBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    cartSidebar.classList.toggle("open");
-    sideMenu.classList.remove("open");
-  });
+  if(cartBtn) {
+    cartBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      cartSidebar.classList.toggle("open");
+      sideMenu.classList.remove("open");
+    });
+  }
 
-  closeCart.addEventListener("click", () => {
-    cartSidebar.classList.remove("open");
-  });
+  if(closeCart) {
+    closeCart.addEventListener("click", () => {
+      cartSidebar.classList.remove("open");
+    });
+  }
 
   document.addEventListener("click", (e) => {
-    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) sideMenu.classList.remove("open");
-    if (!cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.classList.remove("open");
+    if (sideMenu && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) sideMenu.classList.remove("open");
+    if (cartSidebar && !cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.classList.remove("open");
   });
 
   // --- 3. SAYFA YÜKLENDİĞİNDE ÇALIŞACAKLAR ---
