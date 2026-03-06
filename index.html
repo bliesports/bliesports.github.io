@@ -73,7 +73,7 @@
 </div>
 
 <main style="max-width: 800px; margin: 80px auto 20px; padding: 0 20px; text-align: center; position: relative; z-index: 10;">
-  <a href="ürünler/mouse/v1pro/index.html" style="text-decoration: none; display: block; margin-bottom: 25px;">
+  <a href="%C3%BCr%C3%BCnler/mouse/v1pro/index.html" style="text-decoration: none; display: block; margin-bottom: 25px;">
     <div style="width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; border: 1px solid #333; transition: 0.3s;">
       <img src="v1pro-banner.png" alt="V1 PRO" style="width: 100%; height: 100%; object-fit: cover; display: block;">
     </div>
@@ -93,6 +93,48 @@
 </footer>
 
 <script>
+  // --- 1. SEPET SİSTEMİ (HATASIZ & RESİMLİ) ---
+  let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+
+  function sepetiGuncelle() {
+      const cartCount = document.getElementById('cart-count');
+      const cartContent = document.querySelector('.cart-content');
+      
+      if(cartCount) cartCount.innerText = sepet.length;
+
+      if (!cartContent) return;
+
+      if (sepet.length === 0) {
+          cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz şu an boş.</p>';
+      } else {
+          let html = '<div style="padding:15px; color:white;">';
+          sepet.forEach((item) => {
+              // Resim yolundaki Türkçe karakteri de güvenli hale getiriyoruz
+              let güvenliResim = item.resim.replace('ürünler', '%C3%BCr%C3%BCnler');
+              
+              html += `
+                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                    <img src="${güvenliResim}" style="width:60px; height:60px; border-radius:8px; background:#111; object-fit:contain; border:1px solid #333;">
+                    <div style="flex:1;">
+                        <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad} (${item.renk})</p>
+                        <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
+                    </div>
+                </div>`;
+          });
+          html += '<button onclick="sepetiBosalt()" style="width:100%; background:#ffffff; color:#000; border:none; padding:15px; cursor:pointer; margin-top:10px; border-radius:5px; font-weight:bold;">SEPETİ BOŞALT</button></div>';
+          cartContent.innerHTML = html;
+      }
+      localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+  }
+
+  function sepetiBosalt() {
+      sepet = [];
+      sepetiGuncelle();
+  }
+  
+  // Sayfa açıldığında sepeti yükle
+  sepetiGuncelle();
+</script>
   // --- 1. SEPET SİSTEMİ ---
   let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
 
