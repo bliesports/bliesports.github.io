@@ -6,7 +6,8 @@
   <title>BLI Esports | Profesyonel Espor Ekipmanları & V1 Pro</title>
 
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#ffffff"> <meta name="description" content="Türkiye'nin yeni nesil espor ekipman markası. V1 Pro Mouse serisi, Hoverpad Skatez ve Armor Grip Tape seçenekleriyle oyunun kontrolünü ele alın.">
+  <meta name="theme-color" content="#ffffff"> 
+  <meta name="description" content="Türkiye'nin yeni nesil espor ekipman markası. V1 Pro Mouse serisi, Hoverpad Skatez ve Armor Grip Tape seçenekleriyle oyunun kontrolünü ele alın.">
   <meta name="keywords" content="bliesports, oyuncu mouse, espor ekipmanları, hoverpad, grip tape, v1 pro mouse, türkiye espor">
 
   <link rel="icon" type="image/png" href="logo1616.png">
@@ -19,11 +20,13 @@
     .cart-wrapper { position: relative; cursor: pointer; }
     #cart-count { position: absolute; top: -10px; right: -10px; background: #ffffff; color: #000000; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
     .nav-icon { cursor: pointer; transition: 0.3s; color: #ffffff; }
-    .nav-icon:hover { color: #888888; } /* Hover rengi griye çekildi */
+    .nav-icon:hover { color: #888888; }
     
-    /* Yan Menüdeki Başvuru Rengi Düzelttim */
-    .side-menu a#nav-basvuru { color: #ffffff !important; } /* Kırmızı değil, beyaz */
+    .side-menu a#nav-basvuru { color: #ffffff !important; } 
     .side-menu a#nav-basvuru:hover { color: #888888 !important; }
+
+    /* Sepet Resim Kutusu */
+    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; background: #111; object-fit: contain; border: 1px solid #333; }
   </style>
 </head> 
 
@@ -62,16 +65,15 @@
 
 <div class="cart-sidebar" id="cartSidebar" style="background: #000000; color: #ffffff; border-left: 1px solid #333;">
     <div class="cart-header" style="border-bottom: 1px solid #333;">
-        <h3>SEPETİM</h3>
-        <i class="fa-solid fa-xmark close-cart" id="closeCart" style="color: #ffffff;"></i>
+        <h3 style="color: #fff;">SEPETİM</h3>
+        <i class="fa-solid fa-xmark close-cart" id="closeCart" style="color: #ffffff; cursor: pointer;"></i>
     </div>
     <div class="cart-content">
-        <p style="color: #888888;">Sepetiniz şu an boş.</p>
-    </div>
+        </div>
 </div>
 
 <main style="max-width: 800px; margin: 80px auto 20px; padding: 0 20px; text-align: center; position: relative; z-index: 10;">
-  <a href="https://bliesports.github.io/ürünler/mouse/bliv1pro/" style="text-decoration: none; display: block; margin-bottom: 25px;">
+  <a href="ürünler/mouse/v1pro/index.html" style="text-decoration: none; display: block; margin-bottom: 25px;">
     <div style="width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; border: 1px solid #333; transition: 0.3s;">
       <img src="v1pro-banner.png" alt="V1 PRO" style="width: 100%; height: 100%; object-fit: cover; display: block;">
     </div>
@@ -80,86 +82,43 @@
   <h2 style="color: #fff; font-size: 20px; margin-bottom: 10px;">Sitemiz yakın bir zamanda kullanıma açılacaktır.</h2>
   <a href="detayli-bilgi/index.html" class="btn" style="display: inline-block; padding: 12px 40px; background: #ffffff; color: #000000; border-radius: 5px; text-decoration: none; font-weight: bold; transition: 0.3s;">DETAYLI BİLGİ</a>
 </main>
-<footer class="footer" style="background: #000000; color: #ffffff; border-top: 1px solid #333;">
+
+<footer class="footer" style="background: #000000; color: #ffffff; border-top: 1px solid #333; padding: 40px 20px; text-align: center;">
   <span>Sosyal medya hesaplarımız</span>
-  <div class="socials">
-    <a href="https://www.instagram.com/bliesportts/" target="_blank" style="color: #ffffff;"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank" style="color: #ffffff;"><i class="fa-brands fa-youtube"></i></a>
+  <div class="socials" style="margin: 15px 0;">
+    <a href="https://www.instagram.com/bliesportts/" target="_blank" style="color: #ffffff; margin: 0 10px; font-size: 20px;"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank" style="color: #ffffff; margin: 0 10px; font-size: 20px;"><i class="fa-brands fa-youtube"></i></a>
   </div>
   <small style="color: #888888;">© 2026 BLI Esports</small>
-  
-  <section style="display:none;">
-    <h2>BLI Esports Markası Hakkında</h2>
-    <p>BLI Esports, oyuncular için V1 Pro serisi gibi yüksek performanslı mouselar ve ekipmanlar üretir.</p>
-  </section>
 </footer>
 
 <script>
+  // --- 1. SEPET SİSTEMİ ---
   let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
 
   function sepetiGuncelle() {
       const cartCount = document.getElementById('cart-count');
       const cartContent = document.querySelector('.cart-content');
       
-      // "Sepetim" yazısını beyaza çek
-      const cartHeader = document.querySelector('.cart-header h3');
-      if(cartHeader) cartHeader.style.color = "#fff"; 
+      if(cartCount) cartCount.innerText = sepet.length;
 
-      cartCount.innerText = sepet.length;
+      if (!cartContent) return;
 
       if (sepet.length === 0) {
           cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz şu an boş.</p>';
       } else {
-          let html = '<div style="padding:10px; color:white;">';
+          let html = '<div style="padding:15px; color:white;">';
           sepet.forEach((item) => {
               html += `
                 <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
-                    <img src="${item.resim}" style="width:60px; height:60px; border-radius:8px; background:#111; object-fit:contain;">
+                    <img src="${item.resim}" class="cart-item-img">
                     <div style="flex:1;">
                         <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad} (${item.renk})</p>
                         <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
                     </div>
                 </div>`;
           });
-          html += '<button onclick="sepetiBosalt()" style="width:100%; background:#ffffff; color:#000; border:none; padding:12px; cursor:pointer; margin-top:10px; border-radius:5px; font-weight:bold;">SEPETİ BOŞALT</button></div>';
-          cartContent.innerHTML = html;
-      }
-      localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-  }
-
-  function sepetiBosalt() {
-      sepet = [];
-      sepetiGuncelle();
-  }
-<script>
-  // SEPET SİSTEMİ
-  let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-
-  function sepetiGuncelle() {
-      const cartCount = document.getElementById('cart-count');
-      const cartContent = document.querySelector('.cart-content');
-      
-      // "Sepetim" yazısını beyaza çek
-      const cartHeader = document.querySelector('.cart-header h3');
-      if(cartHeader) cartHeader.style.color = "#fff"; 
-
-      cartCount.innerText = sepet.length;
-
-      if (sepet.length === 0) {
-          cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz şu an boş.</p>';
-      } else {
-          let html = '<div style="padding:10px; color:white;">';
-          sepet.forEach((item) => {
-              html += `
-                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
-                    <img src="${item.resim}" style="width:60px; height:60px; border-radius:8px; background:#111; object-fit:contain;">
-                    <div style="flex:1;">
-                        <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad} (${item.renk})</p>
-                        <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
-                    </div>
-                </div>`;
-          });
-          html += '<button onclick="sepetiBosalt()" style="width:100%; background:#ffffff; color:#000; border:none; padding:12px; cursor:pointer; margin-top:10px; border-radius:5px; font-weight:bold;">SEPETİ BOŞALT</button></div>';
+          html += '<button onclick="sepetiBosalt()" style="width:100%; background:#ffffff; color:#000; border:none; padding:15px; cursor:pointer; margin-top:10px; border-radius:5px; font-weight:bold;">SEPETİ BOŞALT</button></div>';
           cartContent.innerHTML = html;
       }
       localStorage.setItem('bli_sepet', JSON.stringify(sepet));
@@ -170,7 +129,7 @@
       sepetiGuncelle();
   }
 
-  // MENÜ KONTROLLERİ
+  // --- 2. MENÜ KONTROLLERİ ---
   const hamburger = document.getElementById("hamburger");
   const sideMenu = document.getElementById("sideMenu");
   const cartBtn = document.getElementById("cartBtn");
@@ -198,16 +157,14 @@
     if (!cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.classList.remove("open");
   });
 
-  // SAYFA YÜKLENDİĞİNDE ÇALIŞACAKLAR
+  // --- 3. SAYFA YÜKLENDİĞİNDE ÇALIŞACAKLAR ---
   window.onload = function() {
     sepetiGuncelle();
     
-    // PWA Kaydı
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
 
-    // Başvuru Kontrol
     const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
     if (kayitliVeri) {
       const data = JSON.parse(kayitliVeri);
@@ -221,6 +178,6 @@
     }
   }
 </script>
-  
-  </body>
+
+</body>
 </html>
