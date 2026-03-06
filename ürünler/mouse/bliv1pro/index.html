@@ -78,7 +78,7 @@
             <div class="color-box" onclick="changeImage('../pembe.png', this)"><img src="../pembe.png"></div>
         </div>
 
-        <button class="add-to-cart">Sepete Ekle</button>
+      <button class="add-to-cart" onclick="sepeteEkle('V1 Pro Mouse', 1250)">Sepete Ekle</button>
         <button style="width: 100%; padding: 18px; background: #fff; border: 1px solid #ccc; border-radius: 50px; font-weight: bold; cursor: pointer;">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
         
         <p style="margin-top: 30px; line-height: 1.6; color: #444;">
@@ -88,6 +88,20 @@
 </div>
 
 <script>
+    function sepeteEkle(ad, fiyat) {
+    // Mevcut sepeti al veya boş dizi oluştur
+    let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+    
+    // Yeni ürünü listeye ekle
+    sepet.push({ ad: ad, fiyat: fiyat });
+    
+    // Güncel sepeti kaydet
+    localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+    
+    // Kullanıcıya bilgi ver ve ana sayfaya yönlendir
+    alert("Ürün başarıyla sepete eklendi! Ana sayfaya yönlendiriliyorsunuz.");
+    window.location.href = "/index.html"; // Eğer GitHub Pages kullanıyorsan "/" yeterli olabilir
+}
     function changeImage(src, element) {
         document.getElementById('mainImg').src = src;
         
