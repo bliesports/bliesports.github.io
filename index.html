@@ -124,25 +124,17 @@
 
 
 
-<main style="max-width: 800px; margin: 80px auto 20px; padding: 0 20px; position: relative; z-index: 10;">
+<main style="max-width: 800px; margin: 80px auto 20px; padding: 0 20px; text-align: center;">
   
-  <a href="https://bliesports.github.io/ürünler/mouse/bliv1pro/" style="text-decoration: none; display: block;">
-    <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; border: 1px solid #333; transition: 0.4s ease; cursor: pointer;" 
-         onmouseover="this.style.transform='scale(1.02)';" 
-         onmouseout="this.style.transform='scale(1)';" >
-      
-      <img src="v1pro-banner.png" alt="V1 PRO Serisi" style="width: 100%; height: 100%; object-fit: contain; display: block;">
-      
+  <a href="https://bliesports.github.io/ürünler/mouse/bliv1pro/" style="text-decoration: none; display: block; margin-bottom: 20px;">
+    <div style="width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; border: 1px solid #333; transition: 0.3s;" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='scale(1)';" >
+      <img src="v1pro-banner.png" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
   </a>
 
-  <div style="text-align: center; margin-top: 25px; color: #fff;">
-    <h1 style="font-size: 24px; letter-spacing: 2px;">BLI ESPORTS</h1>
-    <p style="color: #aaa; font-size: 14px;">Profesyonel espor ekipmanlarında yeni standart.</p>
-  </div>
+  <a href="detayli-bilgi/index.html" class="btn" style="display: inline-block; padding: 12px 30px; background: #ff0000; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">DETAYLI BİLGİ</a>
 
 </main>
-  
   <h1>BLI ESPORTS</h1>
 
   <p>Sitemiz yakın bir zamanda kullanıma açılacaktır.</p>
@@ -180,6 +172,13 @@
 
  
 <script>
+  
+  // --- SEPET SİSTEMİ ANA SAYFA TETİKLEYİCİ ---
+window.addEventListener('load', () => {
+    if (typeof sepetiGuncelle === "function") {
+        sepetiGuncelle();
+    }
+});
   // BURAYA YAPIŞTIR (Satır 177)
   let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
 
