@@ -8,43 +8,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #fff; color: #111; overflow-x: hidden; }
+        body { background: #000; color: #fff; overflow-x: hidden; } /* Arka plan siyah yapıldı */
 
-        /* Ana Sayfa Düzeni */
         .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1400px; margin: 80px auto; }
 
-        /* Sol: Dikey Galeri (Nike Tarzı) */
+        /* Galeri Alanı */
         .gallery-container { display: flex; flex: 1.5; gap: 20px; }
         .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
-        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f7f7f7; padding: 5px; }
-        .thumb:hover { opacity: 0.7; }
+        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #111; padding: 5px; border: 1px solid #333; }
+        .thumb:hover { border-color: #fff; }
 
-        .main-display { flex: 1; background: #f7f7f7; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 500px; }
-        .main-display img { width: 90%; transition: 0.3s; }
+        .main-display { flex: 1; background: #111; border-radius: 20px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 500px; border: 1px solid #333; }
+        .main-display img { width: 80%; transition: 0.3s; }
 
-        /* Sağ: Satın Alma Alanı */
+        /* Ürün Bilgileri */
         .product-info { flex: 1; padding: 0 40px; min-width: 350px; }
-        .brand-tag { color: #e60000; font-weight: bold; font-size: 14px; text-transform: uppercase; }
-        .product-title { font-size: 32px; font-weight: 800; margin: 10px 0; }
-        .product-price { font-size: 24px; font-weight: 600; margin-bottom: 30px; }
+        .brand-tag { color: #888; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; } /* Kırmızıdan Griye çekildi */
+        .product-title { font-size: 36px; font-weight: 800; margin: 10px 0; color: #fff; }
+        .product-price { font-size: 28px; font-weight: 600; margin-bottom: 30px; color: #fff; }
 
-        /* Renk Seçimi */
-        .option-label { font-weight: bold; margin-bottom: 15px; display: block; }
+        /* Seçenekler */
+        .option-label { font-weight: bold; margin-bottom: 15px; display: block; color: #888; }
         .color-options { display: flex; gap: 15px; margin-bottom: 40px; }
-        .color-box { width: 70px; height: 70px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; padding: 5px; transition: 0.2s; }
-        .color-box.active { border-color: #111; }
-        .color-box img { width: 100%; }
+        .color-box { width: 60px; height: 60px; border: 2px solid #333; border-radius: 12px; cursor: pointer; padding: 5px; transition: 0.2s; background: #111; }
+        .color-box.active { border-color: #fff; }
+        .color-box img { width: 100%; object-fit: contain; }
 
-        /* Sepete Ekle Butonu (Nike Stili) */
-        .add-to-cart { width: 100%; padding: 18px; background: #111; color: white; border: none; border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; }
-        .add-to-cart:hover { background: #444; }
+        /* Butonlar */
+        .add-to-cart { width: 100%; padding: 20px; background: #fff; color: #000; border: none; border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; }
+        .add-to-cart:hover { background: #ccc; }
+        
+        .fav-btn { width: 100%; padding: 18px; background: transparent; color: #fff; border: 1px solid #333; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .fav-btn:hover { border-color: #fff; }
 
-        /* Mobil Uyumluluk */
         @media (max-width: 968px) {
             .product-page { flex-direction: column; margin: 20px; }
             .gallery-container { flex-direction: column-reverse; }
             .side-thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
-            .thumb { width: 70px; }
             .product-info { padding: 40px 0; }
         }
     </style>
@@ -67,7 +67,7 @@
     <div class="product-info">
         <span class="brand-tag">Yeni Üye Özel</span>
         <h1 class="product-title">BLI V1 PRO</h1>
-        <p style="color: #666; margin-bottom: 10px;">Profesyonel E-Spor Mouse</p>
+        <p style="color: #888; margin-bottom: 10px;">Profesyonel E-Spor Mouse</p>
         <div class="product-price">1.599,00₺</div>
 
         <span class="option-label">Renk Seç</span>
@@ -78,10 +78,10 @@
             <div class="color-box" onclick="changeImage('../pembe.png', this)"><img src="../pembe.png"></div>
         </div>
 
-      <button class="add-to-cart" onclick="sepeteEkle('V1 Pro Mouse', 1250)">Sepete Ekle</button>
-        <button style="width: 100%; padding: 18px; background: #fff; border: 1px solid #ccc; border-radius: 50px; font-weight: bold; cursor: pointer;">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
+        <button class="add-to-cart" onclick="sepeteEkle('BLI V1 Pro', 1599)">Sepete Ekle</button>
+        <button class="fav-btn">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
         
-        <p style="margin-top: 30px; line-height: 1.6; color: #444;">
+        <p style="margin-top: 30px; line-height: 1.6; color: #888;">
             Hız ve hassasiyetin yeni tanımı. V1 Pro, profesyonel oyuncular için geliştirilmiş ultra hafif yapısı ve yüksek tarama hızıyla rakiplerinizin bir adım önünde olmanızı sağlar.
         </p>
     </div>
@@ -89,23 +89,17 @@
 
 <script>
     function sepeteEkle(ad, fiyat) {
-    // Mevcut sepeti al veya boş dizi oluştur
-    let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-    
-    // Yeni ürünü listeye ekle
-    sepet.push({ ad: ad, fiyat: fiyat });
-    
-    // Güncel sepeti kaydet
-    localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-    
-    // Kullanıcıya bilgi ver ve ana sayfaya yönlendir
-    alert("Ürün başarıyla sepete eklendi! Ana sayfaya yönlendiriliyorsunuz.");
-    window.location.href = "/index.html"; // Eğer GitHub Pages kullanıyorsan "/" yeterli olabilir
-}
+        let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+        sepet.push({ ad: ad, fiyat: fiyat });
+        localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+        
+        alert("Ürün başarıyla sepete eklendi! Ana sayfaya yönlendiriliyorsunuz.");
+        // GitHub Pages uyumlu yönlendirme (Hata payını sıfıra indirdik)
+        window.location.href = "../../../index.html"; 
+    }
+
     function changeImage(src, element) {
         document.getElementById('mainImg').src = src;
-        
-        // Aktif renk kutusunu güncelle
         if(element) {
             document.querySelectorAll('.color-box').forEach(box => box.classList.remove('active'));
             element.classList.add('active');
