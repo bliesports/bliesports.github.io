@@ -88,18 +88,39 @@
 </div>
 
 <script>
+    // SEPETE EKLEME FONKSİYONU
     function sepeteEkle(ad, fiyat) {
         let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-        sepet.push({ ad: ad, fiyat: fiyat });
+        
+        // 1. O an seçili olan (active) renk kutusunu ve içindeki resmi bul
+        const secilenKutu = document.querySelector('.color-box.active img');
+        const resimYolu = secilenKutu ? secilenKutu.src : '../siyah.jpg';
+        
+        // 2. Resim isminden rengi tahmin et (Örn: pembe.png -> Pembe)
+        let dosyaAdi = resimYolu.split('/').pop().split('.')[0]; 
+        let renkAdi = dosyaAdi.charAt(0).toUpperCase() + dosyaAdi.slice(1);
+
+        // 3. Veriyi paketle ve hafızaya at (Fiyatı tam 1599 yapıyoruz)
+        sepet.push({ 
+            ad: ad, 
+            fiyat: 1599, 
+            resim: resimYolu,
+            renk: renkAdi 
+        });
+        
         localStorage.setItem('bli_sepet', JSON.stringify(sepet));
         
         alert("Ürün başarıyla sepete eklendi! Ana sayfaya yönlendiriliyorsunuz.");
-        // GitHub Pages uyumlu yönlendirme (Hata payını sıfıra indirdik)
+        // GitHub Pages yapısına göre ana dizine dönüş (3 klasör geri)
         window.location.href = "../../../index.html"; 
     }
 
+    // RESİM DEĞİŞTİRME VE AKTİF RENK SEÇME
     function changeImage(src, element) {
-        document.getElementById('mainImg').src = src;
+        const mainImg = document.getElementById('mainImg');
+        if(mainImg) mainImg.src = src;
+        
+        // Tıklanan kutuyu parlat, diğerlerini söndür
         if(element) {
             document.querySelectorAll('.color-box').forEach(box => box.classList.remove('active'));
             element.classList.add('active');
