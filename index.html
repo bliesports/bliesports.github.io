@@ -175,7 +175,38 @@
 
  
 <script>
+  // BURAYA YAPIŞTIR (Satır 177)
+  let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
 
+  function sepetiGuncelle() {
+      const cartCount = document.getElementById('cart-count');
+      const cartContent = document.querySelector('.cart-content');
+      cartCount.innerText = sepet.length;
+      if (sepet.length === 0) {
+          cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz şu an boş.</p>';
+      } else {
+          let html = '<ul style="list-style:none; padding:10px; color:white;">';
+          sepet.forEach((item, index) => {
+              html += `<li style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">
+                          <span>${item.ad}</span>
+                          <span style="color:#ff0000; font-weight:bold;">${item.fiyat} TL</span>
+                       </li>`;
+          });
+          html += '</ul><button onclick="sepetiBosalt()" style="width:100%; background:#ff0000; color:white; border:none; padding:10px; cursor:pointer; margin-top:10px; border-radius:5px;">Sepeti Boşalt</button>';
+          cartContent.innerHTML = html;
+      }
+      localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+  }
+
+  function sepetiBosalt() {
+      sepet = [];
+      sepetiGuncelle();
+  }
+  sepetiGuncelle(); 
+  // YAPIŞTIRMA BURADA BİTSİN
+
+  // 179. Satırdaki mevcut "PWA Servis Kaydı" kodu buradan devam etsin...
+  if ('serviceWorker' in navigator) {
  // PWA Servis Kaydı (Uygulama uyarısı için şart!)
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
