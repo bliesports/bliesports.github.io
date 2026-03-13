@@ -1,172 +1,127 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLI Esports 2026 Jersey "Classic" | BLI Store</title>
-    <link rel="stylesheet" href="../../../stil.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classic Jersey | BLI Esports Store</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { background: #fff; color: #000; margin: 0; font-family: Arial, sans-serif; }
     
-    <style>
-        body {
-            background-color: #ffffff;
-            color: #000;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    /* Ürün Sayfası Layout */
+    .product-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 20px;
+      gap: 40px;
+    }
 
-        .product-page {
-            max-width: 1200px;
-            margin: 60px auto;
-            display: flex;
-            gap: 60px;
-            padding: 20px;
-            flex-wrap: wrap;
-        }
+    /* Galeri Sistemi */
+    .product-gallery {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto; /* Mobilde kaydırma */
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none; /* Scrollbar gizleme */
+    }
+    .product-gallery::-webkit-scrollbar { display: none; }
 
-        /* Ürün Resmi */
-        .product-image {
-            flex: 1.2;
-            min-width: 350px;
-        }
+    .product-gallery img {
+      width: 100%;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      border-radius: 15px;
+      border: 1px solid #eee;
+      object-fit: cover;
+    }
 
-        .product-image img {
-            width: 100%;
-            border-radius: 15px;
-            background-color: #f6f6f6;
-            display: block;
-        }
+    /* Ürün Bilgileri */
+    .product-info { padding: 0 10px; }
+    .product-title { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
+    .product-price { font-size: 22px; color: #333; margin-bottom: 20px; }
+    
+    .buy-btn {
+      width: 100%;
+      padding: 18px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .buy-btn:hover { background: #333; }
 
-        /* Ürün Detayları */
-        .product-info {
-            flex: 1;
-            min-width: 320px;
-        }
-
-        .breadcrumb {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .product-title {
-            font-size: 32px;
-            font-weight: bold;
-            margin: 0 0 15px 0;
-        }
-
-        .price-box {
-            font-size: 24px;
-            font-weight: bold;
-            color: #d112bb;
-            margin-bottom: 30px;
-        }
-
-        .selector-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        /* Beden Butonları */
-        .size-grid {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 40px;
-        }
-
-        .size-option {
-            border: 1px solid #ddd;
-            padding: 12px 18px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: 0.2s;
-            background: #fff;
-        }
-
-        .size-option:hover, .size-option.active {
-            border-color: #000;
-            background: #f9f9f9;
-        }
-
-        /* Aksiyon Butonu */
-        .cta-btn {
-            width: 100%;
-            background-color: #000;
-            color: #fff;
-            padding: 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-
-        .cta-btn:hover {
-            background-color: #333;
-        }
-
-        .info-text {
-            margin-top: 30px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #666;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-    </style>
+    /* PC GÖRÜNÜMÜ (Masaüstünde yan yana ve sabit) */
+    @media (min-width: 768px) {
+      .product-container { flex-direction: row; align-items: flex-start; }
+      .product-gallery { 
+        flex: 1.2; 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; /* PC'de yan yana iki görsel */
+        overflow: visible; 
+      }
+      .product-gallery img { width: 100%; }
+      .product-info { flex: 0.8; position: sticky; top: 100px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="product-page">
-    
-    <div class="product-image">
-        <img src="../../../1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" alt="BLI Classic Jersey">
+<header class="navbar">
+  <div class="nav-left">
+    <a href="../../../index.html"><img src="../../../logo1616.png" style="height: 40px;"></a>
+  </div>
+  <div class="nav-right">
+    <div class="cart-wrapper" id="cartBtn">
+      <i class="fa-solid fa-cart-shopping nav-icon"></i>
+      <span id="cart-count">0</span>
     </div>
+  </div>
+</header>
 
-    <div class="product-info">
-        <div class="breadcrumb">Mağaza / Formalar / Classic</div>
-        <h1 class="product-title">BLI Esports 2026 Jersey "Classic"</h1>
-        <div class="price-box">799,00 ₺</div>
+<div class="product-container">
+  <div class="product-gallery">
+    <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Classic Jersey Front">
+    <img src="IMG_20260313_164559.png" alt="Classic Jersey Back">
+  </div>
 
-        <span class="selector-title">BEDEN SEÇİN</span>
-        <div class="size-grid">
-            <div class="size-option">S</div>
-            <div class="size-option">M</div>
-            <div class="size-option">L</div>
-            <div class="size-option">XL</div>
-            <div class="size-option">2XL</div>
-        </div>
-
-        <button class="cta-btn">ÖN SİPARİŞ VER</button>
-
-        <div class="info-text">
-            <p><strong>Detaylar:</strong></p>
-            <ul>
-                <li>%100 Mikro-polyester nefes alan kumaş.</li>
-                <li>Süblime baskı tekniği ile ömür boyu kalıcı renkler.</li>
-                <li>BLI Esports resmi 2026 koleksiyonu.</li>
-            </ul>
-            <p><i>*Teslimatlar Nisan ayında başlayacaktır.</i></p>
-        </div>
-    </div>
+  <div class="product-info">
+    <h1 class="product-title">Classic Jersey</h1>
+    <p class="product-price">899.00 TL</p>
+    <p style="color: #666; line-height: 1.6;">
+      BLI Esports resmi forması. Yüksek performanslı nefes alabilen kumaş teknolojisi ile üretilmiştir.
+    </p>
+    <br>
+    <button class="buy-btn" onclick="sepeteEkle()">SEPETE EKLE</button>
+  </div>
 </div>
 
 <script>
-    // Beden seçme tıklandığında aktif yapma
-    const sizes = document.querySelectorAll('.size-option');
-    sizes.forEach(size => {
-        size.addEventListener('click', () => {
-            sizes.forEach(s => s.classList.remove('active'));
-            size.classList.add('active');
-        });
-    });
+  function sepeteEkle() {
+    let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+    const urun = {
+      id: 'classic-jersey',
+      ad: 'Classic Jersey',
+      fiyat: 899,
+      resim: 'ürünler/forma/classic/b_Sağ_alttaki_gemini_f.jpeg'
+    };
+    sepet.push(urun);
+    localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+    alert('Forma sepete eklendi kral!');
+    window.location.reload();
+  }
+
+  // Sepet sayısını güncelle
+  window.onload = () => {
+    let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+    document.getElementById('cart-count').innerText = sepet.length;
+  };
 </script>
 
 </body>
