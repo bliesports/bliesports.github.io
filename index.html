@@ -3,45 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLI Esports | Profesyonel Espor Ekipmanları & V1 Pro</title>
+  <title>BLI Esports | Official Store</title>
 
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#ffffff"> 
-  <meta name="description" content="Türkiye'nin yeni nesil espor ekipman markası. V1 Pro Mouse serisi, Hoverpad Skatez ve Armor Grip Tape seçenekleriyle oyunun kontrolünü ele alın.">
-  <meta name="keywords" content="bliesports, oyuncu mouse, espor ekipmanları, hoverpad, grip tape, v1 pro mouse, türkiye espor">
-
+  <meta name="description" content="Türkiye'nin yeni nesil espor ekipman markası. V1 Pro Mouse serisi ve Classic Jersey seçenekleriyle oyunun kontrolünü ele alın.">
+  
   <link rel="icon" type="image/png" href="logo1616.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* Siyah-Beyaz Navbar Ayarları */
+    /* BEYAZ TEMA AYARLARI */
+    body { background: #ffffff !important; color: #000000 !important; overflow-x: hidden; }
+    
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .cart-wrapper { position: relative; cursor: pointer; }
-    #cart-count { position: absolute; top: -10px; right: -10px; background: #ffffff; color: #000000; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
-    .nav-icon { cursor: pointer; transition: 0.3s; color: #ffffff; }
-    .nav-icon:hover { color: #888888; }
+    #cart-count { position: absolute; top: -10px; right: -10px; background: #000000; color: #ffffff; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
+    .nav-icon { cursor: pointer; transition: 0.3s; color: #000000 !important; } /* İkonlar siyah oldu */
+    .nav-icon:hover { color: #888888 !important; }
     
-    .side-menu a#nav-basvuru { color: #ffffff !important; } 
-    .side-menu a#nav-basvuru:hover { color: #888888 !important; }
+    .navbar { background: #ffffff !important; border-bottom: 1px solid #eee !important; }
+    .hamburger span { background: #000 !important; } /* Hamburger menü siyah oldu */
 
-    /* Sepet Resim Kutusu */
-    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; background: #111; object-fit: contain; border: 1px solid #333; }
+    /* Ürün Kartları */
+    .hero-container { width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; border: 1px solid #eee; transition: 0.4s; position: relative; }
+    .hero-container:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .hero-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
+    .hero-label { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 14px; text-transform: uppercase; }
+
+    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; background: #f9f9f9; object-fit: contain; border: 1px solid #eee; }
   </style>
 </head> 
 
 <body>
 
-<video id="bgVideo" autoplay muted loop playsinline>
-  <source src="background.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
-
-<header class="navbar" style="background: rgba(0,0,0,0.8); border-bottom: 1px solid #333;">
+<header class="navbar">
   <div class="nav-left">
-    <img src="logo1616.png" alt="BLI Logo">
-  </div>
+    <img src="logo1616.png" alt="BLI Logo" style="filter: invert(0);"> </div>
   <div class="nav-right">
     <div class="cart-wrapper" id="cartBtn">
       <i class="fa-solid fa-cart-shopping nav-icon"></i>
@@ -54,138 +54,106 @@
   </div>
 </header>
 
-<nav class="side-menu" id="sideMenu">
-  <a href="#">Giriş Yap</a>
-  <a href="#">Kayıt Ol</a>
-  <a href="ürünler/">Ürünlerimiz</a>
-  <a href="basvuru/index.html" id="nav-basvuru" style="font-weight: bold;">Başvuru Yap</a>
+<nav class="side-menu" id="sideMenu" style="background: #fff;">
+  <a href="#" style="color:#000;">Giriş Yap</a>
+  <a href="#" style="color:#000;">Kayıt Ol</a>
+  <a href="ürünler/" style="color:#000;">Ürünlerimiz</a>
+  <a href="basvuru/index.html" id="nav-basvuru" style="font-weight: bold; color:#000 !important;">Başvuru Yap</a>
   <a href="javascript:void(0)" id="nav-durum" style="color: #888888; font-weight: bold; display: none;">Başvuruyu Görüntüle</a>
-  <a href="#">Destek</a>
+  <a href="#" style="color:#000;">Destek</a>
 </nav>
 
-<div class="cart-sidebar" id="cartSidebar" style="background: #000000; color: #ffffff; border-left: 1px solid #333;">
-    <div class="cart-header" style="border-bottom: 1px solid #333;">
-        <h3 style="color: #fff;">SEPETİM</h3>
-        <i class="fa-solid fa-xmark close-cart" id="closeCart" style="color: #ffffff; cursor: pointer;"></i>
+<div class="cart-sidebar" id="cartSidebar" style="background: #ffffff; color: #000000; border-left: 1px solid #eee;">
+    <div class="cart-header" style="border-bottom: 1px solid #eee;">
+        <h3 style="color: #000;">SEPETİM</h3>
+        <i class="fa-solid fa-xmark close-cart" id="closeCart" style="color: #000; cursor: pointer;"></i>
     </div>
     <div class="cart-content"></div>
 </div>
 
-<main style="max-width: 800px; margin: 120px auto 0; padding: 0 20px 100px; text-align: center; position: relative; z-index: 10; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+<main style="max-width: 900px; margin: 100px auto 0; padding: 0 20px 100px; text-align: center; z-index: 10; min-height: 100vh;">
   
-  <a href=https://bliesports.github.io/%C3%BCr%C3%BCnler/mouse/bliv1pro/ style="text-decoration: none; display: block; margin-bottom: 50px; width: 100%;">
-    <div style="width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; border: 1px solid #333; transition: 0.3s;">
-      <img src="v1pro-banner.png" alt="V1 PRO" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+  <a href="ürünler/mouse/v1pro/index.html" style="text-decoration: none; display: block; margin-bottom: 40px; width: 100%;">
+    <div class="hero-container">
+      <img src="1000053888.jpg" alt="V1 PRO">
+      <div class="hero-label">BLI V1 PRO <span style="color: #007bff; margin-left: 5px;">YENİ</span></div>
     </div>
   </a>
 
-  <h2 style="color: #fff; font-size: 22px; margin-bottom: 30px;">Sitemiz yakın bir zamanda kullanıma açılacaktır.</h2>
-  
-  <a href="detayli-bilgi/index.html" class="btn" style="display: inline-block; padding: 15px 50px; background: #ffffff; color: #000000; border-radius: 5px; text-decoration: none; font-weight: bold; transition: 0.3s; margin-top: auto;">DETAYLI BİLGİ</a>
+  <a href="ürünler/forma/classic/index.html" style="text-decoration: none; display: block; width: 100%;">
+    <div class="hero-container">
+      <img src="B_Sağ_alttaki_gemini_f.jpeg" alt="Classic Jersey">
+      <div class="hero-label">CLASSIC JERSEY <span style="color: #007bff; margin-left: 5px;">STOKLARDA</span></div>
+    </div>
+  </a>
+
 </main>
 
-<footer class="footer" style="background: #000000; color: #ffffff; border-top: 1px solid #333; padding: 60px 20px; text-align: center;">
-  <span>Sosyal medya hesaplarımız</span>
+<footer class="footer" style="background: #ffffff; color: #000000; border-top: 1px solid #eee; padding: 60px 20px; text-align: center;">
+  <span style="font-weight: bold;">Sosyal medya hesaplarımız</span>
   <div class="socials" style="margin: 20px 0;">
-    <a href="https://www.instagram.com/bliesportts/" target="_blank" style="color: #ffffff; margin: 0 15px; font-size: 24px;"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank" style="color: #ffffff; margin: 0 15px; font-size: 24px;"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://www.instagram.com/bliesportts/" target="_blank" style="color: #000; margin: 0 15px; font-size: 24px;"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank" style="color: #000; margin: 0 15px; font-size: 24px;"><i class="fa-brands fa-youtube"></i></a>
   </div>
   <small style="color: #888888;">© 2026 BLI Esports</small>
 </footer>
+
 <script>
-  // --- 1. SEPET SİSTEMİ (TEK VE HATASIZ) ---
   let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
 
   function sepetiGuncelle() {
       const cartCount = document.getElementById('cart-count');
       const cartContent = document.querySelector('.cart-content');
-      
       if(cartCount) cartCount.innerText = sepet.length;
-
       if (!cartContent) return;
 
       if (sepet.length === 0) {
-          cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz şu an boş.</p>';
+          cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz boş.</p>';
       } else {
-          let html = '<div style="padding:15px; color:white;">';
+          let html = '<div style="padding:15px; color:black;">';
           sepet.forEach((item) => {
-              // 'ürünler' klasöründeki resimleri 404 vermeden gösterir
               let guvenliResim = item.resim.replace('ürünler', '%C3%BCr%C3%BCnler');
-              
               html += `
-                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
                     <img src="${guvenliResim}" class="cart-item-img">
                     <div style="flex:1;">
-                        <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad} (${item.renk})</p>
+                        <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad}</p>
                         <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
                     </div>
                 </div>`;
           });
-          html += '<button onclick="sepetiBosalt()" style="width:100%; background:#ffffff; color:#000; border:none; padding:15px; cursor:pointer; margin-top:10px; border-radius:5px; font-weight:bold;">SEPETİ BOŞALT</button></div>';
+          html += '<button onclick="sepetiBosalt()" style="width:100%; background:#000; color:#fff; border:none; padding:15px; cursor:pointer; margin-top:10px; border-radius:5px; font-weight:bold;">SEPETİ BOŞALT</button></div>';
           cartContent.innerHTML = html;
       }
       localStorage.setItem('bli_sepet', JSON.stringify(sepet));
   }
 
   function sepetiBosalt() {
-      if(confirm("Sepeti boşaltmak istediğinize emin misiniz?")) {
-        sepet = [];
-        sepetiGuncelle();
-      }
+      if(confirm("Sepeti boşaltmak istiyor musunuz?")) { sepet = []; sepetiGuncelle(); }
   }
 
-  // --- 2. MENÜ KONTROLLERİ ---
   const hamburger = document.getElementById("hamburger");
   const sideMenu = document.getElementById("sideMenu");
   const cartBtn = document.getElementById("cartBtn");
   const cartSidebar = document.getElementById("cartSidebar");
   const closeCart = document.getElementById("closeCart");
 
-  if(hamburger) {
-    hamburger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      sideMenu.classList.toggle("open");
-      cartSidebar.classList.remove("open");
-    });
-  }
-
-  if(cartBtn) {
-    cartBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      cartSidebar.classList.toggle("open");
-      sideMenu.classList.remove("open");
-    });
-  }
-
-  if(closeCart) {
-    closeCart.addEventListener("click", () => {
-      cartSidebar.classList.remove("open");
-    });
-  }
+  if(hamburger) hamburger.addEventListener("click", (e) => { e.stopPropagation(); sideMenu.classList.toggle("open"); cartSidebar.classList.remove("open"); });
+  if(cartBtn) cartBtn.addEventListener("click", (e) => { e.stopPropagation(); cartSidebar.classList.toggle("open"); sideMenu.classList.remove("open"); });
+  if(closeCart) closeCart.addEventListener("click", () => { cartSidebar.classList.remove("open"); });
 
   document.addEventListener("click", (e) => {
     if (sideMenu && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) sideMenu.classList.remove("open");
     if (cartSidebar && !cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.classList.remove("open");
   });
 
-  // --- 3. SAYFA YÜKLENDİĞİNDE ÇALIŞACAKLAR ---
   window.onload = function() {
     sepetiGuncelle();
-    
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
-    }
-
     const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
     if (kayitliVeri) {
-      const data = JSON.parse(kayitliVeri);
       const bBtn = document.getElementById("nav-basvuru");
       const dBtn = document.getElementById("nav-durum");
-      if (bBtn && dBtn) {
-        bBtn.style.display = "none";
-        dBtn.style.display = "block";
-        dBtn.onclick = () => alert("BAŞVURU KAYDINIZ\nDurum: İNCELENİYOR ⏳");
-      }
+      if (bBtn && dBtn) { bBtn.style.display = "none"; dBtn.style.display = "block"; dBtn.onclick = () => alert("Durum: İNCELENİYOR ⏳"); }
     }
   }
 </script>
