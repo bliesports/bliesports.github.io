@@ -1,17 +1,152 @@
-<div class="kategori-secim" style="display: flex; justify-content: center; gap: 40px; padding: 100px 20px; background: #000; color: #fff; font-family: sans-serif;">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mağaza | BLI Esports</title>
+    <link rel="stylesheet" href="../stil.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    <a href="/ürünler/mouse/index.html" style="text-decoration: none; color: inherit; text-align: center; border: 2px solid #ff00ff; padding: 20px; border-radius: 15px; width: 250px;">
-        <img src="/v1pro-banner.png" alt="Mouse" style="width: 100%; border-radius: 10px;">
-        <h2 style="margin-top: 15px;">Gaming Mouse</h2>
-        <p>Ekipmanını profesyonel seviyeye taşı.</p>
-        <span style="background: #ff00ff; padding: 8px 15px; border-radius: 5px; display: inline-block; margin-top: 10px;">İncele</span>
-    </a>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    <a href="/ürünler/formalar/classic.html" style="text-decoration: none; color: inherit; text-align: center; border: 2px solid #00ffff; padding: 20px; border-radius: 15px; width: 250px;">
-        <img src="/pembe.png" alt="Forma" style="width: 100%; border-radius: 10px;">
-        <h2 style="margin-top: 15px;">Resmi Formalar</h2>
-        <p>Takımının renklerini üzerinde taşı.</p>
-        <span style="background: #00ffff; padding: 8px 15px; border-radius: 5px; color: #000; display: inline-block; margin-top: 10px;">Yakında</span>
-    </a>
+        .header-title {
+            margin-top: 50px;
+            text-align: center;
+        }
 
-</div>
+        .header-title h1 {
+            font-size: 3rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .store-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 50px 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+        }
+
+        .product-card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 20px;
+            width: 320px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            border-color: #fff;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .product-card p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-view {
+            background: #fff;
+            color: #000;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-view:hover {
+            background: #888;
+        }
+
+        .back-home {
+            margin-top: 30px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-home:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">
+        <h1>BLI STORE</h1>
+        <p>Geleceğin Ekipmanları, Bugünün Şampiyonları İçin.</p>
+    </div>
+
+    <div class="store-container">
+        
+        <div class="product-card">
+            <img src="mouse/siyah.jpg" alt="V1 Pro Mouse">
+            <h3>V1 Pro Mouse</h3>
+            <p>Yüksek hassasiyetli profesyonel optik sensör.</p>
+            <span class="price">1.200,00 TL</span>
+            <div class="btn-group">
+                <a href="mouse/index.html" class="btn-view">İncele</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="../1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" alt="Classic Forma">
+            <h3>Classic Forma</h3>
+            <p>2026 Sezonu resmi "Classic" oyuncu forması.</p>
+            <span class="price">799,00 TL</span>
+            <div class="btn-group">
+                <a href="formalar/classic.html" class="btn-view">İncele</a>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="../index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön</a>
+
+</body>
+</html>
