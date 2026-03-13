@@ -7,33 +7,55 @@
 
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#ffffff"> 
-  <meta name="description" content="Türkiye'nin yeni nesil espor ekipman markası. V1 Pro Mouse serisi ve Classic Jersey seçenekleriyle oyunun kontrolünü ele alın.">
+  <meta name="description" content="Türkiye'nin yeni nesil espor ekipman markası.">
   
   <link rel="icon" type="image/png" href="logo1616.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* BEYAZ TEMA AYARLARI */
-    body { background: #ffffff !important; color: #000000 !important; overflow-x: hidden; margin: 0; }
+    /* BEYAZ TEMA & TEMİZLİK AYARLARI */
+    body { background: #ffffff !important; color: #000000 !important; overflow-x: hidden; margin: 0; font-family: Arial, sans-serif; }
     
+    /* Navbar Düzenlemesi */
+    .navbar { 
+        position: fixed; top: 0; left: 0; width: 100%; height: 64px; 
+        display: flex; align-items: center; justify-content: space-between; 
+        padding: 0 24px; background: #ffffff !important; 
+        border-bottom: 1px solid #eee !important; z-index: 1000; 
+    }
     .nav-right { display: flex; align-items: center; gap: 20px; }
-    .cart-wrapper { position: relative; cursor: pointer; }
-    #cart-count { position: absolute; top: -10px; right: -10px; background: #000000; color: #ffffff; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
-    .nav-icon { cursor: pointer; transition: 0.3s; color: #000000 !important; }
-    .nav-icon:hover { color: #888888 !important; }
-    
-    .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: #ffffff !important; border-bottom: 1px solid #eee !important; z-index: 1000; }
-    .hamburger span { background: #000 !important; }
+    .nav-icon { cursor: pointer; transition: 0.3s; color: #000000 !important; font-size: 20px; }
+    .hamburger span { background: #000 !important; display: block; height: 3px; width: 25px; margin: 5px 0; border-radius: 2px; }
 
-    /* Ürün Kartları Fix */
-    .hero-container { width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid #eee; transition: 0.4s; position: relative; line-height: 0; }
-    .hero-container:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    /* Sepet Sayacı */
+    .cart-wrapper { position: relative; cursor: pointer; }
+    #cart-count { 
+        position: absolute; top: -10px; right: -10px; 
+        background: #000000; color: #ffffff; border-radius: 50%; 
+        padding: 2px 6px; font-size: 10px; font-weight: bold; 
+    }
+
+    /* Ürün Bannerları (Gri kutu ve Yazı SİLİNDİ) */
+    .hero-container { 
+        width: 100%; 
+        border-radius: 20px; 
+        overflow: hidden; 
+        border: 1px solid #eee; 
+        transition: 0.4s; 
+        line-height: 0; /* Alttaki boşluğu siler */
+        background: #fff;
+    }
+    .hero-container:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
     .hero-container img { width: 100%; height: auto; display: block; }
     
-    .hero-label { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 14px; text-transform: uppercase; line-height: normal; }
-
-    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; background: #f9f9f9; object-fit: contain; border: 1px solid #eee; }
+    /* Sepet Sidebar */
+    .cart-sidebar { 
+        position: fixed; top: 0; right: -350px; width: 320px; height: 100%; 
+        background: #ffffff; border-left: 1px solid #eee; z-index: 2000; 
+        transition: 0.4s; padding: 24px; display: flex; flex-direction: column; 
+    }
+    .cart-item-img { width: 60px; height: 60px; border-radius: 8px; object-fit: contain; border: 1px solid #eee; }
   </style>
 </head> 
 
@@ -55,18 +77,17 @@
   </div>
 </header>
 
-<nav class="side-menu" id="sideMenu" style="background: #fff; position: fixed; top: 64px; right: -260px; width: 240px; height: 100%; transition: 0.4s; z-index: 900; padding: 20px; display: flex; flex-direction: column; gap: 15px; border-left: 1px solid #eee;">
+<nav class="side-menu" id="sideMenu" style="position: fixed; top: 64px; right: -260px; width: 240px; height: 100%; background: #fff; transition: 0.4s; z-index: 900; padding: 20px; display: flex; flex-direction: column; gap: 15px; border-left: 1px solid #eee;">
   <a href="#" style="color:#000; text-decoration: none;">Giriş Yap</a>
   <a href="#" style="color:#000; text-decoration: none;">Kayıt Ol</a>
   <a href="ürünler/" style="color:#000; text-decoration: none;">Ürünlerimiz</a>
   <a href="basvuru/index.html" id="nav-basvuru" style="font-weight: bold; color:#000 !important; text-decoration: none;">Başvuru Yap</a>
-  <a href="javascript:void(0)" id="nav-durum" style="color: #888888; font-weight: bold; display: none; text-decoration: none;">Başvuruyu Görüntüle</a>
   <a href="#" style="color:#000; text-decoration: none;">Destek</a>
 </nav>
 
-<div class="cart-sidebar" id="cartSidebar" style="position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #ffffff; color: #000000; border-left: 1px solid #eee; z-index: 2000; transition: 0.4s; padding: 24px;">
+<div class="cart-sidebar" id="cartSidebar">
     <div class="cart-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
-        <h3 style="margin: 0;">SEPETİM</h3>
+        <h3 style="margin: 0; font-size: 18px;">SEPETİM</h3>
         <i class="fa-solid fa-xmark close-cart" id="closeCart" style="cursor: pointer; font-size: 20px;"></i>
     </div>
     <div class="cart-content"></div>
@@ -77,14 +98,12 @@
   <a href="ürünler/mouse/bliv1pro/index.html" style="text-decoration: none; display: block; margin-bottom: 40px;">
     <div class="hero-container">
       <img src="v1pro-banner.png" alt="V1 PRO">
-      <div class="hero-label">V1 PRO <span style="color: #007bff; margin-left: 5px;">YENİ</span></div>
     </div>
   </a>
 
   <a href="ürünler/forma/classic/index.html" style="text-decoration: none; display: block;">
     <div class="hero-container">
       <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Classic Jersey">
-      <div class="hero-label">CLASSIC JERSEY <span style="color: #007bff; margin-left: 5px;">STOKLARDA</span></div>
     </div>
   </a>
 
@@ -93,8 +112,8 @@
 <footer class="footer" style="background: #ffffff; color: #000000; border-top: 1px solid #eee; padding: 60px 20px; text-align: center;">
   <span style="font-weight: bold;">Sosyal medya hesaplarımız</span>
   <div class="socials" style="margin: 20px 0;">
-    <a href="https://www.instagram.com/bliesportts/" target="_blank" style="color: #000; margin: 0 15px; font-size: 24px;"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank" style="color: #000; margin: 0 15px; font-size: 24px;"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://www.instagram.com/bliesportts/" target="_blank" style="color: #000; margin: 0 15px; font-size: 24px; text-decoration: none;"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank" style="color: #000; margin: 0 15px; font-size: 24px; text-decoration: none;"><i class="fa-brands fa-youtube"></i></a>
   </div>
   <small style="color: #888888;">© 2026 BLI Esports</small>
 </footer>
@@ -111,15 +130,15 @@
       if (sepet.length === 0) {
           cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz boş.</p>';
       } else {
-          let html = '<div style="padding:15px; color:black;">';
+          let html = '<div style="padding:0; color:black;">';
           sepet.forEach((item) => {
               let guvenliResim = item.resim.replace('ürünler', '%C3%BCr%C3%BCnler');
               html += `
                 <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
                     <img src="${guvenliResim}" class="cart-item-img">
-                    <div style="flex:1;">
-                        <p style="font-weight:bold; font-size:14px; margin:0; text-align:left;">${item.ad}</p>
-                        <p style="color:#888; font-size:13px; margin:5px 0 0 0; text-align:left;">${item.fiyat} TL</p>
+                    <div style="flex:1; text-align:left;">
+                        <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad}</p>
+                        <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
                     </div>
                 </div>`;
           });
@@ -139,42 +158,29 @@
   const cartSidebar = document.getElementById("cartSidebar");
   const closeCart = document.getElementById("closeCart");
 
-  if(hamburger) {
-    hamburger.addEventListener("click", (e) => {
+  // Menü Aç/Kapat
+  hamburger.addEventListener("click", (e) => {
       e.stopPropagation();
       sideMenu.style.right = sideMenu.style.right === "0px" ? "-260px" : "0px";
       cartSidebar.style.right = "-350px";
-    });
-  }
+  });
 
-  if(cartBtn) {
-    cartBtn.addEventListener("click", (e) => {
+  cartBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       cartSidebar.style.right = cartSidebar.style.right === "0px" ? "-350px" : "0px";
       sideMenu.style.right = "-260px";
-    });
-  }
-
-  if(closeCart) {
-    closeCart.addEventListener("click", () => {
-      cartSidebar.style.right = "-350px";
-    });
-  }
-
-  document.addEventListener("click", (e) => {
-    if (sideMenu && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) sideMenu.style.right = "-260px";
-    if (cartSidebar && !cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.style.right = "-350px";
   });
 
-  window.onload = function() {
-    sepetiGuncelle();
-    const kayitliVeri = localStorage.getItem("bli_basvuru_tamamlandi");
-    if (kayitliVeri) {
-      const bBtn = document.getElementById("nav-basvuru");
-      const dBtn = document.getElementById("nav-durum");
-      if (bBtn && dBtn) { bBtn.style.display = "none"; dBtn.style.display = "block"; dBtn.onclick = () => alert("Durum: İNCELENİYOR ⏳"); }
-    }
-  }
+  closeCart.addEventListener("click", () => {
+      cartSidebar.style.right = "-350px";
+  });
+
+  document.addEventListener("click", (e) => {
+      if (!sideMenu.contains(e.target) && !hamburger.contains(e.target)) sideMenu.style.right = "-260px";
+      if (!cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.style.right = "-350px";
+  });
+
+  window.onload = sepetiGuncelle;
 </script>
 
 </body>
