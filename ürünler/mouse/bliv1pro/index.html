@@ -8,44 +8,95 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #000; color: #fff; overflow-x: hidden; } /* Arka plan siyah yapıldı */
+        body { background: #ffffff; color: #000; overflow-x: hidden; } /* Arka plan BEYAZ yapıldı */
 
-        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1400px; margin: 80px auto; }
+        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 60px auto; }
 
         /* Galeri Alanı */
-        .gallery-container { display: flex; flex: 1.5; gap: 20px; }
+        .gallery-container { display: flex; flex: 1.2; gap: 20px; }
+        
+        /* PC Yan Fotolar */
         .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
-        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #111; padding: 5px; border: 1px solid #333; }
-        .thumb:hover { border-color: #fff; }
+        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f9f9f9; padding: 5px; border: 1px solid #eee; transition: 0.3s; }
+        .thumb:hover { border-color: #000; }
 
-        .main-display { flex: 1; background: #111; border-radius: 20px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 500px; border: 1px solid #333; }
-        .main-display img { width: 80%; transition: 0.3s; }
+        /* Ana Ekran / Mobil Slider */
+        .main-display { 
+            flex: 1; 
+            background: #f9f9f9; 
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            min-height: 500px; 
+            overflow: hidden;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
+            padding: 40px;
+        }
+
+        /* Mobil Noktalar (Dots) */
+        .dots-container {
+            display: none; /* PC'de gizli */
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active { background: #000; width: 20px; border-radius: 10px; }
 
         /* Ürün Bilgileri */
         .product-info { flex: 1; padding: 0 40px; min-width: 350px; }
-        .brand-tag { color: #888; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; } /* Kırmızıdan Griye çekildi */
-        .product-title { font-size: 36px; font-weight: 800; margin: 10px 0; color: #fff; }
-        .product-price { font-size: 28px; font-weight: 600; margin-bottom: 30px; color: #fff; }
+        .brand-tag { color: #888; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px;}
+        .product-title { font-size: 36px; font-weight: 800; margin: 0 0 10px 0; color: #000; }
+        .product-price { font-size: 28px; font-weight: bold; margin-bottom: 30px; color: #d112bb; } /* BBL Pembesi */
 
         /* Seçenekler */
-        .option-label { font-weight: bold; margin-bottom: 15px; display: block; color: #888; }
-        .color-options { display: flex; gap: 15px; margin-bottom: 40px; }
-        .color-box { width: 60px; height: 60px; border: 2px solid #333; border-radius: 12px; cursor: pointer; padding: 5px; transition: 0.2s; background: #111; }
-        .color-box.active { border-color: #fff; }
-        .color-box img { width: 100%; object-fit: contain; }
+        .option-label { font-weight: bold; margin-bottom: 15px; display: block; color: #000; font-size: 14px; text-transform: uppercase;}
+        .color-options { display: flex; gap: 12px; margin-bottom: 40px; }
+        .color-box { width: 50px; height: 50px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; padding: 5px; transition: 0.2s; background: #fff; }
+        .color-box.active { border-color: #000; border-width: 2px; }
+        .color-box img { width: 100%; height: 100%; object-fit: contain; }
 
         /* Butonlar */
-        .add-to-cart { width: 100%; padding: 20px; background: #fff; color: #000; border: none; border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; }
-        .add-to-cart:hover { background: #ccc; }
+        .add-to-cart { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .add-to-cart:hover { background: #333; }
         
-        .fav-btn { width: 100%; padding: 18px; background: transparent; color: #fff; border: 1px solid #333; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .fav-btn:hover { border-color: #fff; }
+        .fav-btn { width: 100%; padding: 18px; background: #fff; color: #000; border: 1px solid #ddd; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .fav-btn:hover { border-color: #000; }
 
+        /* MOBİL AYARLAR */
         @media (max-width: 968px) {
-            .product-page { flex-direction: column; margin: 20px; }
-            .gallery-container { flex-direction: column-reverse; }
-            .side-thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
-            .product-info { padding: 40px 0; }
+            .product-page { flex-direction: column; margin: 0; padding: 10px; }
+            .gallery-container { flex-direction: column; }
+            .side-thumbnails { display: none; } /* Mobilde yan fotoları gizle */
+            .dots-container { display: flex; } /* Mobilde noktaları göster */
+            .main-display { min-height: 400px; border-radius: 0; margin: -10px -10px 20px -10px; }
+            .product-info { padding: 20px 10px; }
         }
     </style>
 </head>
@@ -54,77 +105,107 @@
 <div class="product-page">
     <div class="gallery-container">
         <div class="side-thumbnails">
-            <img src="../siyah.jpg" class="thumb" onclick="changeImage('../siyah.jpg')">
-            <img src="../beyaz.png" class="thumb" onclick="changeImage('../beyaz.png')">
-            <img src="../turuncu.png" class="thumb" onclick="changeImage('../turuncu.png')">
-            <img src="../pembe.png" class="thumb" onclick="changeImage('../pembe.png')">
+            <img src="../siyah.jpg" class="thumb" onclick="goToSlide(0)">
+            <img src="../beyaz.png" class="thumb" onclick="goToSlide(1)">
+            <img src="../turuncu.png" class="thumb" onclick="goToSlide(2)">
+            <img src="../pembe.png" class="thumb" onclick="goToSlide(3)">
         </div>
-        <div class="main-display">
-            <img id="mainImg" src="../siyah.jpg" alt="V1 PRO">
+
+        <div class="main-display" id="sliderContainer">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <img src="../siyah.jpg" alt="V1 PRO Siyah">
+                <img src="../beyaz.png" alt="V1 PRO Beyaz">
+                <img src="../turuncu.png" alt="V1 PRO Turuncu">
+                <img src="../pembe.png" alt="V1 PRO Pembe">
+            </div>
+            
+            <div class="dots-container">
+                <div class="dot active" onclick="goToSlide(0)"></div>
+                <div class="dot" onclick="goToSlide(1)"></div>
+                <div class="dot" onclick="goToSlide(2)"></div>
+                <div class="dot" onclick="goToSlide(3)"></div>
+            </div>
         </div>
     </div>
 
     <div class="product-info">
-        <span class="brand-tag">Yeni Üye Özel</span>
+        <span class="brand-tag">BLI PERFORMANCE</span>
         <h1 class="product-title">BLI V1 PRO</h1>
-        <p style="color: #888; margin-bottom: 10px;">Profesyonel E-Spor Mouse</p>
         <div class="product-price">1.599,00₺</div>
 
-        <span class="option-label">Renk Seç</span>
+        <span class="option-label">Renk Seçimi</span>
         <div class="color-options">
-            <div class="color-box active" onclick="changeImage('../siyah.jpg', this)"><img src="../siyah.jpg"></div>
-            <div class="color-box" onclick="changeImage('../beyaz.png', this)"><img src="../beyaz.png"></div>
-            <div class="color-box" onclick="changeImage('../turuncu.png', this)"><img src="../turuncu.png"></div>
-            <div class="color-box" onclick="changeImage('../pembe.png', this)"><img src="../pembe.png"></div>
+            <div class="color-box active" onclick="goToSlide(0)"><img src="../siyah.jpg"></div>
+            <div class="color-box" onclick="goToSlide(1)"><img src="../beyaz.png"></div>
+            <div class="color-box" onclick="goToSlide(2)"><img src="../turuncu.png"></div>
+            <div class="color-box" onclick="goToSlide(3)"><img src="../pembe.png"></div>
         </div>
 
-        <button class="add-to-cart" onclick="sepeteEkle('BLI V1 Pro', 1599)">Sepete Ekle</button>
+        <button class="add-to-cart" onclick="sepeteEkle('BLI V1 Pro', 1599)">SEPETE EKLE</button>
         <button class="fav-btn">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
         
-        <p style="margin-top: 30px; line-height: 1.6; color: #888;">
-            Hız ve hassasiyetin yeni tanımı. V1 Pro, profesyonel oyuncular için geliştirilmiş ultra hafif yapısı ve yüksek tarama hızıyla rakiplerinizin bir adım önünde olmanızı sağlar.
+        <p style="margin-top: 30px; line-height: 1.6; color: #555; font-size: 14px;">
+            <b>Hız ve hassasiyetin yeni tanımı.</b> V1 Pro, profesyonel oyuncular için geliştirilmiş ultra hafif yapısı ve yüksek tarama hızıyla rakiplerinizin bir adım önünde olmanızı sağlar. Yeni nesil optik sensör ve 80 milyon tıklama ömrü.
         </p>
     </div>
 </div>
 
 <script>
-    // SEPETE EKLEME FONKSİYONU
+    const wrapper = document.getElementById('sliderWrapper');
+    const dots = document.querySelectorAll('.dot');
+    const colorBoxes = document.querySelectorAll('.color-box');
+    let currentSlide = 0;
+
+    // SLIDER GİTME FONKSİYONU
+    function goToSlide(index) {
+        currentSlide = index;
+        const offset = index * -100;
+        wrapper.style.transform = `translateX(${offset}%)`;
+        
+        // Noktaları güncelle
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[index].classList.add('active');
+
+        // Renk kutularını güncelle
+        colorBoxes.forEach(box => box.classList.remove('active'));
+        colorBoxes[index].classList.add('active');
+    }
+
+    // MOBİL İÇİN KAYDIRMA (SWIPE) DESTEĞİ
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const slider = document.getElementById('sliderContainer');
+    slider.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    slider.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        if (touchStartX - touchEndX > 50) { // Sola kaydırma
+            if(currentSlide < 3) goToSlide(currentSlide + 1);
+        }
+        if (touchEndX - touchStartX > 50) { // Sağa kaydırma
+            if(currentSlide > 0) goToSlide(currentSlide - 1);
+        }
+    }
+
+    // SEPETE EKLEME
     function sepeteEkle(ad, fiyat) {
         let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-        
-        // 1. O an seçili olan (active) renk kutusunu ve içindeki resmi bul
-        const secilenKutu = document.querySelector('.color-box.active img');
-        const resimYolu = secilenKutu ? secilenKutu.src : '../siyah.jpg';
-        
-        // 2. Resim isminden rengi tahmin et (Örn: pembe.png -> Pembe)
-        let dosyaAdi = resimYolu.split('/').pop().split('.')[0]; 
-        let renkAdi = dosyaAdi.charAt(0).toUpperCase() + dosyaAdi.slice(1);
+        const renkler = ['Siyah', 'Beyaz', 'Turuncu', 'Pembe'];
+        const resimler = ['../siyah.jpg', '../beyaz.png', '../turuncu.png', '../pembe.png'];
 
-        // 3. Veriyi paketle ve hafızaya at (Fiyatı tam 1599 yapıyoruz)
         sepet.push({ 
             ad: ad, 
-            fiyat: 1599, 
-            resim: resimYolu,
-            renk: renkAdi 
+            fiyat: fiyat, 
+            resim: resimler[currentSlide],
+            renk: renkler[currentSlide] 
         });
         
         localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-        
-        alert("Ürün başarıyla sepete eklendi! Ana sayfaya yönlendiriliyorsunuz.");
-        // GitHub Pages yapısına göre ana dizine dönüş (3 klasör geri)
-        window.location.href = "../../../index.html"; 
-    }
-
-    // RESİM DEĞİŞTİRME VE AKTİF RENK SEÇME
-    function changeImage(src, element) {
-        const mainImg = document.getElementById('mainImg');
-        if(mainImg) mainImg.src = src;
-        
-        // Tıklanan kutuyu parlat, diğerlerini söndür
-        if(element) {
-            document.querySelectorAll('.color-box').forEach(box => box.classList.remove('active'));
-            element.classList.add('active');
-        }
+        alert("Ürün sepete eklendi!");
     }
 </script>
 
