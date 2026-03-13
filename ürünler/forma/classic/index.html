@@ -1,128 +1,103 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Classic Jersey | BLI Esports Store</title>
-  <link rel="stylesheet" href="../../../style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body { background: #fff; color: #000; margin: 0; font-family: Arial, sans-serif; }
-    
-    /* Ürün Sayfası Layout */
-    .product-container {
-      display: flex;
-      flex-direction: column;
-      max-width: 1200px;
-      margin: 80px auto;
-      padding: 20px;
-      gap: 40px;
-    }
+<style>
+  /* Beden Seçenekleri Stili */
+  .size-selector {
+    margin: 25px 0;
+    text-align: left;
+  }
+  .size-title {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+    color: #555;
+  }
+  .size-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .size-btn {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #000;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .size-btn:hover {
+    border-color: #000;
+  }
+  .size-btn.active {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+</style>
 
-    /* Galeri Sistemi */
-    .product-gallery {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto; /* Mobilde kaydırma */
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none; /* Scrollbar gizleme */
-    }
-    .product-gallery::-webkit-scrollbar { display: none; }
-
-    .product-gallery img {
-      width: 100%;
-      flex-shrink: 0;
-      scroll-snap-align: start;
-      border-radius: 15px;
-      border: 1px solid #eee;
-      object-fit: cover;
-    }
-
-    /* Ürün Bilgileri */
-    .product-info { padding: 0 10px; }
-    .product-title { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
-    .product-price { font-size: 22px; color: #333; margin-bottom: 20px; }
-    
-    .buy-btn {
-      width: 100%;
-      padding: 18px;
-      background: #000;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .buy-btn:hover { background: #333; }
-
-    /* PC GÖRÜNÜMÜ (Masaüstünde yan yana ve sabit) */
-    @media (min-width: 768px) {
-      .product-container { flex-direction: row; align-items: flex-start; }
-      .product-gallery { 
-        flex: 1.2; 
-        display: grid; 
-        grid-template-columns: 1fr 1fr; /* PC'de yan yana iki görsel */
-        overflow: visible; 
-      }
-      .product-gallery img { width: 100%; }
-      .product-info { flex: 0.8; position: sticky; top: 100px; }
-    }
-  </style>
-</head>
-<body>
-
-<header class="navbar">
-  <div class="nav-left">
-    <a href="../../../index.html"><img src="../../../logo1616.png" style="height: 40px;"></a>
-  </div>
-  <div class="nav-right">
-    <div class="cart-wrapper" id="cartBtn">
-      <i class="fa-solid fa-cart-shopping nav-icon"></i>
-      <span id="cart-count">0</span>
-    </div>
-  </div>
-</header>
-
-<div class="product-container">
-  <div class="product-gallery">
-    <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Classic Jersey Front">
-    <img src="IMG_20260313_164559.png" alt="Classic Jersey Back">
-  </div>
-
-  <div class="product-info">
+<div class="product-info">
     <h1 class="product-title">Classic Jersey</h1>
     <p class="product-price">899.00 TL</p>
+    
+    <div class="size-selector">
+        <span class="size-title">Beden Seçin</span>
+        <div class="size-options">
+            <button class="size-btn" onclick="selectSize(this, 'S')">S</button>
+            <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+            <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+            <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+            <button class="size-btn" onclick="selectSize(this, 'XXL')">XXL</button>
+        </div>
+    </div>
+
     <p style="color: #666; line-height: 1.6;">
       BLI Esports resmi forması. Yüksek performanslı nefes alabilen kumaş teknolojisi ile üretilmiştir.
     </p>
     <br>
     <button class="buy-btn" onclick="sepeteEkle()">SEPETE EKLE</button>
-  </div>
 </div>
 
 <script>
-  function sepeteEkle() {
-    let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-    const urun = {
-      id: 'classic-jersey',
-      ad: 'Classic Jersey',
-      fiyat: 899,
-      resim: 'ürünler/forma/classic/b_Sağ_alttaki_gemini_f.jpeg'
-    };
-    sepet.push(urun);
-    localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-    alert('Forma sepete eklendi kral!');
-    window.location.reload();
+  let secilenBeden = "";
+
+  function selectSize(element, size) {
+    // Tüm butonlardan active class'ını sil
+    const buttons = document.querySelectorAll('.size-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    // Tıklanan butona active class'ı ekle
+    element.classList.add('active');
+    secilenBeden = size;
   }
 
-  // Sepet sayısını güncelle
-  window.onload = () => {
-    let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-    document.getElementById('cart-count').innerText = sepet.length;
-  };
-</script>
+  function sepeteEkle() {
+    if (secilenBeden === "") {
+      alert("Kanka önce bir beden seçmen lazım!");
+      return;
+    }
 
-</body>
-</html>
+    let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+    const urun = {
+      id: 'classic-jersey-' + secilenBeden,
+      ad: 'Classic Jersey (' + secilenBeden + ')',
+      fiyat: 899,
+      resim: 'ürünler/forma/classic/b_Sağ_alttaki_gemini_f.jpeg',
+      beden: secilenBeden
+    };
+
+    sepet.push(urun);
+    localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+    
+    // Sayfadaki sepet sayacını anında güncelle (Sayfa yenilemeden)
+    const cartCount = document.getElementById('cart-count');
+    if(cartCount) cartCount.innerText = sepet.length;
+
+    alert(secilenBeden + ' beden forma sepete eklendi kral! 🚀');
+  }
+</script>
