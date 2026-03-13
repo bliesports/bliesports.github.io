@@ -10,27 +10,9 @@ html, body {
   width: 100%;
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
-  color: #ffffff;
+  color: #000000; /* Yazılar artık siyah */
   overflow-x: hidden;
-  background-color: #ffffff; /* Sayfa artık beyaz tabanlı */
-}
-
-/* ================= VIDEO BACKGROUND ================= */
-#bgVideo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -2;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: -1;
+  background-color: #ffffff; 
 }
 
 /* ================= NAVBAR ================= */
@@ -44,9 +26,9 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.95); /* Beyaz Navbar */
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(6px);
-  z-index: 100;
+  z-index: 1000; /* Navbar üstte kalsın */
   border-bottom: 1px solid #eee;
 }
 
@@ -65,7 +47,7 @@ html, body {
   font-size: 20px;
   cursor: pointer;
   transition: color 0.3s;
-  color: #000; /* İkonlar siyah */
+  color: #000;
 }
 
 .nav-icon:hover {
@@ -122,7 +104,7 @@ html, body {
   flex-direction: column;
   gap: 15px;
   transition: right 0.4s ease-in-out;
-  z-index: 90;
+  z-index: 900;
   border-left: 1px solid #eee;
 }
 
@@ -143,29 +125,68 @@ html, body {
   background: #f5f5f5;
 }
 
-/* ================= MAIN CONTENT ================= */
-main {
-    margin-top: 80px;
-    padding: 20px;
+/* ================= SEPET PANELİ (DRAWER) FIX ================= */
+.cart-sidebar {
+  position: fixed !important;
+  top: 0 !important;
+  right: -350px !important;
+  width: 320px !important;
+  height: 100% !important;
+  background: #ffffff !important;
+  border-left: 1px solid #eee !important;
+  transition: right 0.4s ease-in-out !important;
+  z-index: 2000 !important; /* HER ŞEYİN ÜSTÜNDE */
+  padding: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-/* ================= BANNER SİSTEMİ (V1 PRO & FORMA) ================= */
+.cart-sidebar.open {
+  right: 0 !important;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.cart-header h3 {
+  color: #000;
+}
+
+.cart-content {
+  flex-grow: 1;
+  text-align: center;
+  color: #888;
+  padding-top: 20px;
+}
+
+/* ================= MAIN CONTENT ================= */
+main {
+    margin-top: 100px;
+    padding: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ================= BANNER SİSTEMİ ================= */
 .hero-wrapper {
     width: 100%;
-    max-width: 1100px; /* Çok yayılmaması için ideal genişlik */
-    margin: 0 auto 30px;
+    margin-bottom: 40px;
     background: #fff;
     overflow: hidden;
     position: relative;
-    border-radius: 15px; /* Köşeleri yuvarladık, pro dursun */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .hero-link {
     display: block;
     text-decoration: none;
     line-height: 0;
-    position: relative;
 }
 
 .hero-img {
@@ -180,32 +201,24 @@ main {
     transform: scale(1.02);
 }
 
-/* Mouse sol alttaki 'mal mal şeyleri' ve kutuları temizleyen kesin çözüm */
+/* Mouse sol alt temizliği */
 .hero-wrapper::after, .hero-wrapper::before,
 .hero-link::after, .hero-link::before {
     display: none !important;
     content: none !important;
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-    .hero-wrapper {
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .navbar {
-        padding: 0 15px;
-    }
-}
-
 /* ================= FOOTER ================= */
 .footer {
-  padding: 40px 0;
+  padding: 60px 20px;
   background: #fff;
   color: #000;
   text-align: center;
   border-top: 1px solid #eee;
+}
+
+.socials {
+    margin-bottom: 20px;
 }
 
 .socials a {
@@ -216,6 +229,13 @@ main {
 }
 
 .socials a:hover {
-  color: #007bff;
+  color: #e60000;
+}
 
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .cart-sidebar {
+    width: 100% !important;
+    right: -100% !important;
   }
+}
