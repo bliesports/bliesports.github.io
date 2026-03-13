@@ -1,21 +1,20 @@
-/* ================= RESET ================= */
+/* ================= 1. GENEL RESET VE TEMEL AYARLAR ================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ================= BODY ================= */
-html, body {
+body {
   width: 100%;
   height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #000000; /* Yazılar artık siyah */
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #ffffff;
+  color: #000000;
   overflow-x: hidden;
-  background-color: #ffffff; 
 }
 
-/* ================= NAVBAR ================= */
+/* ================= 2. NAVBAR (ÜST MENÜ) ================= */
 .navbar {
   position: fixed;
   top: 0;
@@ -26,14 +25,13 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(6px);
-  z-index: 1000; /* Navbar üstte kalsın */
+  background: #ffffff;
   border-bottom: 1px solid #eee;
+  z-index: 1000; /* Her zaman üstte */
 }
 
 .nav-left img {
-  height: 42px;
+  height: 40px;
   cursor: pointer;
 }
 
@@ -46,38 +44,18 @@ html, body {
 .nav-icon {
   font-size: 20px;
   cursor: pointer;
-  transition: color 0.3s;
   color: #000;
+  transition: 0.3s;
 }
 
 .nav-icon:hover {
   color: #e60000;
 }
 
-/* ================= SEPET İKONU VE SAYACI ================= */
-.cart-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-#cart-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #000;
-  color: white;
-  font-size: 10px;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 50%;
-}
-
-/* ================= HAMBURGER ================= */
+/* ================= 3. HAMBURGER İKONU ================= */
 .hamburger {
-  width: 28px;
-  height: 20px;
+  width: 25px;
+  height: 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -89,136 +67,100 @@ html, body {
   width: 100%;
   background: #000;
   border-radius: 2px;
+  transition: 0.3s;
 }
 
-/* ================= SIDE MENU ================= */
+/* ================= 4. YAN MENÜ (SIDE MENU) ================= */
 .side-menu {
   position: fixed;
-  top: 64px;
-  right: -260px;
-  width: 240px;
+  top: 64px; /* Navbar'ın hemen altından başlar */
+  right: -280px; /* Başlangıçta gizli (sağda) */
+  width: 260px;
   height: calc(100vh - 64px);
   background: #ffffff;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  transition: right 0.4s ease-in-out;
-  z-index: 900;
+  gap: 10px;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
   border-left: 1px solid #eee;
+  box-shadow: -5px 5px 15px rgba(0,0,0,0.05);
 }
 
+/* Hamburger menü tıklandığında gelecek class */
 .side-menu.open {
-  right: 0;
+  right: 0 !important;
 }
 
 .side-menu a {
   color: #000;
   text-decoration: none;
-  font-size: 18px;
-  padding: 10px;
-  border-radius: 6px;
+  font-size: 17px;
+  padding: 12px 15px;
+  border-radius: 8px;
   transition: 0.3s;
+  font-weight: 500;
 }
 
 .side-menu a:hover {
   background: #f5f5f5;
+  color: #e60000;
 }
 
-/* ================= SEPET PANELİ (DRAWER) FIX ================= */
+/* ================= 5. BANNERLAR (ANA İÇERİK) ================= */
+main {
+  margin-top: 100px; /* Navbar altında kalmasın diye */
+  padding: 0 20px 60px;
+}
+
+.hero-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  line-height: 0; /* Alttaki hayalet gri boşluğu siler */
+  transition: 0.4s;
+}
+
+.hero-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.hero-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ================= 6. SEPET PANELİ (DRAWER) ================= */
+/* Sepet şu an bozuk dedin ama iskeleti burada hazır dursun */
 .cart-sidebar {
-  position: fixed !important;
-  top: 0 !important;
-  right: -350px !important;
-  width: 320px !important;
-  height: 100% !important;
-  background: #ffffff !important;
-  border-left: 1px solid #eee !important;
-  transition: right 0.4s ease-in-out !important;
-  z-index: 2000 !important; /* HER ŞEYİN ÜSTÜNDE */
-  padding: 24px !important;
-  display: flex !important;
-  flex-direction: column !important;
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 320px;
+  height: 100%;
+  background: #ffffff;
+  z-index: 2000; /* En üstte */
+  transition: 0.4s;
+  border-left: 1px solid #eee;
+  padding: 24px;
 }
 
 .cart-sidebar.open {
   right: 0 !important;
 }
 
-.cart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
-}
-
-.cart-header h3 {
-  color: #000;
-}
-
-.cart-content {
-  flex-grow: 1;
-  text-align: center;
-  color: #888;
-  padding-top: 20px;
-}
-
-/* ================= MAIN CONTENT ================= */
-main {
-    margin-top: 100px;
-    padding: 20px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ================= BANNER SİSTEMİ ================= */
-.hero-wrapper {
-    width: 100%;
-    margin-bottom: 40px;
-    background: #fff;
-    overflow: hidden;
-    position: relative;
-}
-
-.hero-link {
-    display: block;
-    text-decoration: none;
-    line-height: 0;
-}
-
-.hero-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-}
-
-.hero-link:hover .hero-img {
-    transform: scale(1.02);
-}
-
-/* Mouse sol alt temizliği */
-.hero-wrapper::after, .hero-wrapper::before,
-.hero-link::after, .hero-link::before {
-    display: none !important;
-    content: none !important;
-}
-
-/* ================= FOOTER ================= */
+/* ================= 7. FOOTER ================= */
 .footer {
-  padding: 60px 20px;
-  background: #fff;
-  color: #000;
-  text-align: center;
+  padding: 50px 20px;
+  background: #ffffff;
   border-top: 1px solid #eee;
-}
-
-.socials {
-    margin-bottom: 20px;
+  text-align: center;
 }
 
 .socials a {
@@ -230,12 +172,4 @@ main {
 
 .socials a:hover {
   color: #e60000;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .cart-sidebar {
-    width: 100% !important;
-    right: -100% !important;
-  }
 }
