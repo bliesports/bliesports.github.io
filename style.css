@@ -12,6 +12,7 @@ html, body {
   font-family: Arial, Helvetica, sans-serif;
   color: #ffffff;
   overflow-x: hidden;
+  background-color: #ffffff; /* Sayfa artık beyaz tabanlı */
 }
 
 /* ================= VIDEO BACKGROUND ================= */
@@ -43,9 +44,10 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(15, 15, 15, 0.85);
+  background: rgba(255, 255, 255, 0.95); /* Beyaz Navbar */
   backdrop-filter: blur(6px);
   z-index: 100;
+  border-bottom: 1px solid #eee;
 }
 
 .nav-left img {
@@ -63,6 +65,7 @@ html, body {
   font-size: 20px;
   cursor: pointer;
   transition: color 0.3s;
+  color: #000; /* İkonlar siyah */
 }
 
 .nav-icon:hover {
@@ -81,13 +84,12 @@ html, body {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #e60000;
+  background: #000;
   color: white;
   font-size: 10px;
   font-weight: bold;
   padding: 2px 6px;
   border-radius: 50%;
-  border: 1px solid #000;
 }
 
 /* ================= HAMBURGER ================= */
@@ -103,24 +105,25 @@ html, body {
 .hamburger span {
   height: 3px;
   width: 100%;
-  background: #ffffff;
+  background: #000;
   border-radius: 2px;
 }
 
-/* ================= SIDE MENU (HAMBURGER) ================= */
+/* ================= SIDE MENU ================= */
 .side-menu {
   position: fixed;
   top: 64px;
   right: -260px;
   width: 240px;
   height: calc(100vh - 64px);
-  background: rgba(20, 20, 20, 0.98);
+  background: #ffffff;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   transition: right 0.4s ease-in-out;
   z-index: 90;
+  border-left: 1px solid #eee;
 }
 
 .side-menu.open {
@@ -128,7 +131,7 @@ html, body {
 }
 
 .side-menu a {
-  color: #ffffff;
+  color: #000;
   text-decoration: none;
   font-size: 18px;
   padding: 10px;
@@ -137,264 +140,81 @@ html, body {
 }
 
 .side-menu a:hover {
-  background: #e60000;
-}
-
-/* ================= SEPET PANELİ (DRAWER) ================= */
-.cart-sidebar {
-  position: fixed;
-  top: 0;
-  right: -350px;
-  width: 320px;
-  height: 100%;
-  background: rgba(10, 10, 10, 0.98);
-  border-left: 2px solid #e60000;
-  transition: right 0.4s ease-in-out;
-  z-index: 1000;
-  padding: 24px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.cart-sidebar.open {
-  right: 0;
-}
-
-.cart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #222;
-  padding-bottom: 15px;
-}
-
-.cart-header h3 {
-  color: #e60000;
-  font-size: 20px;
-  letter-spacing: 1px;
-}
-
-.close-cart {
-  font-size: 24px;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.close-cart:hover {
-  color: #e60000;
-  transform: rotate(90deg);
-}
-
-.cart-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.cart-content p {
-  color: #888888;
-  font-size: 16px;
-  font-style: italic;
+  background: #f5f5f5;
 }
 
 /* ================= MAIN CONTENT ================= */
-.content {
-  position: absolute;
-  top: 50%;
-  left: 60px;
-  transform: translateY(-50%);
-  max-width: 420px;
+main {
+    margin-top: 80px;
+    padding: 20px;
 }
 
-.content h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
-}
-
-.content p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 24px;
-  background: #e60000;
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 8px;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #b00000;
-}
-
-/* ================= FOOTER ================= */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 12px 0;
-  background: rgba(0, 0, 0, 0.6);
-  text-align: center;
-  font-size: 14px;
-}
-
-.socials {
-  margin: 6px 0;
-}
-
-.socials a {
-  color: #ffffff;
-  font-size: 22px;
-  margin: 0 10px;
-  transition: 0.3s;
-}
-
-.socials a:hover {
-  color: #e60000;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .content {
-    left: 20px;
-    right: 20px;
-  }
-  .content h1 {
-    font-size: 32px;
-  }
-  .cart-sidebar {
-    width: 100%;
-    right: -100%;
-  }
-}
-/* ================= V1 PRO LANSMAN BANNER (RESPONSIVE) ================= */
+/* ================= BANNER SİSTEMİ (V1 PRO & FORMA) ================= */
 .hero-wrapper {
     width: 100%;
-    background: #000;
+    max-width: 1100px; /* Çok yayılmaması için ideal genişlik */
+    margin: 0 auto 30px;
+    background: #fff;
     overflow: hidden;
     position: relative;
-    margin-top: 64px; /* Navbar yüksekliği kadar boşluk bırakır */
+    border-radius: 15px; /* Köşeleri yuvarladık, pro dursun */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .hero-link {
     display: block;
     text-decoration: none;
-    position: relative;
     line-height: 0;
+    position: relative;
 }
 
 .hero-img {
     width: 100%;
     height: auto;
     display: block;
-    max-height: 600px;
     object-fit: cover;
-    transition: transform 1s ease;
+    transition: transform 0.6s ease;
 }
 
 .hero-link:hover .hero-img {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
-.hero-content {
-    position: absolute;
-    bottom: 12%;
-    left: 8%;
-    color: white;
-    z-index: 5;
-    line-height: 1.2;
-}
-
-.hero-content h2 {
-    font-size: clamp(2rem, 6vw, 4.5rem); /* Ekran boyutuna göre yazı büyür/küçülür */
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    text-shadow: 4px 4px 15px rgba(0,0,0,0.7);
-}
-
-.hero-content span {
-    color: #e60000;
-}
-
-.hero-btn {
-    display: inline-block;
-    padding: 14px 45px;
-    background: white;
-    color: black;
-    font-weight: bold;
-    border-radius: 50px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
-
-.hero-btn:hover {
-    background: #e60000;
-    color: white;
-}
-
-/* Mobilde yazıları ortalar */
-@media (max-width: 768px) {
-    .hero-img {
-        min-height: 450px; /* Telefonlarda görselin çok kısalmasını engeller */
-    }
-    .hero-content {
-        bottom: 15%;
-        left: 0;
-        width: 100%;
-        text-align: center;
-
-      
-/* ================= CERRAHİ MÜDAHALE (ASLA BOZMA) ================= */
-
-/* 1. Mouse Banner'daki Hayalet Siyah Kutuları Silen Kod */
-.hero-wrapper::after, 
-.hero-wrapper::before,
-.hero-link::after,
-.hero-link::before {
+/* Mouse sol alttaki 'mal mal şeyleri' ve kutuları temizleyen kesin çözüm */
+.hero-wrapper::after, .hero-wrapper::before,
+.hero-link::after, .hero-link::before {
     display: none !important;
     content: none !important;
 }
 
-/* Mouse sol alttaki gereksiz siyah gölgeyi/butonu temizler */
-.hero-content {
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-/* 2. Formanın Kutuyla Tam Birleşmesini Sağlayan (Boşlukları Siler) Kod */
-.hero-wrapper {
-    line-height: 0 !important; /* Görsellerin altındaki o gıcık 2-3 piksellik boşluğu siler */
-    margin-bottom: 0 !important;
-}
-
-.hero-img {
-    width: 100% !important;
-    height: auto !important;
-    display: block !important; /* Resmin kutuya tam yapışmasını sağlar */
-    border: none !important; /* Varsa kenarlıkları kaldırır */
-}
-
-/* Kutu kenarlarındaki yuvarlatmayı görsele de uygular (Jilet gibi durur) */
-.hero-wrapper, .hero-link {
-    border-radius: 0 !important; /* Eğer index.html'de yuvarlak yaptıysan burayı '20px' yapabilirsin */
-}
-
-/* Mouse sol alttaki metinlerin yerini sabitle, kaymaları engelle */
-.hero-content {
-    pointer-events: none; /* Yazıya tıklayınca resme tıklamayı engellemesin */
-}
-
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .hero-wrapper {
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
+    
+    .navbar {
+        padding: 0 15px;
+    }
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  padding: 40px 0;
+  background: #fff;
+  color: #000;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.socials a {
+  color: #000;
+  font-size: 24px;
+  margin: 0 15px;
+  transition: 0.3s;
+}
+
+.socials a:hover {
+  color: #007bff;
 }
