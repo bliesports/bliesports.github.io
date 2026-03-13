@@ -354,5 +354,47 @@ html, body {
         left: 0;
         width: 100%;
         text-align: center;
+
+      
+/* ================= CERRAHİ MÜDAHALE (ASLA BOZMA) ================= */
+
+/* 1. Mouse Banner'daki Hayalet Siyah Kutuları Silen Kod */
+.hero-wrapper::after, 
+.hero-wrapper::before,
+.hero-link::after,
+.hero-link::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* Mouse sol alttaki gereksiz siyah gölgeyi/butonu temizler */
+.hero-content {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* 2. Formanın Kutuyla Tam Birleşmesini Sağlayan (Boşlukları Siler) Kod */
+.hero-wrapper {
+    line-height: 0 !important; /* Görsellerin altındaki o gıcık 2-3 piksellik boşluğu siler */
+    margin-bottom: 0 !important;
+}
+
+.hero-img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important; /* Resmin kutuya tam yapışmasını sağlar */
+    border: none !important; /* Varsa kenarlıkları kaldırır */
+}
+
+/* Kutu kenarlarındaki yuvarlatmayı görsele de uygular (Jilet gibi durur) */
+.hero-wrapper, .hero-link {
+    border-radius: 0 !important; /* Eğer index.html'de yuvarlak yaptıysan burayı '20px' yapabilirsin */
+}
+
+/* Mouse sol alttaki metinlerin yerini sabitle, kaymaları engelle */
+.hero-content {
+    pointer-events: none; /* Yazıya tıklayınca resme tıklamayı engellemesin */
+}
+
     }
 }
