@@ -4,149 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mağaza | BLI Esports</title>
-    <link rel="stylesheet" href="../stil.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="../stil.css">
     <style>
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff; /* Temiz bir görünüm için beyaz veya çok açık gri */
+            color: #000;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        .header-title {
-            margin-top: 50px;
-            text-align: center;
-        }
-
-        .header-title h1 {
-            font-size: 3rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        .store-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 50px 20px;
-            flex-wrap: wrap;
+        .container {
             max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
         }
 
         .product-card {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 20px;
-            padding: 20px;
-            width: 320px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-card:hover {
-            border-color: #fff;
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        .product-card h3 {
-            font-size: 1.5rem;
-            margin: 10px 0;
-        }
-
-        .product-card p {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .btn-view {
-            background: #fff;
-            color: #000;
-            padding: 10px 20px;
             text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
+            color: inherit;
             transition: 0.3s;
         }
 
-        .btn-view:hover {
-            background: #888;
+        .product-card:hover {
+            opacity: 0.8;
         }
 
-        .back-home {
-            margin-top: 30px;
+        .img-container {
+            width: 100%;
+            aspect-ratio: 1 / 1.2; /* Hafif dikey dikdörtgen, mağaza havası verir */
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .pre-order-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #f1f1f1;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .product-info h3 {
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .product-info .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d112bb; /* BBL tarzı canlı bir renk veya siyah */
+        }
+
+        .status {
+            font-size: 14px;
             color: #888;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .back-home:hover {
-            color: #fff;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="header-title">
-        <h1>BLI STORE</h1>
-        <p>Geleceğin Ekipmanları, Bugünün Şampiyonları İçin.</p>
-    </div>
+<div class="container">
+    <div class="shop-grid">
 
-    <div class="store-container">
-        
-        <div class="product-card">
-            <img src="mouse/siyah.jpg" alt="V1 Pro Mouse">
-            <h3>V1 Pro Mouse</h3>
-            <p>Yüksek hassasiyetli profesyonel optik sensör.</p>
-            <span class="price">1.200,00 TL</span>
-            <div class="btn-group">
-                <a href="mouse/index.html" class="btn-view">İncele</a>
+        <a href="mouse/index.html" class="product-card">
+            <div class="img-container">
+                <img src="mouse/siyah.jpg" alt="V1 Pro Mouse">
             </div>
-        </div>
-
-        <div class="product-card">
-            <img src="../1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" alt="Classic Forma">
-            <h3>Classic Forma</h3>
-            <p>2026 Sezonu resmi "Classic" oyuncu forması.</p>
-            <span class="price">799,00 TL</span>
-            <div class="btn-group">
-                <a href="formalar/classic.html" class="btn-view">İncele</a>
+            <div class="product-info">
+                <h3>BLI V1 Pro Gaming Mouse</h3>
+                <div class="price">1.200,00 ₺</div>
+                <div class="status">Ön Sipariş</div>
             </div>
-        </div>
+        </a>
+
+        <a href="formalar/classic.html" class="product-card">
+            <div class="img-container">
+                <img src="../1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" alt="Classic Forma">
+                <div class="pre-order-badge">Ön Sipariş</div>
+            </div>
+            <div class="product-info">
+                <h3>BLI Esports 2026 Jersey</h3>
+                <div class="price">799,00 ₺</div>
+                <div class="status">Koleksiyon</div>
+            </div>
+        </a>
 
     </div>
-
-    <a href="../index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön</a>
+</div>
 
 </body>
 </html>
