@@ -15,23 +15,23 @@
 
   <style>
     /* BEYAZ TEMA AYARLARI */
-    body { background: #ffffff !important; color: #000000 !important; overflow-x: hidden; }
+    body { background: #ffffff !important; color: #000000 !important; overflow-x: hidden; margin: 0; }
     
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .cart-wrapper { position: relative; cursor: pointer; }
     #cart-count { position: absolute; top: -10px; right: -10px; background: #000000; color: #ffffff; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
-    .nav-icon { cursor: pointer; transition: 0.3s; color: #000000 !important; } /* İkonlar siyah oldu */
+    .nav-icon { cursor: pointer; transition: 0.3s; color: #000000 !important; }
     .nav-icon:hover { color: #888888 !important; }
     
-    .navbar { background: #ffffff !important; border-bottom: 1px solid #eee !important; }
-    .hamburger span { background: #000 !important; } /* Hamburger menü siyah oldu */
+    .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: #ffffff !important; border-bottom: 1px solid #eee !important; z-index: 1000; }
+    .hamburger span { background: #000 !important; }
 
-    /* Ürün Kartları */
-    .hero-container { width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; border: 1px solid #eee; transition: 0.4s; position: relative; }
+    /* Ürün Kartları Fix */
+    .hero-container { width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid #eee; transition: 0.4s; position: relative; line-height: 0; }
     .hero-container:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .hero-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-container img { width: 100%; height: auto; display: block; }
     
-    .hero-label { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 14px; text-transform: uppercase; }
+    .hero-label { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 14px; text-transform: uppercase; line-height: normal; }
 
     .cart-item-img { width: 60px; height: 60px; border-radius: 8px; background: #f9f9f9; object-fit: contain; border: 1px solid #eee; }
   </style>
@@ -41,7 +41,8 @@
 
 <header class="navbar">
   <div class="nav-left">
-    <img src="logo1616.png" alt="BLI Logo" style="filter: invert(0);"> </div>
+    <img src="logo1616.png" alt="BLI Logo" style="height: 42px;"> 
+  </div>
   <div class="nav-right">
     <div class="cart-wrapper" id="cartBtn">
       <i class="fa-solid fa-cart-shopping nav-icon"></i>
@@ -54,36 +55,36 @@
   </div>
 </header>
 
-<nav class="side-menu" id="sideMenu" style="background: #fff;">
-  <a href="#" style="color:#000;">Giriş Yap</a>
-  <a href="#" style="color:#000;">Kayıt Ol</a>
-  <a href="ürünler/" style="color:#000;">Ürünlerimiz</a>
-  <a href="basvuru/index.html" id="nav-basvuru" style="font-weight: bold; color:#000 !important;">Başvuru Yap</a>
-  <a href="javascript:void(0)" id="nav-durum" style="color: #888888; font-weight: bold; display: none;">Başvuruyu Görüntüle</a>
-  <a href="#" style="color:#000;">Destek</a>
+<nav class="side-menu" id="sideMenu" style="background: #fff; position: fixed; top: 64px; right: -260px; width: 240px; height: 100%; transition: 0.4s; z-index: 900; padding: 20px; display: flex; flex-direction: column; gap: 15px; border-left: 1px solid #eee;">
+  <a href="#" style="color:#000; text-decoration: none;">Giriş Yap</a>
+  <a href="#" style="color:#000; text-decoration: none;">Kayıt Ol</a>
+  <a href="ürünler/" style="color:#000; text-decoration: none;">Ürünlerimiz</a>
+  <a href="basvuru/index.html" id="nav-basvuru" style="font-weight: bold; color:#000 !important; text-decoration: none;">Başvuru Yap</a>
+  <a href="javascript:void(0)" id="nav-durum" style="color: #888888; font-weight: bold; display: none; text-decoration: none;">Başvuruyu Görüntüle</a>
+  <a href="#" style="color:#000; text-decoration: none;">Destek</a>
 </nav>
 
-<div class="cart-sidebar" id="cartSidebar" style="background: #ffffff; color: #000000; border-left: 1px solid #eee;">
-    <div class="cart-header" style="border-bottom: 1px solid #eee;">
-        <h3 style="color: #000;">SEPETİM</h3>
-        <i class="fa-solid fa-xmark close-cart" id="closeCart" style="color: #000; cursor: pointer;"></i>
+<div class="cart-sidebar" id="cartSidebar" style="position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #ffffff; color: #000000; border-left: 1px solid #eee; z-index: 2000; transition: 0.4s; padding: 24px;">
+    <div class="cart-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
+        <h3 style="margin: 0;">SEPETİM</h3>
+        <i class="fa-solid fa-xmark close-cart" id="closeCart" style="cursor: pointer; font-size: 20px;"></i>
     </div>
     <div class="cart-content"></div>
 </div>
 
-<main style="max-width: 900px; margin: 100px auto 0; padding: 0 20px 100px; text-align: center; z-index: 10; min-height: 100vh;">
+<main style="max-width: 900px; margin: 100px auto 0; padding: 0 20px 100px; text-align: center;">
   
-  <a href="ürünler/mouse/bliv1pro/index.html" style="text-decoration: none; display: block; margin-bottom: 40px; width: 100%;">
+  <a href="ürünler/mouse/bliv1pro/index.html" style="text-decoration: none; display: block; margin-bottom: 40px;">
     <div class="hero-container">
       <img src="v1pro-banner.png" alt="V1 PRO">
-      <div class="hero-label"<span style="color: #007bff; margin-left: 5px;"</span></div>
+      <div class="hero-label">V1 PRO <span style="color: #007bff; margin-left: 5px;">YENİ</span></div>
     </div>
   </a>
 
-  <a href="ürünler/forma/classic/index.html" style="text-decoration: none; display: block; width: 100%;">
+  <a href="ürünler/forma/classic/index.html" style="text-decoration: none; display: block;">
     <div class="hero-container">
-      <img src="b_Sağ_alttaki_gemini_f.jpeg"
-      <div class="hero-label" <span style="color: #007bff; margin-left: 5px;"</span></div>
+      <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Classic Jersey">
+      <div class="hero-label">CLASSIC JERSEY <span style="color: #007bff; margin-left: 5px;">STOKLARDA</span></div>
     </div>
   </a>
 
@@ -117,8 +118,8 @@
                 <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
                     <img src="${guvenliResim}" class="cart-item-img">
                     <div style="flex:1;">
-                        <p style="font-weight:bold; font-size:14px; margin:0;">${item.ad}</p>
-                        <p style="color:#888; font-size:13px; margin:5px 0 0 0;">${item.fiyat} TL</p>
+                        <p style="font-weight:bold; font-size:14px; margin:0; text-align:left;">${item.ad}</p>
+                        <p style="color:#888; font-size:13px; margin:5px 0 0 0; text-align:left;">${item.fiyat} TL</p>
                     </div>
                 </div>`;
           });
@@ -138,13 +139,31 @@
   const cartSidebar = document.getElementById("cartSidebar");
   const closeCart = document.getElementById("closeCart");
 
-  if(hamburger) hamburger.addEventListener("click", (e) => { e.stopPropagation(); sideMenu.classList.toggle("open"); cartSidebar.classList.remove("open"); });
-  if(cartBtn) cartBtn.addEventListener("click", (e) => { e.stopPropagation(); cartSidebar.classList.toggle("open"); sideMenu.classList.remove("open"); });
-  if(closeCart) closeCart.addEventListener("click", () => { cartSidebar.classList.remove("open"); });
+  if(hamburger) {
+    hamburger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      sideMenu.style.right = sideMenu.style.right === "0px" ? "-260px" : "0px";
+      cartSidebar.style.right = "-350px";
+    });
+  }
+
+  if(cartBtn) {
+    cartBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      cartSidebar.style.right = cartSidebar.style.right === "0px" ? "-350px" : "0px";
+      sideMenu.style.right = "-260px";
+    });
+  }
+
+  if(closeCart) {
+    closeCart.addEventListener("click", () => {
+      cartSidebar.style.right = "-350px";
+    });
+  }
 
   document.addEventListener("click", (e) => {
-    if (sideMenu && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) sideMenu.classList.remove("open");
-    if (cartSidebar && !cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.classList.remove("open");
+    if (sideMenu && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) sideMenu.style.right = "-260px";
+    if (cartSidebar && !cartSidebar.contains(e.target) && !cartBtn.contains(e.target)) cartSidebar.style.right = "-350px";
   });
 
   window.onload = function() {
