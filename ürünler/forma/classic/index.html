@@ -4,121 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classic Jersey | BLI Esports</title>
+    <link rel="icon" type="image/png" href="../../../logo1616.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --accent: #ff00ea; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #fff; color: #000; overflow-x: hidden; }
+        body { background: #ffffff; color: #000; overflow-x: hidden; }
 
-        .product-page { display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto; }
+        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 60px auto; }
 
-        /* GALERİ */
-        .gallery-wrapper { width: 100%; position: relative; }
-        .main-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-        .main-slider::-webkit-scrollbar { display: none; }
-        .main-slider img { width: 100%; flex-shrink: 0; scroll-snap-align: start; object-fit: contain; background: #f9f9f9; }
+        /* Galeri Alanı */
+        .gallery-container { display: flex; flex: 1.2; gap: 20px; }
+        
+        /* PC Yan Fotolar (Küçük resimler) */
+        .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
+        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f9f9f9; padding: 5px; border: 1px solid #eee; transition: 0.3s; }
+        .thumb:hover { border-color: #000; }
 
-        .dots { display: flex; justify-content: center; gap: 8px; padding: 15px 0; }
-        .dot { width: 8px; height: 8px; background: #ddd; border-radius: 50%; }
+        /* Ana Ekran / Mobil Slider */
+        .main-display { 
+            flex: 1; 
+            background: #f9f9f9; 
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            min-height: 500px; 
+            overflow: hidden;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
+            padding: 20px;
+        }
+
+        /* Mobil Noktalar (Dots) */
+        .dots-container {
+            display: none; 
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
         .dot.active { background: #000; width: 20px; border-radius: 10px; }
 
-        /* DETAYLAR */
-        .details { padding: 20px; }
-        .brand-text { color: #888; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-        .p-title { font-size: 32px; font-weight: 800; margin: 10px 0; }
-        .p-price { font-size: 26px; font-weight: bold; color: var(--accent); margin-bottom: 25px; }
+        /* Ürün Bilgileri */
+        .product-info { flex: 1; padding: 0 40px; min-width: 350px; }
+        .brand-tag { color: #888; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px;}
+        .product-title { font-size: 36px; font-weight: 800; margin: 0 0 10px 0; color: #000; }
+        .product-price { font-size: 28px; font-weight: bold; margin-bottom: 30px; color: #d112bb; } 
 
-        /* BEDEN */
-        .size-label { font-size: 12px; font-weight: bold; color: #888; margin-bottom: 10px; }
-        .size-list { display: flex; gap: 10px; margin-bottom: 30px; }
-        .size-btn { width: 50px; height: 50px; border: 2px solid #eee; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; }
-        .size-btn.active { border-color: #000; background: #fcfcfc; }
+        /* Beden Seçimi */
+        .option-label { font-weight: bold; margin-bottom: 15px; display: block; color: #000; font-size: 14px; text-transform: uppercase;}
+        .size-options { display: flex; gap: 12px; margin-bottom: 40px; }
+        .size-box { width: 50px; height: 50px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; background: #fff; font-weight: bold; }
+        .size-box.active { border-color: #000; border-width: 2px; background: #f0f0f0; }
 
-        /* BUTONLAR */
-        .btn-box { display: flex; flex-direction: column; gap: 12px; }
-        .main-button { width: 100%; padding: 18px; border-radius: 14px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        .pre-order { background: #000; color: #fff; border: none; } /* ÖN SİPARİŞ ANA BUTON */
-        .fav-btn { background: none; border: 1px solid #eee; color: #666; font-size: 14px; }
+        /* Butonlar */
+        .pre-order-btn { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .pre-order-btn:hover { background: #333; }
+        
+        .fav-btn { width: 100%; padding: 18px; background: #fff; color: #666; border: 1px solid #ddd; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .fav-btn:hover { border-color: #000; color: #000; }
 
-        /* PC GÖRÜNÜMÜ */
-        @media (min-width: 1024px) {
-            .product-page { flex-direction: row; padding: 80px 50px; gap: 60px; }
-            .gallery-wrapper { flex: 1; display: flex; flex-direction: row-reverse; gap: 20px; }
-            .main-slider { flex-direction: column; overflow: visible; flex: 1; }
-            .main-slider img { width: 100%; margin-bottom: 20px; border-radius: 15px; }
-            .dots { display: none; }
-            .details { flex: 0.7; position: sticky; top: 100px; height: fit-content; }
+        /* MOBİL AYARLAR */
+        @media (max-width: 968px) {
+            .product-page { flex-direction: column; margin: 0; padding: 10px; }
+            .gallery-container { flex-direction: column; }
+            .side-thumbnails { display: none; } 
+            .dots-container { display: flex; } 
+            .main-display { min-height: 400px; border-radius: 0; margin: -10px -10px 20px -10px; }
+            .product-info { padding: 20px 10px; }
         }
     </style>
 </head>
 <body>
 
 <div class="product-page">
-    <div class="gallery-wrapper">
-        <div class="main-slider" id="slider">
-            <img src="1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" alt="Ön">
-            <img src="IMG_20260313_164559.png" alt="Arka">
+    <div class="gallery-container">
+        <div class="side-thumbnails">
+            <img src="1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" class="thumb" onclick="goToSlide(0)">
+            <img src="IMG_20260313_164559.png" class="thumb" onclick="goToSlide(1)">
         </div>
-        <div class="dots">
-            <div class="dot active"></div>
-            <div class="dot"></div>
+
+        <div class="main-display" id="sliderContainer">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <img src="1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" alt="Classic Jersey Ön">
+                <img src="IMG_20260313_164559.png" alt="Classic Jersey Arka">
+            </div>
+            
+            <div class="dots-container">
+                <div class="dot active" onclick="goToSlide(0)"></div>
+                <div class="dot" onclick="goToSlide(1)"></div>
+            </div>
         </div>
     </div>
 
-    <div class="details">
-        <p class="brand-text">BLI PERFORMANCE</p>
-        <h1 class="p-title">Classic Jersey</h1>
-        <p class="p-price">899,00₺</p>
+    <div class="product-info">
+        <span class="brand-tag">BLI PERFORMANCE</span>
+        <h1 class="product-title">Classic Jersey</h1>
+        <div class="product-price">899,00₺</div>
 
-        <p class="size-label">BEDEN SEÇİMİ</p>
-        <div class="size-list">
-            <div class="size-btn" onclick="selSize(this, 'S')">S</div>
-            <div class="size-btn" onclick="selSize(this, 'M')">M</div>
-            <div class="size-btn active" onclick="selSize(this, 'L')">L</div>
-            <div class="size-btn" onclick="selSize(this, 'XL')">XL</div>
+        <span class="option-label">Beden Seçimi</span>
+        <div class="size-options">
+            <div class="size-box" onclick="selectSize(this, 'S')">S</div>
+            <div class="size-box" onclick="selectSize(this, 'M')">M</div>
+            <div class="size-box active" onclick="selectSize(this, 'L')">L</div>
+            <div class="size-box" onclick="selectSize(this, 'XL')">XL</div>
         </div>
 
-        <div class="btn-box">
-            <button class="main-button pre-order" onclick="preOrder()">ÖN SİPARİŞ VER</button>
-            <button class="main-button fav-btn"><i class="fa-regular fa-heart"></i> Favorilere Ekle</button>
-        </div>
-
-        <p style="margin-top: 30px; color: #666; font-size: 14px; line-height: 1.6;">
-            BLI Esports resmi forması. Gelişmiş kumaş teknolojisi ile üstün performans için tasarlandı.
+        <button class="pre-order-btn" onclick="onSiparisVer()">ÖN SİPARİŞ VER</button>
+        <button class="fav-btn">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
+        
+        <p style="margin-top: 30px; line-height: 1.6; color: #555; font-size: 14px;">
+            <b>BLI Esports resmi forması.</b> Gelişmiş kumaş teknolojisi, hassas kesim ve dayanıklı baskı kalitesi ile üstün performans için tasarlandı. Profesyonel oyuncuların tercihi.
         </p>
     </div>
 </div>
 
 <script>
-    let bdn = "L";
+    const wrapper = document.getElementById('sliderWrapper');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    let secilenBeden = "L";
 
-    function selSize(el, s) {
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    function selectSize(el, beden) {
+        document.querySelectorAll('.size-box').forEach(box => box.classList.remove('active'));
         el.classList.add('active');
-        bdn = s;
+        secilenBeden = beden;
     }
 
-    function preOrder() {
-        // Sepete ekle
-        let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-        sepet.push({
-            id: 'classic-jersey-' + bdn,
-            ad: 'Classic Jersey (' + bdn + ')',
-            fiyat: 899,
-            resim: 'ürünler/forma/classic/1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg'
-        });
-        localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+    function goToSlide(index) {
+        currentSlide = index;
+        const offset = index * -100;
+        wrapper.style.transform = `translateX(${offset}%)`;
         
-        // Bildirim ver ve ana sayfaya fırlat
-        alert(bdn + " Beden Sepete Eklendi! Ana sayfaya yönlendiriliyorsun kral.");
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[index].classList.add('active');
+    }
+
+    function onSiparisVer() {
+        let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+        sepet.push({ 
+            ad: 'Classic Jersey (' + secilenBeden + ')', 
+            fiyat: 899, 
+            resim: 'ürünler/forma/classic/1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg',
+            beden: secilenBeden 
+        });
+        
+        localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+        alert(secilenBeden + " Beden sepete eklendi! Ana sayfaya uçuyorsun...");
         window.location.href = "../../../index.html"; 
     }
 
-    const sld = document.getElementById('slider');
-    const dts = document.querySelectorAll('.dot');
-    sld.addEventListener('scroll', () => {
-        let idx = Math.round(sld.scrollLeft / sld.offsetWidth);
-        dts.forEach((d, i) => d.classList.toggle('active', i === idx));
+    // Swipe desteği
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const slider = document.getElementById('sliderContainer');
+    slider.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    slider.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50 && currentSlide < 1) goToSlide(1);
+        if (touchEndX - touchStartX > 50 && currentSlide > 0) goToSlide(0);
     });
 </script>
 
