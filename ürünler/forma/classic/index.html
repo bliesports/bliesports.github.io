@@ -4,134 +4,105 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Classic Jersey | BLI Esports</title>
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
   <style>
-    /* TEMEL AYARLAR */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #fff; color: #000; font-family: 'Segoe UI', Arial, sans-serif; overflow-x: hidden; }
+    :root { --main-bg: #ffffff; --text-color: #000000; --accent: #ff00ea; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: var(--main-bg); color: var(--text-color); }
 
-    /* NAVBAR */
-    .navbar { 
-        position: fixed; top: 0; width: 100%; height: 64px; 
-        background: #fff; border-bottom: 1px solid #eee; 
-        display: flex; align-items: center; justify-content: space-between; 
-        padding: 0 20px; z-index: 1000; 
-    }
+    /* NAVBAR GİBİ ÜST ALAN */
+    .header { padding: 20px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; background: #fff; z-index: 100; border-bottom: 1px solid #eee; }
 
-    /* ÜRÜN KONTEYNER */
-    .product-container {
-        max-width: 1100px;
-        margin: 80px auto 0;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-    }
+    /* MOUSE SAYFASI GİBİ SLIDER YAPISI */
+    .product-slider { width: 100%; margin-top: 64px; position: relative; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .product-slider::-webkit-scrollbar { display: none; }
+    .product-slider img { width: 100%; flex-shrink: 0; scroll-snap-align: start; object-fit: cover; }
 
-    /* GALERİ (MOBİLDE YANA KAYDIRMALI) */
-    .gallery {
-        display: flex;
-        gap: 10px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        margin-bottom: 20px;
-    }
-    .gallery::-webkit-scrollbar { display: none; }
-    
-    .gallery img {
-        width: 100%;
-        flex-shrink: 0;
-        scroll-snap-align: start;
-        border-radius: 15px;
-        border: 1px solid #eee;
-        background: #f9f9f9;
-    }
+    /* SLIDER NOKTALARI */
+    .dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
+    .dot { width: 8px; height: 8px; background: #ddd; border-radius: 50%; }
+    .dot.active { background: #000; width: 20px; border-radius: 10px; transition: 0.3s; }
 
-    /* BİLGİ ALANI */
-    .product-details { padding: 10px; }
-    .title { font-size: 26px; font-weight: bold; margin-bottom: 5px; }
-    .price { font-size: 20px; color: #444; margin-bottom: 20px; }
+    /* ÜRÜN DETAYLARI */
+    .details { padding: 20px; }
+    .brand { color: #888; font-size: 12px; letter-spacing: 1px; font-weight: bold; text-transform: uppercase; }
+    .product-name { font-size: 32px; font-weight: 800; margin: 5px 0; }
+    .price { font-size: 24px; font-weight: bold; color: var(--accent); margin-bottom: 25px; }
 
-    /* BEDEN BUTONLARI */
-    .size-box { margin-bottom: 25px; }
-    .size-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; display: block; color: #888; }
-    .sizes { display: flex; gap: 10px; }
-    .size-btn {
-        width: 45px; height: 45px; border: 1px solid #ddd; background: #fff;
-        border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
-    }
-    .size-btn.active { background: #000; color: #fff; border-color: #000; }
+    /* BEDEN SEÇİMİ (MOUSE RENK SEÇİMİ GİBİ) */
+    .section-title { font-size: 12px; font-weight: bold; color: #888; margin-bottom: 10px; text-transform: uppercase; }
+    .size-options { display: flex; gap: 10px; margin-bottom: 30px; }
+    .size-card { width: 50px; height: 50px; border: 2px solid #eee; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+    .size-card.active { border-color: #000; background: #fafafa; }
 
-    /* SEPETE EKLE BUTONU */
-    .add-to-cart {
-        width: 100%; padding: 18px; background: #000; color: #fff;
-        border: none; border-radius: 12px; font-weight: bold; font-size: 16px;
-        cursor: pointer; transition: 0.3s;
-    }
-    .add-to-cart:hover { transform: scale(0.98); background: #222; }
-
-    /* PC GÖRÜNÜMÜ */
-    @media (min-width: 768px) {
-        .product-container { flex-direction: row; gap: 50px; align-items: flex-start; }
-        .gallery { flex: 1; display: grid; grid-template-columns: 1fr 1fr; overflow: visible; }
-        .product-details { flex: 0.8; position: sticky; top: 100px; }
-    }
+    /* BUTONLAR */
+    .action-buttons { display: flex; flex-direction: column; gap: 12px; }
+    .btn-main { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    .btn-preorder { width: 100%; padding: 15px; background: #fff; color: #000; border: 2px solid #000; border-radius: 12px; font-size: 14px; font-weight: bold; cursor: pointer; }
+    .btn-fav { width: 100%; background: none; border: none; color: #666; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
   </style>
 </head>
 <body>
 
-<header class="navbar">
-    <a href="../../../index.html"><img src="../../../logo1616.png" style="height: 40px;"></a>
-    <div style="position: relative;">
-        <i class="fa-solid fa-cart-shopping" style="font-size: 20px;"></i>
-        <span id="cart-count" style="position:absolute; top:-10px; right:-10px; background:red; color:white; border-radius:50%; padding:2px 6px; font-size:10px;">0</span>
+<div class="header">
+    <a href="../../../index.html"><img src="../../../logo1616.png" style="height: 35px;"></a>
+    <i class="fa-solid fa-cart-shopping"></i>
+</div>
+
+<div class="product-slider" id="slider">
+    <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Ön">
+    <img src="IMG_20260313_164559.png" alt="Arka">
+</div>
+
+<div class="dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+</div>
+
+<div class="details">
+    <p class="brand">BLI PERFORMANCE</p>
+    <h1 class="product-name">Classic Jersey</h1>
+    <p class="price">899,00₺</p>
+
+    <p class="section-title">Beden Seçimi</p>
+    <div class="size-options">
+        <div class="size-card" onclick="selectSize(this, 'S')">S</div>
+        <div class="size-card" onclick="selectSize(this, 'M')">M</div>
+        <div class="size-card active" onclick="selectSize(this, 'L')">L</div>
+        <div class="size-card" onclick="selectSize(this, 'XL')">XL</div>
     </div>
-</header>
 
-<div class="product-container">
-    <div class="gallery">
-        <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Ön">
-        <img src="IMG_20260313_164559.png" alt="Arka">
+    <div class="action-buttons">
+        <button class="btn-main" onclick="addToCart()">Sepete Ekle</button>
+        <button class="btn-preorder">Ön Sipariş Ver</button>
+        <button class="btn-fav"><i class="fa-regular fa-heart"></i> Favorilere Ekle</button>
     </div>
 
-    <div class="product-details">
-        <h1 class="title">Classic Jersey</h1>
-        <p class="price">899.00 TL</p>
-
-        <div class="size-box">
-            <span class="size-title">BEDEN SEÇİN</span>
-            <div class="sizes">
-                <button class="size-btn" onclick="setS(this, 'S')">S</button>
-                <button class="size-btn" onclick="setS(this, 'M')">M</button>
-                <button class="size-btn" onclick="setS(this, 'L')">L</button>
-                <button class="size-btn" onclick="setS(this, 'XL')">XL</button>
-            </div>
-        </div>
-
-        <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 30px;">
-            BLI Esports resmi forması. Yüksek performanslı nefes alabilen kumaş teknolojisi ile üretilmiştir.
-        </p>
-
-        <button class="add-to-cart" onclick="addToCart()">SEPETE EKLE</button>
-    </div>
+    <p style="margin-top: 30px; color: #666; font-size: 14px; line-height: 1.6;">
+        BLI Esports resmi forması. Gelişmiş kumaş teknolojisi, hassas kesim ve dayanıklı baskı kalitesi ile üstün performans için tasarlandı.
+    </p>
 </div>
 
 <script>
-    let selectedSize = "";
-
-    function setS(btn, size) {
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedSize = size;
+    function selectSize(el, size) {
+        document.querySelectorAll('.size-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        console.log("Seçilen beden:", size);
     }
 
     function addToCart() {
-        if(!selectedSize) { alert("Beden seçmedin kral!"); return; }
-        alert(selectedSize + " beden sepete eklendi!");
-        // Buraya sepet mantığını ekleyebilirsin
+        alert("Sepete eklendi kral!");
     }
+
+    // Slider noktaları için basit takip
+    const slider = document.getElementById('slider');
+    const dots = document.querySelectorAll('.dot');
+    slider.addEventListener('scroll', () => {
+        const index = Math.round(slider.scrollLeft / window.innerWidth);
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    });
 </script>
 
 </body>
