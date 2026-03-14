@@ -81,7 +81,6 @@
 
         .nav-tools { display: flex; align-items: center; gap: 8px; }
 
-        /* HAMBURGER BUTON FIX: Dokunmatik alanı büyütülmüş ve 'temassızlık' giderilmiş */
         .tool-btn {
             width: 55px; height: 55px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -98,7 +97,7 @@
         }
 
         .hamburger::after {
-            content: ''; position: absolute; inset: -5px; /* Tıklama alanını genişletir */
+            content: ''; position: absolute; inset: -5px;
         }
 
         .hamburger span {
@@ -177,7 +176,7 @@
         .banner-stack { display: grid; grid-template-columns: 1fr; gap: 35px; }
 
         .pro-banner {
-            width: 100%; aspect-ratio: 16 / 9; /* FIXED RATIO */
+            width: 100%; aspect-ratio: 16 / 9;
             border-radius: var(--card-radius);
             overflow: hidden; background: #000;
             position: relative; cursor: pointer;
@@ -321,7 +320,6 @@
         }
         .form-input:focus { border-color: var(--primary-black); background: #fff; }
 
-        /* Toast Master */
         #toast-master { position: fixed; bottom: 40px; right: 40px; z-index: 9999; }
         .toast-msg {
             background: var(--primary-black); color: var(--pure-white); padding: 22px 35px;
@@ -496,7 +494,6 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Veritabanı ve Yerel Sepet
     const PRODUCT_DB = [
         { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", keywords: "v1 pro mouse fare" },
         { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", keywords: "forma jersey tshirt" }
@@ -504,7 +501,6 @@
 
     let userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
 
-    // Yükleme Ekranı ve Başlangıç
     window.addEventListener('load', () => {
         let progress = 0;
         const bar = document.getElementById('load-progress-bar');
@@ -525,13 +521,13 @@
         refreshCartDisplay();
     });
 
-    // --- 2. SEPET MOTORU (SENİN SİLDİĞİN KRİTİK YER) ---
+    // --- 2. SEPET MOTORU ---
     function addToCart(id, name, price, img) {
         const product = { id, name, price, img };
         userCart.push(product);
         refreshCartDisplay();
         pushNotification(name + " sepete eklendi kral!");
-        openSidePanel('cartPanel'); // Ürün eklenince sepeti açar
+        openSidePanel('cartPanel');
     }
 
     function refreshCartDisplay() {
@@ -592,7 +588,6 @@
         }
     }
 
-// ... (Senin mevcut pushNotification fonksiyonun bittiği yer) ...
     function pushNotification(msg) {
         const toastMaster = document.getElementById('toast-master');
         if(toastMaster) {
@@ -604,7 +599,12 @@
         }
     }
 
-    // --- TAM BURAYA YAPIŞTIR ---
+    // --- SADECE BUNLARI EKLEDİM ---
+    function initCheckout() {
+        // Ödeme adımına geçince sepet sayfasına yollar
+        window.location.href = "cart/index.html";
+    }
+
     window.addEventListener('focus', () => {
         userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
         refreshCartDisplay();
