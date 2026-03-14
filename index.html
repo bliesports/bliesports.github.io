@@ -9,318 +9,485 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* ----------------------------------------------------------------
-           1. MOUSE İMLECİ (SADE & STABİL)
+           1. ROOT & RESET
         ------------------------------------------------------------------- */
-        * { cursor: none !important; }
-        #custom-cursor {
-            position: fixed; width: 8px; height: 8px; background: #000;
-            border-radius: 50%; pointer-events: none; z-index: 10000;
+        :root {
+            --red: #ff3333;
+            --black: #000;
+            --white: #fff;
+            --gray: #f5f5f5;
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        #cursor-follower {
-            position: fixed; width: 30px; height: 30px; border: 1px solid rgba(0,0,0,0.3);
-            border-radius: 50%; pointer-events: none; z-index: 9999;
-            transition: transform 0.1s ease-out;
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+        body { font-family: 'Inter', sans-serif; background: var(--white); overflow-x: hidden; color: var(--black); }
+        a { text-decoration: none; color: inherit; }
+        li { list-style: none; }
+
+        /* ----------------------------------------------------------------
+           2. MOUSE IMLECI (STABIL)
+        ------------------------------------------------------------------- */
+        #c-dot {
+            position: fixed; width: 6px; height: 6px; background: #000;
+            border-radius: 50%; pointer-events: none; z-index: 100000;
+        }
+        #c-ring {
+            position: fixed; width: 30px; height: 30px; border: 1px solid rgba(0,0,0,0.2);
+            border-radius: 50%; pointer-events: none; z-index: 99999;
+            transition: transform 0.08s ease-out;
         }
 
         /* ----------------------------------------------------------------
-           2. AÇILIŞ EKRANI (BEYAZ + SİYAH ÇUBUK)
+           3. AÇILIŞ EKRANI (BEYAZ + SİYAH DOLAN ÇUBUK)
         ------------------------------------------------------------------- */
-        #loading-screen {
-            position: fixed; inset: 0; background: #fff; z-index: 99999;
+        #preloader {
+            position: fixed; inset: 0; background: #fff; z-index: 999999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .progress-container { width: 250px; height: 2px; background: #eee; margin-top: 20px; overflow: hidden; }
-        #progress-bar { width: 0%; height: 100%; background: #000; transition: width 0.3s; }
+        .loader-logo { height: 50px; margin-bottom: 25px; opacity: 0; animation: fadeIn 0.5s forwards; }
+        .load-bar-bg { width: 180px; height: 2px; background: #eee; border-radius: 10px; overflow: hidden; }
+        #load-bar-fill { width: 0%; height: 100%; background: #000; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ----------------------------------------------------------------
-           3. GENEL STİLLER
+           4. NAVBAR
         ------------------------------------------------------------------- */
-        :root { --red: #ff3333; --black: #000; --white: #fff; --gray: #f9f9f9; }
-        body { font-family: 'Inter', sans-serif; background: #fff; overflow-x: hidden; }
-
         .navbar {
-            position: fixed; top: 0; width: 100%; height: 90px;
+            position: fixed; top: 0; width: 100%; height: 100px;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 6%; z-index: 2000; background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px); border-bottom: 1px solid #eee;
+            padding: 0 6%; z-index: 2000; transition: var(--transition);
         }
-        .nav-logo img { height: 50px; }
+        .navbar.scrolled {
+            height: 80px; background: rgba(255,255,255,0.95); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-logo img { height: 55px; transition: var(--transition); }
+        .navbar.scrolled .nav-logo img { height: 45px; }
 
-        .nav-tools { display: flex; gap: 15px; }
-        .tool-icon {
-            width: 45px; height: 45px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-size: 18px;
+        .nav-tools { display: flex; align-items: center; gap: 10px; }
+        .btn-circle {
+            width: 50px; height: 50px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 20px;
             transition: 0.3s; position: relative;
         }
-        .tool-icon:hover { background: var(--gray); color: var(--red); }
+        .btn-circle:hover { background: var(--gray); color: var(--red); }
         .badge {
-            position: absolute; top: 5px; right: 5px; background: var(--red);
+            position: absolute; top: 8px; right: 8px; background: var(--red);
             color: #fff; font-size: 10px; font-weight: 900; width: 18px; height: 18px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            border: 2px solid #fff;
         }
 
         /* ----------------------------------------------------------------
-           4. PANELLER & MODALLAR
+           5. SIDE PANELLER (SEPET & MENÜ)
         ------------------------------------------------------------------- */
-        .panel-dim { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 3000; display: none; }
+        .dimmer {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(6px); z-index: 3000; display: none; opacity: 0;
+        }
         .side-panel {
-            position: fixed; top: 0; right: -100%; width: 450px; height: 100vh;
-            background: #fff; z-index: 4000; transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 50px; display: flex; flex-direction: column;
+            position: fixed; top: 0; right: -100%; width: 480px; height: 100vh;
+            background: #fff; z-index: 4000; transition: var(--transition);
+            padding: 60px 45px; display: flex; flex-direction: column;
+            box-shadow: -10px 0 50px rgba(0,0,0,0.05);
         }
         .side-panel.active { right: 0; }
+        @media (max-width: 500px) { .side-panel { width: 100%; } }
 
-        .modal-overlay {
+        .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .panel-head h2 { font-family: 'Orbitron'; font-weight: 900; font-size: 24px; }
+
+        /* Sepet Ürünleri */
+        #cart-content { flex: 1; overflow-y: auto; padding-right: 10px; }
+        .cart-card {
+            display: flex; gap: 20px; padding: 20px; background: var(--gray);
+            border-radius: 20px; margin-bottom: 15px; position: relative;
+            animation: slideUp 0.4s ease forwards;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .cart-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; }
+        .cart-card-info h4 { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
+        .cart-card-info b { font-family: 'Orbitron'; color: var(--red); font-size: 16px; }
+        .btn-del {
+            position: absolute; top: 20px; right: 20px; border: none; background: none;
+            color: #bbb; transition: 0.3s;
+        }
+        .btn-del:hover { color: var(--red); }
+
+        .cart-footer { margin-top: auto; padding-top: 30px; border-top: 1px dashed #ddd; }
+        .total-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .total-box span { font-family: 'Orbitron'; font-size: 28px; font-weight: 900; }
+
+        /* ----------------------------------------------------------------
+           6. AUTH MODAL (GELİŞMİŞ)
+        ------------------------------------------------------------------- */
+        .modal-bg {
             position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 9000; display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(15px);
         }
-        .modal-card { background: #fff; width: 420px; border-radius: 35px; padding: 50px; position: relative; }
+        .modal-card {
+            background: #fff; width: 450px; border-radius: 40px; padding: 60px;
+            position: relative;
+        }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 11px; font-weight: 900; color: #888; margin-bottom: 8px; }
+        .inp {
+            width: 100%; padding: 18px; border-radius: 15px; border: 2px solid transparent;
+            background: var(--gray); font-weight: 700; transition: 0.3s;
+        }
+        .inp:focus { border-color: #000; background: #fff; }
 
-        .input-box {
-            width: 100%; padding: 18px; border-radius: 12px; border: 2px solid transparent;
-            background: var(--gray); margin-bottom: 15px; font-weight: 600;
+        .btn-black {
+            width: 100%; padding: 22px; background: #000; color: #fff; border: none;
+            border-radius: 18px; font-family: 'Orbitron'; font-weight: 900; transition: 0.3s;
         }
-        .btn-main {
-            width: 100%; padding: 20px; background: #000; color: #fff; border: none;
-            border-radius: 15px; font-family: 'Orbitron'; font-weight: 900; transition: 0.3s;
-        }
-        .btn-main:hover { background: var(--red); transform: translateY(-3px); }
+        .btn-black:hover { background: var(--red); transform: translateY(-5px); }
 
         /* ----------------------------------------------------------------
-           5. MAĞAZA İÇERİĞİ (MOUSE & FORMA)
+           7. ANA İÇERİK (SADE & LİNK ODAKLI)
         ------------------------------------------------------------------- */
-        .content-wrap { margin-top: 130px; padding: 0 6% 80px; }
+        .engine-container { margin-top: 140px; padding: 0 6% 100px; }
         
-        .section-title {
-            font-family: 'Orbitron'; font-size: 24px; font-weight: 900;
-            margin-bottom: 30px; border-left: 5px solid var(--red); padding-left: 15px;
+        .cat-title {
+            font-family: 'Orbitron'; font-size: 22px; font-weight: 900;
+            margin-bottom: 30px; display: flex; align-items: center; gap: 15px;
         }
+        .cat-title::after { content: ''; flex: 1; height: 1px; background: #eee; }
 
-        .product-banner {
-            width: 100%; border-radius: 30px; overflow: hidden;
-            background: #000; margin-bottom: 50px; position: relative;
+        .banner-box {
+            width: 100%; border-radius: 40px; overflow: hidden;
+            background: #000; margin-bottom: 60px; position: relative;
         }
-        .product-banner img { width: 100%; display: block; transition: 1.5s; }
-        .product-banner:hover img { transform: scale(1.03); }
+        .banner-box img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 2s; }
+        .banner-box:hover img { transform: scale(1.06); }
 
-        /* ----------------------------------------------------------------
-           6. SEPET SİSTEMİ
-        ------------------------------------------------------------------- */
-        #cart-items { flex: 1; overflow-y: auto; }
-        .cart-row {
-            display: flex; gap: 15px; padding: 15px; background: var(--gray);
-            border-radius: 15px; margin-bottom: 10px; align-items: center;
+        /* Toast */
+        #toast-master { position: fixed; bottom: 30px; right: 30px; z-index: 10000; }
+        .toast {
+            background: #000; color: #fff; padding: 20px 30px; border-radius: 20px;
+            font-weight: 800; margin-top: 10px; animation: toastIn 0.5s forwards;
         }
-        .cart-row img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; }
-        .cart-row-info { flex: 1; }
-        .cart-row-info b { font-size: 14px; }
-        .cart-row-info p { color: var(--red); font-weight: 800; font-size: 13px; }
+        @keyframes toastIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
         /* Footer */
-        footer { background: #000; color: #fff; padding: 80px 6% 30px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
-        .footer-col h4 { font-family: 'Orbitron'; color: var(--red); margin-bottom: 20px; font-size: 14px; }
-        .footer-links li { list-style: none; margin-bottom: 12px; color: #555; transition: 0.3s; }
-        .footer-links li:hover { color: #fff; }
+        footer { background: #000; color: #fff; padding: 100px 6% 40px; }
+        .f-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px; }
+        .f-col h4 { font-family: 'Orbitron'; color: var(--red); margin-bottom: 30px; font-size: 14px; }
+        .f-links li { margin-bottom: 15px; color: #555; transition: 0.3s; }
+        .f-links li:hover { color: #fff; transform: translateX(5px); }
     </style>
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
-    <div id="cursor-follower"></div>
+    <div id="c-dot"></div>
+    <div id="c-ring"></div>
 
-    <div id="loading-screen">
-        <img src="logo1616.png" height="50">
-        <div class="progress-container">
-            <div id="progress-bar"></div>
+    <div id="preloader">
+        <img src="logo1616.png" class="loader-logo">
+        <div class="load-bar-bg">
+            <div id="load-bar-fill"></div>
         </div>
     </div>
 
-    <nav class="navbar">
+    <nav class="navbar" id="main-nav">
         <div class="nav-logo" onclick="location.href='index.html'"><img src="logo1616.png"></div>
         <div class="nav-tools">
-            <div class="tool-icon" onclick="openP('cart-panel')">
+            <div class="btn-circle" onclick="toggleSide('cart-panel')">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span class="badge" id="b-count">0</span>
+                <span class="badge" id="cart-badge">0</span>
             </div>
-            <div class="tool-icon" onclick="openP('menu-panel')"><i class="fa-solid fa-bars-staggered"></i></div>
+            <div class="btn-circle" onclick="toggleSide('menu-panel')">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>
         </div>
     </nav>
 
-    <div class="panel-dim" id="dim" onclick="closeP()"></div>
+    <div class="dimmer" id="panel-dim" onclick="closeAll()"></div>
 
     <aside class="side-panel" id="cart-panel">
-        <h2 style="font-family:'Orbitron'; margin-bottom:30px;">SEPETİN</h2>
-        <div id="cart-items"></div>
-        <div style="margin-top:20px; padding-top:20px; border-top:1px solid #eee;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <b>TOPLAM</b>
-                <b id="cart-total" style="font-family:'Orbitron'; font-size:22px;">0.00 TL</b>
+        <div class="panel-head">
+            <h2>SEPETİN</h2>
+            <div class="btn-circle" onclick="closeAll()"><i class="fa-solid fa-xmark"></i></div>
+        </div>
+        <div id="cart-content">
             </div>
-            <button class="btn-main">ÖDEMEYE GEÇ</button>
+        <div class="cart-footer">
+            <div class="total-box">
+                <small style="font-weight:900; color:#aaa;">TOPLAM</small>
+                <span id="total-price">0.00 TL</span>
+            </div>
+            <button class="btn-black" onclick="checkout()">ÖDEME YAP</button>
         </div>
     </aside>
 
     <aside class="side-panel" id="menu-panel">
-        <h2 style="font-family:'Orbitron'; margin-bottom:30px;">MENÜ</h2>
-        <div id="user-area"></div>
-        <ul class="footer-links" style="margin-top:30px;">
+        <div class="panel-head">
+            <h2>MENÜ</h2>
+            <div class="btn-circle" onclick="closeAll()"><i class="fa-solid fa-xmark"></i></div>
+        </div>
+        <div id="user-status"></div>
+        <ul class="f-links" style="margin-top:40px; font-size:18px; font-weight:800;">
             <li onclick="location.href='index.html'">ANA SAYFA</li>
-            <li onclick="location.href='https://bliesports.github.io/%C3%BCr%C3%BCnler/mouse/bliv1pro/'">BLI V1 PRO MOUSE</li>
+            <li onclick="location.href='https://bliesports.github.io/%C3%BCr%C3%BCnler/mouse/bliv1pro/'">V1 PRO MOUSE</li>
             <li onclick="location.href='https://bliesports.github.io/%C3%BCr%C3%BCnler/forma/index.html'">FORMALAR</li>
+            <li onclick="location.href='/basvuru/index.html'">BAŞVURU</li>
         </ul>
     </aside>
 
-    <div class="modal-overlay" id="auth-m">
+    <div class="modal-bg" id="auth-modal">
         <div class="modal-card">
-            <div id="log-view">
-                <h2 style="font-family:'Orbitron'; margin-bottom:20px;">GİRİŞ YAP</h2>
-                <input type="email" id="l-mail" class="input-box" placeholder="E-Posta">
-                <input type="password" id="l-pass" class="input-box" placeholder="Şifre">
-                <button class="btn-main" onclick="handleLogin()">GİRİŞ</button>
-                <p style="text-align:center; margin-top:20px; font-size:12px;">Yoksa? <b onclick="switchA('reg')">Kayıt Ol</b></p>
+            <div class="btn-circle" style="position:absolute; top:30px; right:30px;" onclick="closeModal()">
+                <i class="fa-solid fa-xmark"></i>
             </div>
-            <div id="reg-view" style="display:none;">
-                <h2 style="font-family:'Orbitron'; margin-bottom:20px;">KAYIT OL</h2>
-                <input type="text" id="r-name" class="input-box" placeholder="Ad Soyad">
-                <input type="email" id="r-mail" class="input-box" placeholder="E-Posta">
-                <input type="password" id="r-p1" class="input-box" placeholder="Şifre">
-                <input type="password" id="r-p2" class="input-box" placeholder="Şifre Tekrar">
-                <button class="btn-main" onclick="startOTP()">KOD GÖNDER</button>
+
+            <div id="login-sec">
+                <h2 style="font-family:'Orbitron'; margin-bottom:30px;">GİRİŞ YAP</h2>
+                <div class="input-group">
+                    <label>E-POSTA</label>
+                    <input type="email" id="l-email" class="inp" placeholder="ad@domain.com">
+                </div>
+                <div class="input-group">
+                    <label>ŞİFRE</label>
+                    <input type="password" id="l-pass" class="inp" placeholder="••••••••">
+                </div>
+                <button class="btn-black" onclick="handleLogin()">GİRİŞ YAP</button>
+                <p style="text-align:center; margin-top:25px; font-size:13px; color:#888;">Hesabın yok mu? <b onclick="switchAuth('reg')">Kayıt Ol</b></p>
             </div>
-            <div id="otp-view" style="display:none;">
-                <h2 style="font-family:'Orbitron'; margin-bottom:20px;">DOĞRULA</h2>
-                <input type="text" id="otp-in" class="input-box" placeholder="000000" style="text-align:center; letter-spacing:5px;">
-                <button class="btn-main" onclick="finishReg()">TAMAMLA</button>
+
+            <div id="reg-sec" style="display:none;">
+                <h2 style="font-family:'Orbitron'; margin-bottom:30px;">KAYIT OL</h2>
+                <div class="input-group"><label>AD SOYAD</label><input type="text" id="r-name" class="inp"></div>
+                <div class="input-group"><label>E-POSTA</label><input type="email" id="r-email" class="inp"></div>
+                <div class="input-group"><label>ŞİFRE</label><input type="password" id="r-p1" class="inp"></div>
+                <div class="input-group"><label>ŞİFRE TEKRAR</label><input type="password" id="r-p2" class="inp"></div>
+                <button class="btn-black" onclick="startVerification()">KOD GÖNDER</button>
+                <p style="text-align:center; margin-top:25px; font-size:13px; color:#888;">Zaten üye misin? <b onclick="switchAuth('log')">Giriş Yap</b></p>
+            </div>
+
+            <div id="otp-sec" style="display:none;">
+                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">DOĞRULA</h2>
+                <p style="color:#888; font-size:13px; margin-bottom:30px;">Gmail adresine gelen 6 haneli kodu gir.</p>
+                <input type="text" id="v-code" class="inp" placeholder="000000" style="text-align:center; letter-spacing:8px; font-size:24px;">
+                <button class="btn-black" style="margin-top:20px;" onclick="completeReg()">KAYDI TAMAMLA</button>
             </div>
         </div>
     </div>
 
-    <main class="content-wrap">
+    <main class="engine-container">
         
-        <h3 class="section-title">MOUSE</h3>
-        <div class="product-banner" onclick="location.href='https://bliesports.github.io/%C3%BCr%C3%BCnler/mouse/bliv1pro/'">
-            <img src="v1pro-banner.png">
+        <h3 class="cat-title">MOUSE</h3>
+        <div class="banner-box" onclick="location.href='https://bliesports.github.io/%C3%BCr%C3%BCnler/mouse/bliv1pro/'">
+            <img src="v1pro-banner.png" alt="Mouse">
         </div>
 
-        <h3 class="section-title">FORMALAR VE T-SHIRTLER</h3>
-        <div class="product-banner" onclick="location.href='https://bliesports.github.io/%C3%BCr%C3%BCnler/forma/index.html'">
-            <img src="b_Sağ_alttaki_gemini_f.jpeg">
+        <h3 class="cat-title">FORMALAR VE T-SHIRTLER</h3>
+        <div class="banner-box" onclick="location.href='https://bliesports.github.io/%C3%BCr%C3%BCnler/forma/index.html'">
+            <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Jersey">
         </div>
 
     </main>
 
+    <div id="toast-master"></div>
+
     <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <img src="logo1616.png" height="40" style="filter:invert(1);">
-                <p style="margin-top:15px; color:#444;">BLI Esports Professional Hardware.</p>
-            </div>
-            <div class="footer-col">
-                <h4>HIZLI LİNKLER</h4>
-                <ul class="footer-links">
-                    <li>Hakkımızda</li>
-                    <li>Sipariş Takibi</li>
-                    <li>Destek</li>
-                </ul>
-            </div>
+        <div class="f-grid">
+            <div class="f-col"><img src="logo1616.png" height="45" style="filter:invert(1);"><p style="margin-top:20px; color:#333;">Professional Esports Gear.</p></div>
+            <div class="f-col"><h4>DESTEK</h4><ul class="f-links"><li>Sipariş Takibi</li><li>İade Koşulları</li><li>Gizlilik</li></ul></div>
+            <div class="f-col"><h4>SOSYAL</h4><ul class="f-links"><li>Instagram</li><li>Discord</li><li>X (Twitter)</li></ul></div>
         </div>
-        <p style="margin-top:50px; text-align:center; font-size:12px; color:#222;">&copy; 2026 BLI ESPORTS</p>
+        <p style="margin-top:60px; text-align:center; font-size:11px; color:#222;">&copy; 2026 BLI ESPORTS | TÜM HAKLARI SAKLIDIR.</p>
     </footer>
 
     <script>
-        // --- CONFIG & FIREBASE ---
+        // --- A. CONFIGS ---
         const firebaseConfig = { apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8", authDomain: "bliesports.firebaseapp.com", projectId: "bliesports" };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         emailjs.init("YOUR_PUBLIC_KEY");
 
-        // --- MOUSE TRACKER (FIXED) ---
-        const dot = document.getElementById('custom-cursor');
-        const ring = document.getElementById('cursor-follower');
+        // --- B. MOUSE TRACKING ---
+        const dot = document.getElementById('c-dot');
+        const ring = document.getElementById('c-ring');
         document.addEventListener('mousemove', (e) => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-            ring.style.left = (e.clientX - 11) + 'px';
-            ring.style.top = (e.clientY - 11) + 'px';
+            dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            ring.style.transform = `translate(${e.clientX - 12}px, ${e.clientY - 12}px)`;
         });
 
-        // --- LOADING SİSTEMİ ---
-        window.onload = () => {
-            let bar = document.getElementById('progress-bar');
-            let w = 0;
-            let iv = setInterval(() => {
-                w += 10;
-                bar.style.width = w + '%';
-                if(w >= 100) {
-                    clearInterval(iv);
+        // --- C. PRELOADER LOGIC ---
+        window.addEventListener('load', () => {
+            let bar = document.getElementById('load-bar-fill');
+            let progress = 0;
+            let interval = setInterval(() => {
+                progress += Math.random() * 25;
+                if(progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
                     setTimeout(() => {
-                        document.getElementById('loading-screen').style.display = 'none';
+                        document.getElementById('preloader').style.opacity = '0';
+                        setTimeout(() => document.getElementById('preloader').style.display = 'none', 600);
                     }, 400);
                 }
-            }, 100);
+                bar.style.width = progress + '%';
+            }, 150);
             renderCart();
-        };
+            checkUrlParams();
+        });
 
-        // --- SEPET MOTORU ---
+        // --- D. SEPET MOTORU (TAM STABİL) ---
         let cart = JSON.parse(localStorage.getItem('bli_cart')) || [];
+
         function renderCart() {
-            const container = document.getElementById('cart-items');
-            container.innerHTML = "";
-            let total = 0;
-            cart.forEach((item, i) => {
-                total += item.price;
-                container.innerHTML += `
-                    <div class="cart-row">
-                        <img src="${item.img}">
-                        <div class="cart-row-info"><b>${item.name}</b><p>${item.price} TL</p></div>
-                        <i class="fa-solid fa-trash" onclick="removeI(${i})" style="color:#ddd; cursor:pointer;"></i>
-                    </div>`;
-            });
-            document.getElementById('b-count').innerText = cart.length;
-            document.getElementById('cart-total').innerText = total.toFixed(2) + " TL";
+            const container = document.getElementById('cart-content');
+            const totalEl = document.getElementById('total-price');
+            const badge = document.getElementById('cart-badge');
+            
+            if(cart.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:60px 20px; color:#ccc;"><i class="fa-solid fa-cart-shopping" style="font-size:40px; margin-bottom:15px;"></i><p>Sepetin boş.</p></div>`;
+                totalEl.innerText = "0.00 TL";
+                badge.innerText = "0";
+            } else {
+                container.innerHTML = "";
+                let sum = 0;
+                cart.forEach((item, index) => {
+                    sum += item.price;
+                    container.innerHTML += `
+                        <div class="cart-card">
+                            <img src="${item.img}">
+                            <div class="cart-card-info">
+                                <h4>${item.name}</h4>
+                                <b>${item.price.toFixed(2)} TL</b>
+                            </div>
+                            <button class="btn-del" onclick="removeFromCart(${index})"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>`;
+                });
+                totalEl.innerText = sum.toFixed(2) + " TL";
+                badge.innerText = cart.length;
+            }
             localStorage.setItem('bli_cart', JSON.stringify(cart));
         }
-        function removeI(i) { cart.splice(i,1); renderCart(); }
 
-        // --- UI & AUTH ---
-        function openP(id) { document.getElementById(id).classList.add('active'); document.getElementById('dim').style.display='block'; }
-        function closeP() { document.querySelectorAll('.side-panel').forEach(p=>p.classList.remove('active')); document.getElementById('dim').style.display='none'; }
-        function switchA(v) { 
-            document.getElementById('log-view').style.display = v==='log'?'block':'none';
-            document.getElementById('reg-view').style.display = v==='reg'?'block':'none';
+        function removeFromCart(i) {
+            cart.splice(i, 1);
+            renderCart();
+            pushToast("Ürün sepetten çıkarıldı.");
         }
 
-        let otp = null; let tUser = {};
-        function startOTP() {
+        // --- E. UI CONTROLS ---
+        window.onscroll = () => {
+            const nav = document.getElementById('main-nav');
+            if(window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        };
+
+        function toggleSide(id) {
+            closeAll();
+            document.getElementById(id).classList.add('active');
+            const dim = document.getElementById('panel-dim');
+            dim.style.display = 'block';
+            setTimeout(() => dim.style.opacity = '1', 10);
+        }
+
+        function closeAll() {
+            document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
+            const dim = document.getElementById('panel-dim');
+            dim.style.opacity = '0';
+            setTimeout(() => dim.style.display = 'none', 500);
+        }
+
+        function closeModal() { document.getElementById('auth-modal').style.display = 'none'; }
+        function switchAuth(m) {
+            document.getElementById('login-sec').style.display = m === 'log' ? 'block' : 'none';
+            document.getElementById('reg-sec').style.display = m === 'reg' ? 'block' : 'none';
+            document.getElementById('otp-sec').style.display = 'none';
+        }
+
+        function pushToast(m) {
+            const master = document.getElementById('toast-master');
+            const t = document.createElement('div'); t.className = 'toast'; t.innerText = m;
+            master.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        // --- F. AUTH & OTP ENGINE ---
+        let generatedOTP = null;
+        let tempUser = {};
+
+        async function startVerification() {
+            const n = document.getElementById('r-name').value;
+            const e = document.getElementById('r-email').value;
             const p1 = document.getElementById('r-p1').value;
             const p2 = document.getElementById('r-p2').value;
-            if(p1 !== p2) return alert("Şifreler uymuyor!");
-            otp = Math.floor(100000 + Math.random() * 900000);
-            tUser = { n: document.getElementById('r-name').value, e: document.getElementById('r-mail').value, p: p1 };
-            console.log("OTP:", otp);
-            document.getElementById('reg-view').style.display='none';
-            document.getElementById('otp-view').style.display='block';
+
+            if(!n || !e || !p1) return alert("Tüm alanları doldur!");
+            if(p1 !== p2) return alert("Şifreler uyuşmuyor!");
+
+            generatedOTP = Math.floor(100000 + Math.random() * 900000);
+            tempUser = { n, e, p1 };
+
+            console.log("OTP KODUNUZ:", generatedOTP); // Test
+            document.getElementById('reg-sec').style.display = 'none';
+            document.getElementById('otp-sec').style.display = 'block';
+            pushToast("Doğrulama kodu gönderildi.");
         }
 
-        async function finishReg() {
-            if(document.getElementById('otp-in').value != otp) return alert("Kod yanlış!");
+        async function completeReg() {
+            const code = document.getElementById('v-code').value;
+            if(code != generatedOTP) return alert("Hatalı kod!");
+
             try {
-                const res = await auth.createUserWithEmailAndPassword(tUser.e, tUser.p);
-                await res.user.updateProfile({ displayName: tUser.n });
-                location.reload();
+                const res = await auth.createUserWithEmailAndPassword(tempUser.e, tempUser.p1);
+                await res.user.updateProfile({ displayName: tempUser.n });
+                pushToast("Kayıt başarıyla tamamlandı!");
+                closeModal();
             } catch(e) { alert(e.message); }
         }
 
+        async function handleLogin() {
+            const e = document.getElementById('l-email').value;
+            const p = document.getElementById('l-pass').value;
+            try {
+                await auth.signInWithEmailAndPassword(e, p);
+                pushToast("Giriş yapıldı.");
+                closeModal();
+            } catch(e) { alert("Hata: " + e.message); }
+        }
+
         auth.onAuthStateChanged(user => {
-            const area = document.getElementById('user-area');
-            if(user) area.innerHTML = `<div style="padding:20px; background:#f4f4f4; border-radius:15px; text-align:center;"><b>${user.displayName}</b><br><button onclick="auth.signOut()" style="margin-top:10px; border:none; background:none; color:red; font-weight:800;">ÇIKIŞ</button></div>`;
-            else area.innerHTML = `<button class="btn-main" onclick="document.getElementById('auth-m').style.display='flex'">GİRİŞ YAP</button>`;
+            const status = document.getElementById('user-status');
+            if(user) {
+                status.innerHTML = `<div style="background:var(--gray); padding:20px; border-radius:20px; text-align:center;">
+                    <span style="font-size:10px; font-weight:900; color:var(--red);">AKTİF PROFİL</span>
+                    <h3 style="font-family:'Orbitron'; margin:5px 0 15px 0;">${user.displayName}</h3>
+                    <button class="btn-black" style="padding:10px; font-size:11px;" onclick="auth.signOut()">ÇIKIŞ YAP</button>
+                </div>`;
+            } else {
+                status.innerHTML = `<button class="btn-black" onclick="document.getElementById('auth-modal').style.display='flex'">GİRİŞ / KAYIT</button>`;
+            }
         });
+
+        function checkout() {
+            if(!auth.currentUser) {
+                pushToast("Önce giriş yapmalısın!");
+                toggleSide('none');
+                document.getElementById('auth-modal').style.display='flex';
+            } else if(cart.length === 0) {
+                pushToast("Sepetin boş!");
+            } else {
+                pushToast("Ödeme sayfasına aktarılıyor...");
+            }
+        }
+
+        function checkUrlParams() {
+            if(new URLSearchParams(window.location.search).get('openCart') === 'true') {
+                setTimeout(() => toggleSide('cart-panel'), 500);
+            }
+        }
     </script>
 </body>
 </html>
