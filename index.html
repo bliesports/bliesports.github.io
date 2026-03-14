@@ -592,7 +592,7 @@
         }
     }
 
-    // Arama, Bildirim ve Login fonksiyonlarını da buraya ekleyebilirsin kral...
+// ... (Senin mevcut pushNotification fonksiyonun bittiği yer) ...
     function pushNotification(msg) {
         const toastMaster = document.getElementById('toast-master');
         if(toastMaster) {
@@ -603,6 +603,19 @@
             setTimeout(() => toast.remove(), 3000);
         }
     }
+
+    // --- TAM BURAYA YAPIŞTIR ---
+    window.addEventListener('focus', () => {
+        userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+        refreshCartDisplay();
+    });
+
+    window.addEventListener('storage', () => {
+        userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+        refreshCartDisplay();
+    });
+    // ---------------------------
+
 </script>
 
 </body>
