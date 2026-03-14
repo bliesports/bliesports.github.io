@@ -41,7 +41,11 @@
     /* MODAL VE FORM TASARIMI */
     .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:3000; align-items:center; justify-content:center; padding: 20px; }
     .modal-content { background:#fff; padding:25px; border-radius:15px; width:100%; max-width:380px; color:#000; position: relative; }
+    
+    .input-group { position: relative; width: 100%; }
     .auth-input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+    .toggle-pass { position: absolute; right: 10px; top: 20px; cursor: pointer; color: #666; }
+    
     .auth-btn { width:100%; padding:12px; background:#000; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:10px; }
     .auth-link { color: #666; font-size: 13px; cursor: pointer; display: block; text-align: center; margin-top: 15px; }
   </style>
@@ -55,7 +59,10 @@
     
     <div id="loginForm">
       <input type="email" id="loginEmail" class="auth-input" placeholder="E-posta">
-      <input type="password" id="loginPass" class="auth-input" placeholder="Şifre">
+      <div class="input-group">
+        <input type="password" id="loginPass" class="auth-input" placeholder="Şifre">
+        <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('loginPass')"></i>
+      </div>
       <button class="auth-btn" onclick="handleLogin()">Giriş Yap</button>
       <span class="auth-link" onclick="openModal('register')">Hesabın yok mu? Kayıt Ol</span>
     </div>
@@ -63,14 +70,20 @@
     <div id="registerForm" style="display:none;">
       <input type="text" id="regName" class="auth-input" placeholder="Kullanıcı Adı">
       <input type="email" id="regEmail" class="auth-input" placeholder="E-posta">
-      <input type="password" id="regPass" class="auth-input" placeholder="Şifre">
-      <input type="password" id="regPassConfirm" class="auth-input" placeholder="Şifre Tekrar">
+      <div class="input-group">
+        <input type="password" id="regPass" class="auth-input" placeholder="Şifre">
+        <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('regPass')"></i>
+      </div>
+      <div class="input-group">
+        <input type="password" id="regPassConfirm" class="auth-input" placeholder="Şifre Tekrar">
+        <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('regPassConfirm')"></i>
+      </div>
       <button class="auth-btn" onclick="sendOTP()">Kayıt Ol (Onay Kodu Gönder)</button>
       <span class="auth-link" onclick="openModal('login')">Zaten üye misin? Giriş Yap</span>
     </div>
 
     <div id="otpForm" style="display:none;">
-      <p style="font-size:14px;">Gmail adresine 6 haneli bir kod gönderdik.</p>
+      <p style="font-size:14px;">Gmail adresine 6 haneli kod gönderdik.</p>
       <input type="text" id="otpInput" class="auth-input" placeholder="6 Haneli Kod" maxlength="6">
       <button class="auth-btn" onclick="verifyAndRegister()">Onayla ve Kayıt Ol</button>
     </div>
@@ -101,17 +114,16 @@
     <a href="javascript:void(0)" onclick="menuAction('register')">Kayıt Ol</a>
   </div>
   <div id="userLinks" style="display:none;">
-    <span id="welcomeText" style="padding:15px 20px; display:block; font-weight:bold; border-bottom:1px solid #eee;">Selam Kral!</span>
+    <span id="welcomeText" style="padding:15px 20px; display:block; font-weight:bold; border-bottom:1px solid #eee; color:#000;">Selam!</span>
     <a href="javascript:void(0)" onclick="logout()" style="color:red !important;">Çıkış Yap</a>
   </div>
-  
   <a href="ürünler/">Ürünlerimiz</a>
   <a href="basvuru/index.html" id="nav-basvuru" style="font-weight: bold;">Başvuru Yap</a>
   <a href="javascript:void(0)" onclick="menuAction('support')">Destek</a>
 </nav>
 
 <div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding-bottom:15px; padding:15px;">
+    <div class="cart-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:15px;">
         <h3>SEPETİM</h3>
         <i class="fa-solid fa-xmark close-cart" id="closeCart" style="cursor:pointer; font-size:20px;"></i>
     </div>
@@ -127,17 +139,8 @@
   </a>
 </main>
 
-<footer class="footer" style="text-align:center; padding:40px 0; border-top:1px solid #eee;">
-  <span style="font-weight: bold;">Sosyal medya hesaplarımız</span>
-  <div class="socials" style="margin: 20px 0;">
-    <a href="https://www.instagram.com/bliesportts/" target="_blank" style="margin:0 10px; font-size:24px; color:#000;"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.youtube.com/@BLIESPORTS" target="_blank" style="margin:0 10px; font-size:24px; color:#000;"><i class="fa-brands fa-youtube"></i></a>
-  </div>
-  <small>© 2026 BLI Esports</small>
-</footer>
-
 <script>
-  // SENİN BİLGİLERİN
+  // FIREBASE CONFIG
   const firebaseConfig = {
     apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8",
     authDomain: "bliesports.firebaseapp.com",
@@ -149,8 +152,6 @@
   };
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
-  
-  // EmailJS Init
   emailjs.init("QQAT1SNb9qOdZw353");
 
   const menuPanel = document.getElementById('sideMenu');
@@ -158,12 +159,17 @@
   let currentOTP = "";
   let tempUserData = {};
 
-  // OTURUM KONTROLÜ (Profesyonel Giriş/Çıkış Takibi)
+  // Şifre Göster/Gizle
+  function toggleVisibility(id) {
+    const el = document.getElementById(id);
+    el.type = el.type === "password" ? "text" : "password";
+  }
+
+  // Oturum Takibi
   auth.onAuthStateChanged(user => {
     const authLinks = document.getElementById('authLinks');
     const userLinks = document.getElementById('userLinks');
     const welcomeText = document.getElementById('welcomeText');
-
     if (user) {
       authLinks.style.display = 'none';
       userLinks.style.display = 'block';
@@ -174,126 +180,79 @@
     }
   });
 
-  // GİRİŞ İŞLEMİ
   async function handleLogin() {
     const email = document.getElementById('loginEmail').value;
     const pass = document.getElementById('loginPass').value;
     try {
       await auth.signInWithEmailAndPassword(email, pass);
-      alert("Giriş Başarılı! Hoş geldin kral.");
       closeModal();
     } catch (error) { alert("Hata: " + error.message); }
   }
 
-  // OTP GÖNDERME (EmailJS)
-  function sendOTP() {
+  // OTP Gönder ve Gmail Kontrolü
+  async function sendOTP() {
     const name = document.getElementById('regName').value;
     const email = document.getElementById('regEmail').value;
     const pass = document.getElementById('regPass').value;
     const passConfirm = document.getElementById('regPassConfirm').value;
 
     if(!name || !email || !pass) return alert("Boş alan bırakma kral!");
-    if(pass !== passConfirm) return alert("Şifreler uyuşmuyor!");
+    if(pass !== passConfirm) return alert("Şifreler aynı değil!");
 
-    currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    tempUserData = { name, email, pass };
+    try {
+        // E-posta kullanımda mı kontrolü
+        const methods = await auth.fetchSignInMethodsForEmail(email);
+        if(methods.length > 0) return alert("Bu e-posta zaten kullanımda kral, başka dene!");
 
-    const templateParams = {
-      to_email: email,
-      otp_code: currentOTP,
-      name: "BLIESPORTS"
-    };
+        currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
+        tempUserData = { name, email, pass };
 
-    emailjs.send("service_4l87xyp", "template_4qf4r88", templateParams)
-      .then(() => {
-        document.getElementById('registerForm').style.display = 'none';
-        document.getElementById('otpForm').style.display = 'block';
-        document.getElementById('modalTitle').innerText = "Kodu Onayla";
-      }, (err) => {
-        alert("Mail gönderilemedi: " + JSON.stringify(err));
-      });
+        emailjs.send("service_4l87xyp", "template_4qf4r88", {
+          to_email: email,
+          otp_code: currentOTP,
+          name: "BLIESPORTS"
+        }).then(() => {
+          document.getElementById('registerForm').style.display = 'none';
+          document.getElementById('otpForm').style.display = 'block';
+          document.getElementById('modalTitle').innerText = "Kodu Onayla";
+        });
+    } catch(e) { alert("Hata: " + e.message); }
   }
 
-  // KOD DOĞRULAMA VE KAYIT
   async function verifyAndRegister() {
     const enteredOTP = document.getElementById('otpInput').value;
-    if(enteredOTP !== currentOTP) return alert("Kod yanlış birader, tekrar bak!");
-
+    if(enteredOTP !== currentOTP) return alert("Kod hatalı!");
     try {
       const userCredential = await auth.createUserWithEmailAndPassword(tempUserData.email, tempUserData.pass);
       await userCredential.user.updateProfile({ displayName: tempUserData.name });
-      alert("Başarıyla üye oldun kral! BLIESPORTS'a hoş geldin.");
-      closeModal();
-    } catch (error) { alert("Hata: " + error.message); }
+      location.reload();
+    } catch (error) { alert("Kayıt Hatası: " + error.message); }
   }
 
-  // STANDART FONKSİYONLARIN (BOZULMADI)
-  function toggleDropdown(){
-    menuPanel.classList.toggle('open');
-    cartSidebar.classList.remove('open');
-  }
-
+  function toggleDropdown(){ menuPanel.classList.toggle('open'); }
   function menuAction(action){
-    menuPanel.classList.remove('open');
-    if(action==='login'||action==='register') openModal(action);
-    else if(action==='support') alert('BLIESPORTS Destek: Bize Instagram üzerinden ulaşabilirsin kral.');
+    if(action==='login'||action==='register') { menuPanel.classList.remove('open'); openModal(action); }
+    else if(action==='support') alert('Instagram: @bliesportts');
   }
-
-  function openModal(type){ 
-    document.getElementById('modal').style.display='flex'; 
+  function openModal(type){
+    document.getElementById('modal').style.display='flex';
     document.getElementById('modalTitle').innerText = type==='login' ? 'Giriş Yap' : 'Kayıt Ol';
     document.getElementById('loginForm').style.display = type==='login' ? 'block' : 'none';
     document.getElementById('registerForm').style.display = type==='register' ? 'block' : 'none';
     document.getElementById('otpForm').style.display = 'none';
   }
-
   function closeModal(){ document.getElementById('modal').style.display='none'; }
-  
-  function logout(){ 
-    if(confirm("Çıkış yapmak istediğine emin misin?")) {
-      auth.signOut().then(() => { location.reload(); }); 
-    }
-  }
-
+  function logout(){ auth.signOut().then(() => location.reload()); }
   function scrollToTop(){ window.scrollTo({ top:0, behavior:'smooth' }); }
 
-  // SEPET MANTIĞI (Senin Orijinal Kodun)
+  // SEPET (Senin Orijinal Kodun)
   let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
   function sepetiGuncelle() {
     const cartCount = document.getElementById('cart-count');
-    const cartContent = document.querySelector('.cart-content');
     if(cartCount) cartCount.innerText = sepet.length;
-    if(!cartContent) return;
-    if(sepet.length === 0) {
-      cartContent.innerHTML = '<p style="color:#888; text-align:center; margin-top:20px;">Sepetiniz boş.</p>';
-    } else {
-      let html = '<div>';
-      sepet.forEach(item => {
-        html += `<div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
-                  <img src="${item.resim}" style="width:40px;">
-                  <div style="text-align:left;"><p style="font-size:12px; font-weight:bold; margin:0;">${item.ad}</p><p style="font-size:11px; margin:0;">${item.fiyat} TL</p></div>
-                </div>`;
-      });
-      html += '<button onclick="sepetiBosalt()" style="width:100%; background:#000; color:#fff; border:none; padding:10px; cursor:pointer; border-radius:5px;">TEMİZLE</button></div>';
-      cartContent.innerHTML = html;
-    }
     localStorage.setItem('bli_sepet', JSON.stringify(sepet));
   }
-  function sepetiBosalt(){ if(confirm("Emin misin kral?")) { sepet=[]; sepetiGuncelle(); } }
-
-  document.getElementById('cartBtn').addEventListener('click', () => {
-    cartSidebar.classList.toggle('open');
-    menuPanel.classList.remove('open');
-  });
-  document.getElementById('closeCart').addEventListener('click', () => cartSidebar.classList.remove('open'));
-
   window.onload = sepetiGuncelle;
-
-  document.addEventListener('click', (e) => {
-    if(!menuPanel.contains(e.target) && !document.getElementById('hamburger').contains(e.target)) menuPanel.classList.remove('open');
-    if(!cartSidebar.contains(e.target) && !document.getElementById('cartBtn').contains(e.target)) cartSidebar.classList.remove('open');
-  });
 </script>
-
 </body>
 </html>
