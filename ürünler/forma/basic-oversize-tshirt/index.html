@@ -194,23 +194,26 @@
         el.classList.add('active');
     }
 
-    function sepeteEkle() {
-    // 1. Mevcut sepeti çek (localStorage ismi 'bli_user_cart' olmalı)
-    let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-    
-    // 2. Yeni ürünü ekle
-    sepet.push({ 
-        id: 103, // T-shirt için yeni bir ID
-        name: "BLI BASIC OVERSIZE TSHIRT", 
-        price: 699, 
-        img: "../../../tshırt1.jpg", // Ana sayfada görünecek resim yolu
-        renk: selectedSize 
-    });
-    
-    // 3. Kaydet
-    localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
-    
-    alert("Ürün sepete eklendi!");
+   function sepeteEkle() {
+        // 1. Mevcut sepeti çek
+        let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+        
+        // 2. Yeni ürünü ekle
+        sepet.push({ 
+            id: 103, // T-shirt ID'si
+            name: "BLI BASIC OVERSIZE T-SHIRT", 
+            price: 699, 
+            img: "tshırt1.jpg", // Ana dizindeki resim adın
+            renk: selectedSize // Seçilen beden 'renk' alanına yazılır
+        });
+        
+        // 3. Kaydet
+        localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
+        
+        // 4. KRİTİK: Ana sayfaya haber ver (Badge güncellensin)
+        window.dispatchEvent(new Event('storage'));
+        
+        alert("Beden: " + selectedSize + " - Tişört sepete eklendi!");
     }
 </script>
 
