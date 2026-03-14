@@ -13,7 +13,7 @@
         .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 60px auto; }
 
         /* Galeri Alanı */
-        .gallery-container { display: flex; flex: 1.2; gap: 20px; }
+        .gallery-container { display: flex; flex: 1.2; gap: 20px; position: relative; }
         
         .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
         .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f9f9f9; padding: 5px; border: 1px solid #eee; transition: 0.3s; }
@@ -23,20 +23,21 @@
             flex: 1; 
             background: #f9f9f9; 
             border-radius: 20px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
             position: relative; 
             min-height: 550px; 
             overflow: hidden;
+            touch-action: pan-y; /* Mobilde dikey kaydırmayı engellemez, yatayı biz yöneteceğiz */
+            user-select: none;
         }
 
         .slider-wrapper {
             display: flex;
-            transition: transform 0.4s ease-in-out;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             width: 100%;
             height: 100%;
+            cursor: grab;
         }
+        .slider-wrapper:active { cursor: grabbing; }
 
         .slider-wrapper img {
             width: 100%;
@@ -44,7 +45,27 @@
             object-fit: contain;
             flex-shrink: 0;
             padding: 20px;
+            pointer-events: none; /* Sürüklerken resmi seçmesini engeller */
         }
+
+        /* Mobil Noktalar (Pagination) */
+        .slider-dots {
+            display: none; /* Varsayılan kapalı */
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: 10px;
+            z-index: 10;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ccc;
+            transition: 0.3s;
+        }
+        .dot.active { background: #000; width: 20px; border-radius: 10px; }
 
         /* Ürün Bilgileri */
         .product-info { flex: 1; padding: 0 40px; min-width: 350px; }
@@ -52,13 +73,11 @@
         .product-title { font-size: 32px; font-weight: 800; margin: 0 0 10px 0; color: #000; line-height: 1.2; }
         .product-price { font-size: 28px; font-weight: bold; margin-bottom: 30px; color: #000; }
 
-        /* Beden Seçimi */
         .option-label { font-weight: bold; margin-bottom: 15px; display: block; color: #000; font-size: 14px; text-transform: uppercase;}
         .size-options { display: flex; gap: 10px; margin-bottom: 40px; }
         .size-btn { border: 1px solid #ddd; background: #fff; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .size-btn.active { background: #000; color: #fff; border-color: #000; }
 
-        /* Butonlar */
         .add-to-cart { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; text-transform: uppercase; }
         .add-to-cart:hover { background: #333; }
         
@@ -67,6 +86,7 @@
             .side-thumbnails { display: none; }
             .main-display { min-height: 450px; }
             .product-info { padding: 20px 10px; }
+            .slider-dots { display: flex; } /* Mobilde noktaları göster */
         }
     </style>
 </head>
@@ -75,14 +95,18 @@
 <div class="product-page">
     <div class="gallery-container">
         <div class="side-thumbnails">
-            <img src="tshırt1.png" class="thumb" onclick="goToSlide(0)">
-            <img src="tshırt2.png" class="thumb" onclick="goToSlide(1)">
+            <img src="../../../tshırt1.jpg" class="thumb" onclick="goToSlide(0)">
+            <img src="../../../tshırt2.jpg" class="thumb" onclick="goToSlide(1)">
         </div>
 
         <div class="main-display" id="sliderContainer">
             <div class="slider-wrapper" id="sliderWrapper">
                 <img src="../../../tshırt1.jpg" alt="Ön">
                 <img src="../../../tshırt2.jpg" alt="Arka">
+            </div>
+            <div class="slider-dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
             </div>
         </div>
     </div>
@@ -110,12 +134,60 @@
 
 <script>
     const wrapper = document.getElementById('sliderWrapper');
-    let selectedSize = 'M';
+    const container = document.getElementById('sliderContainer');
+    const dots = document.querySelectorAll('.dot');
+    let isDragging = false, startX, currentTranslate = 0, prevTranslate = 0, currentIndex = 0;
 
+    // Slide Gitme Fonksiyonu
     function goToSlide(index) {
-        wrapper.style.transform = `translateX(${index * -100}%)`;
+        currentIndex = index;
+        currentTranslate = currentIndex * -container.offsetWidth;
+        prevTranslate = currentTranslate;
+        wrapper.style.transform = `translateX(${currentTranslate}px)`;
+        
+        // Noktaları Güncelle
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
     }
 
+    // Touch & Mouse Olayları
+    container.addEventListener('mousedown', dragStart);
+    container.addEventListener('touchstart', dragStart);
+    container.addEventListener('mouseup', dragEnd);
+    container.addEventListener('touchend', dragEnd);
+    container.addEventListener('mousemove', dragAction);
+    container.addEventListener('touchmove', dragAction);
+
+    function dragStart(e) {
+        isDragging = true;
+        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        wrapper.style.transition = 'none';
+    }
+
+    function dragAction(e) {
+        if (!isDragging) return;
+        const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        currentTranslate = prevTranslate + (currentX - startX);
+        wrapper.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    function dragEnd() {
+        isDragging = false;
+        const movedBy = currentTranslate - prevTranslate;
+
+        if (movedBy < -100 && currentIndex < 1) currentIndex++;
+        else if (movedBy > 100 && currentIndex > 0) currentIndex--;
+
+        wrapper.style.transition = 'transform 0.4s ease-out';
+        goToSlide(currentIndex);
+    }
+
+    // Pencere boyutu değişince slider'ı koru
+    window.addEventListener('resize', () => goToSlide(currentIndex));
+
+    // Diğer Fonksiyonlar
+    let selectedSize = 'M';
     function selectSize(size, el) {
         selectedSize = size;
         document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
@@ -127,10 +199,9 @@
         sepet.push({ 
             ad: "BLI BASIC OVERSIZE TSHIRT", 
             fiyat: 699, 
-            resim: "%C3%BCr%C3%BCnler/forma/basic-oversize-tsh%C4%B1rt/tsh%C4%B1rt1.png",
-            renk: selectedSize 
+            resim: "tshırt1.png",
+            beden: selectedSize 
         });
-        
         localStorage.setItem('bli_sepet', JSON.stringify(sepet));
         alert("Ürün sepete eklendi!");
     }
