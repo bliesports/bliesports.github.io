@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepetim | BLI PERFORMANCE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #ffffff; color: #000; padding: 20px; }
+        .cart-wrapper { max-width: 900px; margin: 40px auto; }
+        h1 { font-size: 32px; font-weight: 800; margin-bottom: 30px; border-bottom: 3px solid #000; padding-bottom: 10px; }
+        
+        /* Ürün Satırı */
+        .cart-item { display: flex; align-items: center; padding: 20px; border: 1px solid #eee; border-radius: 15px; margin-bottom: 15px; transition: 0.3s; }
+        .cart-item:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .cart-item img { width: 100px; height: 100px; object-fit: contain; background: #f9f9f9; border-radius: 10px; }
+        .item-info { flex: 1; padding: 0 20px; }
+        .item-name { font-weight: bold; font-size: 18px; margin-bottom: 5px; }
+        .item-meta { color: #666; font-size: 14px; }
+        .item-price { font-weight: 800; font-size: 18px; }
+        
+        .remove-btn { cursor: pointer; color: #ff4757; font-size: 20px; padding: 10px; transition: 0.2s; }
+        .remove-btn:hover { transform: scale(1.2); }
+
+        /* Özet Alanı */
+        .cart-footer { margin-top: 40px; padding: 30px; background: #f9f9f9; border-radius: 20px; text-align: right; }
+        .total-label { font-size: 16px; color: #666; }
+        .total-amount { font-size: 30px; font-weight: 900; display: block; margin-bottom: 20px; }
+        
+        .checkout-btn { background: #000; color: #fff; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
+        .checkout-btn:hover { background: #333; transform: translateY(-2px); }
+        
+        .empty-cart { text-align: center; padding: 100px 0; }
+        .empty-cart i { font-size: 60px; color: #eee; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="cart-wrapper">
+    <a href="index.html" style="text-decoration:none; color:#000; font-weight:bold;"><i class="fa-solid fa-chevron-left"></i> Alışverişe Devam Et</a>
+    <h1 style="margin-top:20px;">SEPETİM</h1>
+    
+    <div id="cart-list">
+        </div>
+
+    <div id="cart-summary-area" class="cart-footer">
+        <span class="total-label">Ödenecek Toplam Tutar:</span>
+        <span class="total-amount" id="grand-total">0,00₺</span>
+        <button class="checkout-btn" onclick="odemeyeGit()">ÖDEMEYE GEÇ (SHOPIER)</button>
+    </div>
+</div>
+
+<script>
+    function sepetiGoster() {
+        const cartList = document.getElementById('cart-list');
+        const summary = document.getElementById('cart-summary-area');
+        const totalDisp = document.getElementById('grand-total');
+        
+        let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+        
+        if (sepet.length === 0) {
+            cartList.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <p>Sepetin şu an bomboş kanka.</p>
+                </div>`;
+            summary.style.display = 'none';
+            return;
+        }
+
+        summary.style.display = 'block';
+        let toplamFiyat = 0;
+        let htmlContent = '';
+
+        sepet.forEach((urun, index) => {
+            toplamFiyat += urun.price;
+            htmlContent += `
+                <div class="cart-item">
+                    <img src="${urun.img}" alt="Ürün">
+                    <div class="item-info">
+                        <div class="item-name">${urun.name}</div>
+                        <div class="item-meta">Seçim: ${urun.renk || 'Standart'}</div>
+                    </div>
+                    <div class="item-price">${urun.price},00₺</div>
+                    <i class="fa-solid fa-trash-can remove-btn" onclick="urunSil(${index})"></i>
+                </div>
+            `;
+        });
+
+        cartList.innerHTML = htmlContent;
+        totalDisp.innerText = toplamFiyat.toLocaleString('tr-TR') + ",00₺";
+    }
+
+    function urunSil(index) {
+        let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+        sepet.splice(index, 1);
+        localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
+        sepetiGoster();
+        // Ana sayfadaki badge sayısını da tetikler
+        window.dispatchEvent(new Event('storage'));
+    }
+
+    function odemeyeGit() {
+        alert("Ödeme adımına yönlendiriliyorsunuz...");
+        window.location.href = "https://www.shopier.com/s/shipping/bliesports";
+    }
+
+    // Sayfa yüklendiğinde çalıştır
+    sepetiGoster();
+</script>
+
+</body>
+</html>
