@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLI BASIC OVERSIZE TSHIRT | LIMITED EDITION</title>
+    <link rel="icon" type="image/png" href="../../../logo1616.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #ffffff; color: #000; overflow-x: hidden; }
+
+        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 60px auto; }
+
+        /* Galeri Alanı */
+        .gallery-container { display: flex; flex: 1.2; gap: 20px; }
+        
+        .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
+        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f9f9f9; padding: 5px; border: 1px solid #eee; transition: 0.3s; }
+        .thumb:hover { border-color: #000; }
+
+        .main-display { 
+            flex: 1; 
+            background: #f9f9f9; 
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            min-height: 550px; 
+            overflow: hidden;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
+            padding: 20px;
+        }
+
+        /* Ürün Bilgileri */
+        .product-info { flex: 1; padding: 0 40px; min-width: 350px; }
+        .brand-tag { color: #888; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px;}
+        .product-title { font-size: 32px; font-weight: 800; margin: 0 0 10px 0; color: #000; line-height: 1.2; }
+        .product-price { font-size: 28px; font-weight: bold; margin-bottom: 30px; color: #000; }
+
+        /* Beden Seçimi */
+        .option-label { font-weight: bold; margin-bottom: 15px; display: block; color: #000; font-size: 14px; text-transform: uppercase;}
+        .size-options { display: flex; gap: 10px; margin-bottom: 40px; }
+        .size-btn { border: 1px solid #ddd; background: #fff; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .size-btn.active { background: #000; color: #fff; border-color: #000; }
+
+        /* Butonlar */
+        .add-to-cart { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; text-transform: uppercase; }
+        .add-to-cart:hover { background: #333; }
+        
+        @media (max-width: 968px) {
+            .product-page { flex-direction: column; margin: 0; padding: 10px; }
+            .side-thumbnails { display: none; }
+            .main-display { min-height: 450px; }
+            .product-info { padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="product-page">
+    <div class="gallery-container">
+        <div class="side-thumbnails">
+            <img src="tshırt1.png" class="thumb" onclick="goToSlide(0)">
+            <img src="tshırt2.png" class="thumb" onclick="goToSlide(1)">
+        </div>
+
+        <div class="main-display" id="sliderContainer">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <img src="tshırt1.png" alt="Ön">
+                <img src="tshırt2.png" alt="Arka">
+            </div>
+        </div>
+    </div>
+
+    <div class="product-info">
+        <span class="brand-tag">LIMITED EDITION</span>
+        <h1 class="product-title">BLI BASIC OVERSIZE TSHIRT</h1>
+        <div class="product-price">699,00₺</div>
+
+        <span class="option-label">Beden Seçimi</span>
+        <div class="size-options">
+            <div class="size-btn" onclick="selectSize('S', this)">S</div>
+            <div class="size-btn active" onclick="selectSize('M', this)">M</div>
+            <div class="size-btn" onclick="selectSize('L', this)">L</div>
+            <div class="size-btn" onclick="selectSize('XL', this)">XL</div>
+        </div>
+
+        <button class="add-to-cart" onclick="sepeteEkle()">SEPETE EKLE</button>
+        
+        <p style="margin-top: 30px; line-height: 1.6; color: #555; font-size: 14px;">
+            <b>Tarzını sokağa yansıt.</b> BLI Limited Edition Oversize Tshirt, yüksek gramajlı %100 pamuklu kumaşı ve premium baskı kalitesiyle hem rahatlık hem de şıklık sunar. Sınırlı sayıda üretilmiştir.
+        </p>
+    </div>
+</div>
+
+<script>
+    const wrapper = document.getElementById('sliderWrapper');
+    let selectedSize = 'M';
+
+    function goToSlide(index) {
+        wrapper.style.transform = `translateX(${index * -100}%)`;
+    }
+
+    function selectSize(size, el) {
+        selectedSize = size;
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function sepeteEkle() {
+        let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+        sepet.push({ 
+            ad: "BLI BASIC OVERSIZE TSHIRT", 
+            fiyat: 699, 
+            resim: "%C3%BCr%C3%BCnler/forma/basic-oversize-tsh%C4%B1rt/tsh%C4%B1rt1.png",
+            renk: selectedSize 
+        });
+        
+        localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+        alert("Ürün sepete eklendi!");
+    }
+</script>
+
+</body>
+</html>
