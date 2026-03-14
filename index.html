@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* SENİN ORİJİNAL STİLLERİN */
+    /* SENİN ORIJINAL BEYAZ TEMAN */
     body { background: #ffffff !important; color: #000000 !important; overflow-x: hidden; margin: 0; font-family: Arial, sans-serif; }
     
     .navbar { 
@@ -35,19 +35,32 @@
     .hero-container:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
     .hero-container img { width: 100%; height: auto; display: block; }
     
-    .side-menu, .cart-sidebar { background: #ffffff !important; color: #000 !important; border-left: 1px solid #eee; transition: 0.3s; }
+    /* YAN MENÜ VE SEPET */
+    .side-menu, .cart-sidebar { background: #ffffff !important; color: #000 !important; border-left: 1px solid #eee; transition: 0.3s; width: 300px; position: fixed; top: 0; right: -300px; height: 100%; z-index: 2000; overflow-y: auto; }
+    .side-menu.open, .cart-sidebar.open { right: 0; }
     .side-menu a { color: #000 !important; text-decoration: none; padding: 15px 20px; border-bottom: 1px solid #f5f5f5; display: block; }
     
-    /* MODAL VE FORM TASARIMI */
+    /* MODAL VE AUTH */
     .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:3000; align-items:center; justify-content:center; padding: 20px; }
     .modal-content { background:#fff; padding:25px; border-radius:15px; width:100%; max-width:380px; color:#000; position: relative; }
-    
     .input-group { position: relative; width: 100%; }
     .auth-input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
     .toggle-pass { position: absolute; right: 10px; top: 20px; cursor: pointer; color: #666; }
-    
     .auth-btn { width:100%; padding:12px; background:#000; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:10px; }
     .auth-link { color: #666; font-size: 13px; cursor: pointer; display: block; text-align: center; margin-top: 15px; }
+
+    /* SEPET ÖZEL TASARIM */
+    .cart-item { display: flex; align-items: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid #eee; position: relative; }
+    .cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+    .cart-item-info { flex: 1; text-align: left; }
+    .cart-item-info h4 { margin: 0; font-size: 14px; }
+    .cart-item-info p { margin: 5px 0; font-size: 12px; color: #666; }
+    .remove-item { cursor: pointer; color: #ff4d4d; font-size: 18px; padding: 5px; }
+    .quantity-select { padding: 4px; border-radius: 4px; border: 1px solid #ddd; font-size: 12px; }
+    .cart-footer { padding: 20px; background: #fff; position: sticky; bottom: 0; }
+    .cart-btns { display: flex; flex-direction: column; gap: 10px; }
+    .btn-continue { background: #eee; color: #000; padding: 12px; border: none; border-radius: 8px; cursor: pointer; text-align: center; text-decoration: none; font-weight: bold; }
+    .btn-checkout { background: #000; color: #fff; padding: 12px; border: none; border-radius: 8px; cursor: pointer; text-align: center; text-decoration: none; font-weight: bold; }
   </style>
 </head> 
 
@@ -55,8 +68,7 @@
 
 <div id="modal" class="modal">
   <div class="modal-content">
-    <h2 id="modalTitle" style="margin-top:0;">Giriş Yap</h2>
-    
+    <h2 id="modalTitle">Giriş Yap</h2>
     <div id="loginForm">
       <input type="email" id="loginEmail" class="auth-input" placeholder="E-posta">
       <div class="input-group">
@@ -64,7 +76,7 @@
         <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('loginPass')"></i>
       </div>
       <button class="auth-btn" onclick="handleLogin()">Giriş Yap</button>
-      <span class="auth-link" onclick="openModal('register')">Hesabın yok mu? Kayıt Ol</span>
+      <span class="auth-link" onclick="openModal('register')">Kayıt Ol</span>
     </div>
 
     <div id="registerForm" style="display:none;">
@@ -74,28 +86,22 @@
         <input type="password" id="regPass" class="auth-input" placeholder="Şifre">
         <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('regPass')"></i>
       </div>
-      <div class="input-group">
-        <input type="password" id="regPassConfirm" class="auth-input" placeholder="Şifre Tekrar">
-        <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('regPassConfirm')"></i>
-      </div>
-      <button class="auth-btn" onclick="sendOTP()">Kayıt Ol (Onay Kodu Gönder)</button>
-      <span class="auth-link" onclick="openModal('login')">Zaten üye misin? Giriş Yap</span>
+      <input type="password" id="regPassConfirm" class="auth-input" placeholder="Şifre Tekrar">
+      <button class="auth-btn" onclick="sendOTP()">Onay Kodu Gönder</button>
+      <span class="auth-link" onclick="openModal('login')">Giriş Yap</span>
     </div>
 
     <div id="otpForm" style="display:none;">
-      <p style="font-size:14px;">Gmail adresine 6 haneli kod gönderdik.</p>
-      <input type="text" id="otpInput" class="auth-input" placeholder="6 Haneli Kod" maxlength="6">
-      <button class="auth-btn" onclick="verifyAndRegister()">Onayla ve Kayıt Ol</button>
+      <p>6 Haneli Kodu Gir:</p>
+      <input type="text" id="otpInput" class="auth-input" placeholder="######" maxlength="6">
+      <button class="auth-btn" onclick="verifyAndRegister()">Onayla</button>
     </div>
-
     <button onclick="closeModal()" style="background:none; border:none; position:absolute; top:15px; right:15px; cursor:pointer; font-size:20px;">&times;</button>
   </div>
 </div>
 
 <header class="navbar">
-  <div class="nav-left">
-    <img src="logo1616.png" alt="BLI Logo" style="height: 42px; cursor:pointer;" onclick="scrollToTop()"> 
-  </div>
+  <div class="nav-left"><img src="logo1616.png" style="height: 42px; cursor:pointer;" onclick="scrollToTop()"></div>
   <div class="nav-right">
     <div class="cart-wrapper" id="cartBtn" style="position:relative; cursor:pointer;">
       <i class="fa-solid fa-cart-shopping nav-icon"></i>
@@ -113,145 +119,173 @@
     <a href="javascript:void(0)" onclick="menuAction('login')">Giriş Yap</a>
     <a href="javascript:void(0)" onclick="menuAction('register')">Kayıt Ol</a>
   </div>
-  <div id="userLinks" style="display:none;">
-    <span id="welcomeText" style="padding:15px 20px; display:block; font-weight:bold; border-bottom:1px solid #eee; color:#000;">Selam!</span>
-    <a href="javascript:void(0)" onclick="logout()" style="color:red !important;">Çıkış Yap</a>
+  <div id="userLinks" style="display:none; padding: 15px 20px; border-bottom: 1px solid #eee;">
+    <div style="display:flex; align-items:center; gap:10px;">
+        <i class="fa-solid fa-circle-user" style="font-size:24px;"></i>
+        <span id="welcomeText" style="font-weight:bold;">Kullanıcı</span>
+    </div>
+    <a href="javascript:void(0)" onclick="logout()" style="color:red !important; padding:10px 0 0 0; border:none;">Çıkış Yap</a>
   </div>
   <a href="ürünler/">Ürünlerimiz</a>
-  <a href="basvuru/index.html" id="nav-basvuru" style="font-weight: bold;">Başvuru Yap</a>
-  <a href="javascript:void(0)" onclick="menuAction('support')">Destek</a>
+  <a href="basvuru/index.html">Başvuru Yap</a>
 </nav>
 
 <div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:15px;">
-        <h3>SEPETİM</h3>
-        <i class="fa-solid fa-xmark close-cart" id="closeCart" style="cursor:pointer; font-size:20px;"></i>
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:20px; border-bottom:1px solid #eee;">
+        <h3 style="margin:0;">SEPETİM</h3>
+        <i class="fa-solid fa-xmark" onclick="toggleCart()" style="cursor:pointer; font-size:24px;"></i>
     </div>
-    <div class="cart-content" style="padding:15px;"></div>
+    <div id="cartItemsContainer" style="padding: 0 20px;"></div>
+    <div class="cart-footer">
+        <div id="totalPrice" style="font-weight:bold; margin-bottom:15px; font-size:18px;">Toplam: 0 TL</div>
+        <div class="cart-btns">
+            <a href="/ürünler" class="btn-continue">ALIVERİŞE DEVAM ET</a>
+            <button class="btn-checkout" onclick="alert('Shopier yakında eklenecek!')">SİPARİŞE DEVAM ET</button>
+        </div>
+    </div>
 </div>
 
-<main style="max-width: 900px; margin: 100px auto 0; padding: 0 20px 100px; text-align: center;">
-  <a href="ürünler/mouse/bliv1pro/index.html" style="text-decoration:none; display:block; margin-bottom:40px;">
-    <div class="hero-container"><img src="v1pro-banner.png" alt="V1 PRO"></div>
-  </a>
-  <a href="ürünler/forma/classic/index.html" style="text-decoration:none; display:block;">
-    <div class="hero-container"><img src="b_Sağ_alttaki_gemini_f.jpeg" alt="Classic Jersey"></div>
-  </a>
+<main style="max-width: 900px; margin: 100px auto 0; padding: 0 20px 100px;">
+    <button onclick="sepeteEkle({id:1, ad:'BEŞİKTAŞ İÇ SAHA FORMASI', fiyat:2125, resim:'b_Sağ_alttaki_gemini_f.jpeg'})" style="padding:10px; background:#000; color:#fff; border-radius:5px; margin-bottom:20px; cursor:pointer;">Test: Forma Ekle</button>
+
+    <div class="hero-container"><img src="v1pro-banner.png"></div>
+    <div class="hero-container" style="margin-top:20px;"><img src="b_Sağ_alttaki_gemini_f.jpeg"></div>
 </main>
 
 <script>
-  // FIREBASE CONFIG
   const firebaseConfig = {
     apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8",
     authDomain: "bliesports.firebaseapp.com",
     projectId: "bliesports",
     storageBucket: "bliesports.firebasestorage.app",
     messagingSenderId: "880767104142",
-    appId: "1:880767104142:web:5edbe111f42f16ab1545df",
-    measurementId: "G-T1PHQ0Z45M"
+    appId: "1:880767104142:web:5edbe111f42f16ab1545df"
   };
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   emailjs.init("QQAT1SNb9qOdZw353");
 
-  const menuPanel = document.getElementById('sideMenu');
-  const cartSidebar = document.getElementById('cartSidebar');
   let currentOTP = "";
   let tempUserData = {};
+  let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
 
-  // Şifre Göster/Gizle
-  function toggleVisibility(id) {
-    const el = document.getElementById(id);
-    el.type = el.type === "password" ? "text" : "password";
-  }
-
-  // Oturum Takibi
+  // OTURUM DURUMU
   auth.onAuthStateChanged(user => {
-    const authLinks = document.getElementById('authLinks');
-    const userLinks = document.getElementById('userLinks');
-    const welcomeText = document.getElementById('welcomeText');
-    if (user) {
-      authLinks.style.display = 'none';
-      userLinks.style.display = 'block';
-      welcomeText.innerText = "Selam, " + (user.displayName || "Kral");
-    } else {
-      authLinks.style.display = 'block';
-      userLinks.style.display = 'none';
-    }
+    document.getElementById('authLinks').style.display = user ? 'none' : 'block';
+    document.getElementById('userLinks').style.display = user ? 'block' : 'none';
+    if(user) document.getElementById('welcomeText').innerText = user.displayName;
   });
 
-  async function handleLogin() {
-    const email = document.getElementById('loginEmail').value;
-    const pass = document.getElementById('loginPass').value;
-    try {
-      await auth.signInWithEmailAndPassword(email, pass);
-      closeModal();
-    } catch (error) { alert("Hata: " + error.message); }
+  // SEPET SİSTEMİ (PRO)
+  function sepeteEkle(urun) {
+    const varolan = sepet.find(item => item.id === urun.id);
+    if(varolan) { varolan.adet += 1; } 
+    else { urun.adet = 1; sepet.push(urun); }
+    sepetiGuncelle();
+    toggleCart(true); // Sepeti otomatik açar
   }
 
-  // OTP Gönder ve Gmail Kontrolü
+  function sepettenSil(id) {
+    sepet = sepet.filter(item => item.id !== id);
+    sepetiGuncelle();
+  }
+
+  function adetDegistir(id, yeniAdet) {
+    const urun = sepet.find(item => item.id === id);
+    if(urun) { urun.adet = parseInt(yeniAdet); sepetiGuncelle(); }
+  }
+
+  function sepetiGuncelle() {
+    const container = document.getElementById('cartItemsContainer');
+    const countLabel = document.getElementById('cart-count');
+    const totalLabel = document.getElementById('totalPrice');
+    let total = 0;
+    
+    container.innerHTML = "";
+    sepet.forEach(item => {
+      total += (item.fiyat * item.adet);
+      container.innerHTML += `
+        <div class="cart-item">
+          <img src="${item.resim}">
+          <div class="cart-item-info">
+            <h4>${item.ad}</h4>
+            <p>${item.fiyat} TL</p>
+            <select class="quantity-select" onchange="adetDegistir(${item.id}, this.value)">
+              ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="${n}" ${item.adet == n ? 'selected' : ''}>Adet: ${n}</option>`).join('')}
+            </select>
+          </div>
+          <i class="fa-solid fa-trash-can remove-item" onclick="sepettenSil(${item.id})"></i>
+        </div>`;
+    });
+
+    countLabel.innerText = sepet.length;
+    totalLabel.innerText = `Toplam: ${total} TL`;
+    localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+  }
+
+  // AUTH İŞLEMLERİ (GMAIL ENGELİ DAHİL)
   async function sendOTP() {
     const name = document.getElementById('regName').value;
     const email = document.getElementById('regEmail').value;
     const pass = document.getElementById('regPass').value;
-    const passConfirm = document.getElementById('regPassConfirm').value;
-
-    if(!name || !email || !pass) return alert("Boş alan bırakma kral!");
-    if(pass !== passConfirm) return alert("Şifreler aynı değil!");
+    if(!name || !email || !pass) return alert("Eksikleri doldur kral!");
 
     try {
-        // E-posta kullanımda mı kontrolü
         const methods = await auth.fetchSignInMethodsForEmail(email);
-        if(methods.length > 0) return alert("Bu e-posta zaten kullanımda kral, başka dene!");
+        if(methods.length > 0) return alert("Bu Gmail zaten kayıtlı birader!");
 
         currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
         tempUserData = { name, email, pass };
 
-        emailjs.send("service_4l87xyp", "template_4qf4r88", {
+        await emailjs.send("service_4l87xyp", "template_4qf4r88", {
           to_email: email,
           otp_code: currentOTP,
           name: "BLIESPORTS"
-        }).then(() => {
-          document.getElementById('registerForm').style.display = 'none';
-          document.getElementById('otpForm').style.display = 'block';
-          document.getElementById('modalTitle').innerText = "Kodu Onayla";
         });
+        
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('otpForm').style.display = 'block';
     } catch(e) { alert("Hata: " + e.message); }
   }
 
   async function verifyAndRegister() {
-    const enteredOTP = document.getElementById('otpInput').value;
-    if(enteredOTP !== currentOTP) return alert("Kod hatalı!");
+    if(document.getElementById('otpInput').value !== currentOTP) return alert("Kod yanlış!");
     try {
-      const userCredential = await auth.createUserWithEmailAndPassword(tempUserData.email, tempUserData.pass);
-      await userCredential.user.updateProfile({ displayName: tempUserData.name });
+      const res = await auth.createUserWithEmailAndPassword(tempUserData.email, tempUserData.pass);
+      await res.user.updateProfile({ displayName: tempUserData.name });
       location.reload();
-    } catch (error) { alert("Kayıt Hatası: " + error.message); }
+    } catch(e) { alert(e.message); }
   }
 
-  function toggleDropdown(){ menuPanel.classList.toggle('open'); }
-  function menuAction(action){
-    if(action==='login'||action==='register') { menuPanel.classList.remove('open'); openModal(action); }
-    else if(action==='support') alert('Instagram: @bliesportts');
+  async function handleLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPass').value;
+    try { await auth.signInWithEmailAndPassword(email, pass); closeModal(); } 
+    catch(e) { alert("Giriş başarısız kral!"); }
   }
-  function openModal(type){
-    document.getElementById('modal').style.display='flex';
-    document.getElementById('modalTitle').innerText = type==='login' ? 'Giriş Yap' : 'Kayıt Ol';
-    document.getElementById('loginForm').style.display = type==='login' ? 'block' : 'none';
-    document.getElementById('registerForm').style.display = type==='register' ? 'block' : 'none';
+
+  // UI KONTROLLERİ
+  function toggleDropdown() { document.getElementById('sideMenu').classList.toggle('open'); }
+  function toggleCart(forceOpen = false) { 
+    if(forceOpen) document.getElementById('cartSidebar').classList.add('open');
+    else document.getElementById('cartSidebar').classList.toggle('open');
+  }
+  function openModal(type) {
+    document.getElementById('modal').style.display = 'flex';
+    document.getElementById('loginForm').style.display = type === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = type === 'register' ? 'block' : 'none';
     document.getElementById('otpForm').style.display = 'none';
   }
-  function closeModal(){ document.getElementById('modal').style.display='none'; }
-  function logout(){ auth.signOut().then(() => location.reload()); }
-  function scrollToTop(){ window.scrollTo({ top:0, behavior:'smooth' }); }
-
-  // SEPET (Senin Orijinal Kodun)
-  let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-  function sepetiGuncelle() {
-    const cartCount = document.getElementById('cart-count');
-    if(cartCount) cartCount.innerText = sepet.length;
-    localStorage.setItem('bli_sepet', JSON.stringify(sepet));
+  function closeModal() { document.getElementById('modal').style.display = 'none'; }
+  function logout() { auth.signOut().then(() => location.reload()); }
+  function toggleVisibility(id) { 
+    const x = document.getElementById(id); 
+    x.type = x.type === "password" ? "text" : "password"; 
   }
+  function menuAction(a) { toggleDropdown(); openModal(a); }
+  function scrollToTop() { window.scrollTo({top:0, behavior:'smooth'}); }
+
+  document.getElementById('cartBtn').onclick = () => toggleCart();
   window.onload = sepetiGuncelle;
 </script>
 </body>
