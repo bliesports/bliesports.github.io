@@ -2,59 +2,394 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Başvuru Formu | BLI Esports</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BLI Esports | Elite Recruitment</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        body { background-color: #0b0b0b; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: #141414; padding: 40px; border-radius: 15px; border: 1px solid #ff0000; width: 100%; max-width: 400px; text-align: center; }
-        h2 { color: #ff0000; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        .row { display: flex; gap: 10px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #ff0000; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; transition: 0.3s; }
-        button:hover { background: #cc0000; }
-        .back-link { display: block; margin-top: 20px; color: #555; text-decoration: none; font-size: 14px; }
+        /* ============================================================
+           1. CORE SIBER DESIGN SYSTEM
+           ============================================================ 
+        */
+        :root {
+            --bli-red: #ff3333;
+            --bli-dark-red: #880000;
+            --bg-black: #080808;
+            --card-bg: rgba(15, 15, 15, 0.95);
+            --neon-glow: 0 0 20px rgba(255, 51, 51, 0.3);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Arka Plan Hareketli Çizgiler */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(255, 51, 51, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 51, 51, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            from { background-position: 0 0; }
+            to { background-position: 40px 40px; }
+        }
+
+        /* ============================================================
+           2. FORM CONTAINER (THE CARD)
+           ============================================================ 
+        */
+        .application-wrapper {
+            width: 90%;
+            max-width: 550px;
+            perspective: 1000px;
+            padding: 20px 0;
+        }
+
+        .bli-card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 50px 40px;
+            border: 1px solid rgba(255, 51, 51, 0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), var(--neon-glow);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            animation: cardSlideIn 0.8s ease-out;
+        }
+
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(50px) rotateX(-10deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
+        }
+
+        .bli-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--bli-red);
+        }
+
+        /* ============================================================
+           3. HEADER & TYPOGRAPHY
+           ============================================================ 
+        */
+        .header-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-area img {
+            height: 60px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px var(--bli-red));
+        }
+
+        .header-area h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .header-area p {
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* ============================================================
+           4. FORM ELEMENTS
+           ============================================================ 
+        */
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--bli-red);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.05);
+            border-radius: 15px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--bli-red);
+            background: rgba(255, 51, 51, 0.05);
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.1);
+        }
+
+        select {
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 20px;
+        }
+
+        textarea {
+            resize: none;
+            min-height: 100px;
+        }
+
+        /* ============================================================
+           5. THE BUTTON (ULTIMATE DESIGN)
+           ============================================================ 
+        */
+        .submit-btn {
+            width: 100%;
+            padding: 22px;
+            background: var(--bli-red);
+            border: none;
+            border-radius: 18px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 51, 51, 0.3);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .submit-btn:hover {
+            background: #ff0000;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 51, 51, 0.5);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-nav {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #444;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .back-nav:hover {
+            color: var(--bli-red);
+        }
+
+        .back-nav i {
+            margin-right: 8px;
+        }
+
+        /* ============================================================
+           6. SUCCESS / ERROR NOTIFICATIONS
+           ============================================================ 
+        */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: #fff;
+            color: #000;
+            padding: 20px 30px;
+            border-radius: 20px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            margin-top: 15px;
+            animation: toastIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes toastIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .bli-card { padding: 40px 25px; }
+            .field-row { grid-template-columns: 1fr; gap: 0; }
+            .header-area h2 { font-size: 22px; }
+        }
+
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>OYUNCU BAŞVURUSU</h2>
-    <form id="formBli" action="https://formspree.io/f/mojnyoqb" method="POST">
-        
-        <div class="row">
-            <input type="text" name="ad" id="f_ad" placeholder="Adınız" required>
-            <input type="text" name="soyad" id="f_soyad" placeholder="Soyadınız" required>
-        </div>
-        
-        <input type="email" name="email" id="f_email" placeholder="Gmail Adresiniz" required>
-        
-        <select name="oyun" id="f_oyun">
-            <option value="Valorant">Valorant</option>
-            <option value="League of Legends">League of Legends</option>
-            <option value="PUBG Mobile">PUBG Mobile</option>
-        </select>
-        
-        <textarea name="mesaj" placeholder="Kısaca oyun tecrübelerinizden bahsedin..." rows="3"></textarea>
-        
-        <input type="hidden" name="_next" value="https://bliesports.github.io">
-        
-        <button type="submit">BAŞVURUYU GÖNDER</button>
-    </form>
-    <a href="https://bliesports.github.io" class="back-link">Vazgeç ve Ana Sayfaya Dön</a>
-</div>
+    <div class="application-wrapper">
+        <div class="bli-card">
+            
+            <div class="header-area">
+                <img src="logo1616.png" alt="BLI Logo">
+                <h2>OYUNCU ALIMI</h2>
+                <p>PROFESYONEL ARENA SENİ BEKLİYOR</p>
+            </div>
 
-<script>
-    document.getElementById("formBli").onsubmit = function() {
-        const basvuruBilgisi = {
-            ad: document.getElementById("f_ad").value,
-            soyad: document.getElementById("f_soyad").value,
-            email: document.getElementById("f_email").value,
-            oyun: document.getElementById("f_oyun").value
+            <form id="formBli" action="https://formspree.io/f/mojnyoqb" method="POST">
+                
+                <div class="field-row">
+                    <div class="input-group">
+                        <label class="input-label">ADINIZ</label>
+                        <input type="text" name="ad" id="f_ad" placeholder="Örn: Ahmet" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">SOYADINIZ</label>
+                        <input type="text" name="soyad" id="f_soyad" placeholder="Örn: Yılmaz" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">İLETİŞİM (GMAIL)</label>
+                    <input type="email" name="email" id="f_email" placeholder="adres@gmail.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">ANA BRANŞINIZ</label>
+                    <select name="oyun" id="f_oyun">
+                        <option value="Valorant">VALORANT</option>
+                        <option value="League of Legends">LEAGUE OF LEGENDS</option>
+                        <option value="PUBG Mobile">PUBG MOBILE</option>
+                        <option value="Counter Strike 2">COUNTER STRIKE 2</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">DENEYİM & CV</label>
+                    <textarea name="mesaj" id="f_mesaj" placeholder="Daha önce bulunduğun takımlar, rankın ve hedeflerin..." required></textarea>
+                </div>
+
+                <input type="hidden" name="_next" value="https://bliesports.github.io">
+                <input type="hidden" name="_subject" value="Yeni Oyuncu Başvurusu - BLI Esports">
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    BAŞVURUYU TAMAMLA
+                </button>
+
+            </form>
+
+            <a href="https://bliesports.github.io" class="back-nav">
+                <i class="fa-solid fa-arrow-left"></i> Vazgeç ve Ana Sayfaya Dön
+            </a>
+
+        </div>
+    </div>
+
+    <div id="toast-master" class="toast-container"></div>
+
+    <script>
+        const form = document.getElementById("formBli");
+        const btn = document.getElementById("submitBtn");
+
+        form.onsubmit = function(e) {
+            // Buton animasyonu
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> GÖNDERİLİYOR...';
+            btn.style.opacity = "0.7";
+            btn.style.pointerEvents = "none";
+
+            const payload = {
+                ad: document.getElementById("f_ad").value,
+                soyad: document.getElementById("f_soyad").value,
+                email: document.getElementById("f_email").value,
+                oyun: document.getElementById("f_oyun").value,
+                tarih: new Date().toLocaleString()
+            };
+            
+            // Yerel depolama
+            localStorage.setItem("bli_son_basvuru", JSON.stringify(payload));
+            
+            // Başarı mesajı (opsiyonel gösterim, asıl yönlendirme Formspree'de)
+            showToast("Başvuru verileri hazırlandı, yönlendiriliyorsunuz...");
         };
-        
-        localStorage.setItem("bli_basvuru_tamamlandi", JSON.stringify(basvuruBilgisi));
-    };
-</script>
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-check-circle" style="color:#00ff00"></i> ${msg}`;
+            document.getElementById('toast-master').appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        // Giriş efektleri için rastgele input parlaması
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('focus', () => {
+                console.log("BLI Systems: Input Focused");
+            });
+        });
+    </script>
 
 </body>
 </html>
