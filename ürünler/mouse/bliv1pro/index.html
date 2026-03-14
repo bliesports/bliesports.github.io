@@ -183,29 +183,32 @@
     });
 
     function handleSwipe() {
-        if (touchStartX - touchEndX > 50) { // Sola kaydırma
-            if(currentSlide < 3) goToSlide(currentSlide + 1);
-        }
-        if (touchEndX - touchStartX > 50) { // Sağa kaydırma
-            if(currentSlide > 0) goToSlide(currentSlide - 1);
-        }
+        if (touchStartX - touchEndX > 50) { if(currentSlide < 3) goToSlide(currentSlide + 1); }
+        if (touchEndX - touchStartX > 50) { if(currentSlide > 0) goToSlide(currentSlide - 1); }
     }
 
-    // SEPETE EKLEME
-    function sepeteEkle(ad, fiyat) {
-        let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
+    // SEPETE EKLEME (GÜNCELLENMİŞ VE INDEX.HTML UYUMLU)
+    function sepeteEkle(name, price) {
+        // Ana sayfanla aynı LocalStorage ismini (bli_user_cart) kullanıyoruz
+        let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+        
         const renkler = ['Siyah', 'Beyaz', 'Turuncu', 'Pembe'];
-        const resimler = ['../siyah.jpg', '../beyaz.png', '../turuncu.png', '../pembe.png'];
+        const resimler = ['siyah.jpg', 'beyaz.png', 'turuncu.png', 'pembe.png']; // Dosya yollarını kontrol et
 
         sepet.push({ 
-            ad: ad, 
-            fiyat: fiyat, 
-            resim: resimler[currentSlide],
+            id: 101, // Mouse ID'si
+            name: name, // 'ad' yerine 'name'
+            price: price, // 'fiyat' yerine 'price'
+            img: "v1pro-banner.png", // Ana sayfada güzel görünmesi için banner resmini veya resimler[currentSlide] kullanabilirsin
             renk: renkler[currentSlide] 
         });
         
-        localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-        alert("Ürün sepete eklendi!");
+        localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
+        
+        // Bu olay (event) ana sayfanın sepeti anında yenilemesini sağlar
+        window.dispatchEvent(new Event('storage'));
+        
+        alert(name + " (" + renkler[currentSlide] + ") sepete eklendi!");
     }
 </script>
 
