@@ -3,706 +3,714 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BLI Esports | Elite Gaming Gear & Apparel</title>
+    <title>BLI Esports | Official Professional Store</title>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@100;300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         /* ============================================================
-           1. CORE VARIABLES & RESET
-           ============================================================ */
+           1. PREMIUM DESIGN SYSTEM & VARIABLES
+           ============================================================ 
+        */
         :root {
-            --primary: #000000;
-            --accent: #ff3333;
-            --accent-glow: rgba(255, 51, 51, 0.4);
-            --white: #ffffff;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-800: #343a40;
-            --black-900: #121212;
-            --border-radius: 24px;
-            --shadow-lg: 0 20px 50px rgba(0,0,0,0.1);
-            --transition-smooth: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            --nav-height: 85px;
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --accent-red: #ff3333;
+            --accent-red-hover: #cc0000;
+            --text-white: #ffffff;
+            --text-gray: #888888;
+            --bg-light: #f4f4f4;
+            --border-color: rgba(0,0,0,0.08);
+            --nav-blur: 20px;
+            --transition-ultra: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            --shadow-premium: 0 30px 60px rgba(0,0,0,0.12);
+            --card-radius: 30px;
         }
 
+        /* ============================================================
+           2. RESET & BASE
+           ============================================================ 
+        */
         * {
             margin: 0; padding: 0; box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--white);
-            color: var(--primary);
-            line-height: 1.6;
+            background: var(--text-white);
+            color: var(--primary-black);
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            selection-background: var(--accent-red);
+            selection-color: var(--text-white);
         }
+
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
         /* ============================================================
-           2. NAVIGATION & SEARCH OVERLAY
-           ============================================================ */
-        .search-overlay {
-            position: fixed; top: -110%; left: 0; width: 100%; height: var(--nav-height);
-            background: var(--white); z-index: 2000;
-            display: flex; align-items: center; padding: 0 5%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: var(--transition-smooth);
-        }
-        .search-overlay.active { top: 0; }
-        
-        .search-container {
-            width: 100%; max-width: 1200px; margin: 0 auto;
-            display: flex; align-items: center; gap: 20px;
-        }
-        .search-input {
-            flex: 1; border: none; outline: none; font-size: 24px;
-            font-weight: 800; color: var(--primary); font-family: 'Inter';
-        }
-        .search-input::placeholder { color: var(--gray-300); }
+           3. ADVANCED ANIMATIONS
+           ============================================================ 
+        */
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 51, 51, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); } }
 
+        /* ============================================================
+           4. NAVIGATION ENGINE
+           ============================================================ 
+        */
         .navbar {
-            position: fixed; top: 0; width: 100%; height: var(--nav-height);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 90px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(var(--nav-blur)); -webkit-backdrop-filter: blur(var(--nav-blur));
+            z-index: 1000; border-bottom: 1px solid var(--border-color);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 5%; z-index: 1000;
-            border-bottom: 1px solid var(--gray-200);
+            padding: 0 6%; transition: var(--transition-ultra);
         }
 
-        .nav-logo img { height: 55px; object-fit: contain; cursor: pointer; transition: var(--transition-smooth); }
-        .nav-logo img:hover { transform: rotate(-3deg) scale(1.05); }
+        .navbar.scrolled { height: 70px; background: rgba(255, 255, 255, 0.98); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
 
-        .nav-actions { display: flex; align-items: center; gap: 25px; }
+        .nav-logo img { height: 50px; width: auto; transition: var(--transition-ultra); }
+        .navbar.scrolled .nav-logo img { height: 40px; }
 
-        .nav-btn {
-            background: none; border: none; cursor: pointer; position: relative;
-            color: var(--primary); font-size: 22px; transition: var(--transition-smooth);
-            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
-            border-radius: 50%;
+        .nav-tools { display: flex; align-items: center; gap: 15px; }
+
+        .tool-btn {
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 19px; color: var(--primary-black);
+            transition: var(--transition-ultra); position: relative;
         }
-        .nav-btn:hover { background: var(--gray-100); color: var(--accent); }
 
-        .badge {
-            position: absolute; top: 5px; right: 5px;
-            background: var(--accent); color: var(--white);
+        .tool-btn:hover { background: var(--bg-light); color: var(--accent-red); transform: translateY(-2px); }
+
+        .cart-badge {
+            position: absolute; top: 8px; right: 8px;
+            background: var(--accent-red); color: #fff;
             font-size: 10px; font-weight: 900; width: 18px; height: 18px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            border: 2px solid var(--white);
+            border: 2px solid #fff;
         }
 
         .hamburger {
-            width: 30px; display: flex; flex-direction: column; gap: 6px; cursor: pointer;
+            width: 35px; height: 45px; display: flex; flex-direction: column;
+            justify-content: center; gap: 7px; margin-left: 10px; cursor: pointer;
         }
-        .hamburger span { height: 3px; background: var(--primary); border-radius: 10px; transition: 0.3s; }
-        .hamburger:hover span:nth-child(2) { width: 20px; }
+
+        .hamburger span {
+            width: 100%; height: 2px; background: var(--primary-black);
+            border-radius: 4px; transition: var(--transition-ultra);
+        }
+
+        .hamburger:hover span:nth-child(2) { width: 70%; }
 
         /* ============================================================
-           3. HERO BANNERS & MAIN CONTENT
-           ============================================================ */
-        .main-content {
-            margin-top: calc(var(--nav-height) + 40px);
-            padding: 0 5% 100px;
-            max-width: 1400px; margin-left: auto; margin-right: auto;
+           5. SEARCH SYSTEM
+           ============================================================ 
+        */
+        .search-portal {
+            position: fixed; top: -100%; left: 0; width: 100%; height: 100vh;
+            background: rgba(255,255,255,0.98); z-index: 2500;
+            display: flex; flex-direction: column; padding: 100px 10%;
+            transition: var(--transition-ultra); opacity: 0;
         }
 
-        .section-header {
-            margin-bottom: 40px; text-align: center;
-        }
-        .section-header h1 {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(24px, 5vw, 42px);
-            letter-spacing: -1px; margin-bottom: 10px;
+        .search-portal.active { top: 0; opacity: 1; }
+
+        .search-inner { width: 100%; max-width: 900px; margin: 0 auto; }
+
+        .search-field-wrap {
+            display: flex; align-items: center; border-bottom: 3px solid var(--primary-black);
+            padding-bottom: 15px; margin-bottom: 50px;
         }
 
-        .banner-grid {
-            display: grid; grid-template-columns: 1fr; gap: 40px;
+        .search-field-wrap input {
+            flex: 1; border: none; outline: none; background: none;
+            font-size: 40px; font-family: 'Orbitron'; font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .hero-banner {
-            position: relative; border-radius: var(--border-radius);
-            overflow: hidden; text-decoration: none;
-            display: block; background: #f0f0f0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: var(--transition-smooth);
-        }
-        .hero-banner:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-        .hero-banner img {
-            width: 100%; height: auto; display: block;
-            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .hero-banner:hover img { transform: scale(1.05); }
-
-        /* Banner Overlay Glow */
-        .hero-banner::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
-            opacity: 0; transition: 0.5s;
-        }
-        .hero-banner:hover::after { opacity: 1; }
+        .search-close-btn { font-size: 35px; color: var(--text-gray); cursor: pointer; }
 
         /* ============================================================
-           4. SIDEBARS (MENU & CART)
-           ============================================================ */
-        .overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px); display: none; z-index: 1500;
+           6. MAIN STOREFRONT (BANNER GRID)
+           ============================================================ 
+        */
+        .content-engine {
+            margin-top: 110px;
+            padding: 0 4% 80px;
+            animation: fadeInScale 0.8s ease-out;
         }
 
-        .sidebar {
-            position: fixed; top: 0; right: -100%; width: 420px; height: 100%;
-            background: var(--white); z-index: 2100; transition: var(--transition-smooth);
-            display: flex; flex-direction: column; padding: 40px;
-            box-shadow: -20px 0 60px rgba(0,0,0,0.2);
+        .hero-matrix {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
         }
-        .sidebar.active { right: 0; }
 
-        @media (max-width: 500px) { .sidebar { width: 100%; } }
+        .bli-banner-card {
+            position: relative;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 16/9;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
 
-        .sidebar-close {
-            position: absolute; top: 30px; left: -60px;
-            width: 45px; height: 45px; background: var(--white);
+        @media (max-width: 768px) { .bli-banner-card { aspect-ratio: 1/1; } }
+
+        .bli-banner-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .bli-banner-card:hover img { transform: scale(1.05); }
+
+        .banner-overlay-link {
+            position: absolute; inset: 0; z-index: 10;
+        }
+
+        /* ============================================================
+           7. SIDEBAR ARCHITECTURE (MENU & CART)
+           ============================================================ 
+        */
+        .global-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px); z-index: 1900;
+            display: none; opacity: 0; transition: 0.4s;
+        }
+
+        .side-panel {
+            position: fixed; top: 0; right: -100%; width: 450px; height: 100vh;
+            background: var(--text-white); z-index: 2000;
+            display: flex; flex-direction: column; padding: 50px 40px;
+            transition: var(--transition-ultra);
+            box-shadow: -20px 0 50px rgba(0,0,0,0.1);
+        }
+
+        .side-panel.active { right: 0; }
+
+        @media (max-width: 480px) { .side-panel { width: 100%; } }
+
+        .panel-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .panel-title { font-family: 'Orbitron'; font-size: 26px; font-weight: 900; letter-spacing: -1px; }
+
+        .close-panel-btn {
+            width: 40px; height: 40px; background: var(--bg-light);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 20px; transition: 0.3s;
+            transition: 0.3s;
         }
-        .sidebar.active .sidebar-close { left: 30px; top: 30px; position: static; margin-bottom: 30px; }
 
-        .sidebar-title { font-family: 'Orbitron'; font-size: 24px; margin-bottom: 30px; border-left: 5px solid var(--accent); padding-left: 15px; }
+        .close-panel-btn:hover { background: var(--primary-black); color: var(--text-white); }
 
-        /* Menu Links */
-        .nav-links { list-style: none; }
-        .nav-links li { margin-bottom: 10px; }
-        .nav-links a {
-            display: flex; align-items: center; gap: 15px;
-            padding: 18px 25px; border-radius: 15px;
-            text-decoration: none; color: var(--primary);
-            font-weight: 700; font-size: 18px; transition: 0.3s;
-            background: var(--gray-100);
-        }
-        .nav-links a:hover { background: var(--primary); color: var(--white); transform: translateX(10px); }
-        .nav-links i { width: 25px; text-align: center; color: var(--accent); }
-
-        /* Cart Items */
-        .cart-items-container { flex: 1; overflow-y: auto; margin: 20px 0; padding-right: 10px; }
-        .cart-item {
-            display: flex; gap: 15px; padding: 15px; background: var(--gray-100);
-            border-radius: 18px; margin-bottom: 15px; position: relative;
-        }
-        .cart-item img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; }
-        .cart-item-info h4 { font-size: 14px; margin-bottom: 5px; font-weight: 800; }
-        .cart-item-info p { color: var(--accent); font-weight: 900; font-family: 'JetBrains Mono'; }
+        /* Menu Links Style */
+        .menu-list { flex: 1; }
+        .menu-item { margin-bottom: 15px; opacity: 0; transform: translateX(30px); transition: 0.5s; }
+        .side-panel.active .menu-item { opacity: 1; transform: translateX(0); }
         
-        .quantity-control {
-            display: flex; align-items: center; gap: 10px; margin-top: 10px;
+        .menu-link {
+            display: flex; align-items: center; gap: 20px;
+            padding: 22px 30px; border-radius: 20px;
+            background: var(--bg-light); font-weight: 800; font-size: 19px;
+            transition: var(--transition-ultra); border: 1px solid transparent;
         }
+
+        .menu-link:hover {
+            background: var(--text-white); border-color: var(--primary-black);
+            transform: scale(1.02); padding-left: 40px;
+        }
+
+        .menu-link i { color: var(--accent-red); width: 25px; }
+
+        /* Cart Logic Style */
+        .cart-flow { flex: 1; overflow-y: auto; padding-right: 10px; }
+        .cart-empty-state { text-align: center; margin-top: 100px; color: #ccc; }
+        
+        .cart-card {
+            display: flex; gap: 15px; padding: 20px; background: var(--bg-light);
+            border-radius: 20px; margin-bottom: 15px; position: relative;
+        }
+
+        .cart-card img { width: 80px; height: 80px; border-radius: 15px; object-fit: cover; }
+        
+        .cart-card-details h4 { font-size: 15px; font-weight: 800; margin-bottom: 5px; }
+        .cart-card-details p { font-family: 'JetBrains Mono'; color: var(--accent-red); font-weight: 700; }
+
+        .qty-controls {
+            display: flex; align-items: center; gap: 12px; margin-top: 10px;
+        }
+
         .qty-btn {
-            width: 24px; height: 24px; border: 1px solid #ccc; border-radius: 5px;
-            background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            width: 25px; height: 25px; border: 1px solid #ddd; background: #fff;
+            border-radius: 6px; font-weight: 900;
         }
 
-        .cart-footer { padding-top: 20px; border-top: 2px dashed var(--gray-200); }
-        .total-row { display: flex; justify-content: space-between; font-size: 22px; font-weight: 900; margin-bottom: 20px; }
+        .panel-footer {
+            margin-top: auto; padding-top: 30px; border-top: 2px dashed #eee;
+        }
 
-        .btn-checkout {
-            width: 100%; padding: 20px; background: var(--primary); color: var(--white);
-            border: none; border-radius: 18px; font-size: 16px; font-weight: 800;
-            cursor: pointer; transition: 0.3s; font-family: 'Orbitron';
+        .total-box {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px;
         }
-        .btn-checkout:hover { background: var(--accent); box-shadow: 0 10px 20px var(--accent-glow); }
 
-        /* ============================================================
-           5. AUTH MODALS (ADVANCED)
-           ============================================================ */
-        .modal-container {
-            position: fixed; inset: 0; z-index: 3000;
-            display: none; align-items: center; justify-content: center;
-            padding: 20px;
-        }
-        .modal-container.active { display: flex; }
-        
-        .modal-box {
-            background: var(--white); width: 100%; max-width: 450px;
-            padding: 40px; border-radius: 35px; position: relative;
-            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes modalPop { from { opacity:0; transform: scale(0.8); } to { opacity:1; transform: scale(1); } }
+        .total-box span:first-child { font-weight: 400; color: var(--text-gray); }
+        .total-box span:last-child { font-family: 'Orbitron'; font-size: 28px; font-weight: 900; }
 
-        .form-group { margin-bottom: 20px; position: relative; }
-        .form-group label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--gray-800); }
-        .form-input {
-            width: 100%; padding: 16px 20px; border-radius: 15px;
-            border: 2px solid var(--gray-200); outline: none; transition: 0.3s;
-            font-family: 'Inter'; font-weight: 600;
+        .checkout-btn {
+            width: 100%; padding: 24px; background: var(--primary-black);
+            color: var(--text-white); border-radius: 20px; font-weight: 900;
+            font-family: 'Orbitron'; font-size: 17px; transition: 0.4s;
         }
-        .form-input:focus { border-color: var(--primary); background: var(--gray-100); }
+
+        .checkout-btn:hover { background: var(--accent-red); box-shadow: 0 15px 30px var(--accent-glow); }
 
         /* ============================================================
-           6. FOOTER
-           ============================================================ */
-        .footer {
-            background: var(--black-900); color: var(--white);
-            padding: 80px 5% 40px; margin-top: 50px;
+           8. FOOTER TERMINAL
+           ============================================================ 
+        */
+        .footer-terminal {
+            background: var(--secondary-black); color: var(--text-white);
+            padding: 100px 6% 50px;
         }
+
         .footer-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 50px; max-width: 1400px; margin: 0 auto;
+            gap: 60px; max-width: 1400px; margin: 0 auto;
         }
-        .footer-brand img { height: 40px; filter: brightness(0) invert(1); margin-bottom: 20px; }
-        .footer-links h3 { font-family: 'Orbitron'; margin-bottom: 25px; font-size: 16px; color: var(--accent); }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: #888; text-decoration: none; transition: 0.3s; }
-        .footer-links a:hover { color: var(--white); padding-left: 5px; }
 
-        .social-row { display: flex; gap: 15px; margin-top: 20px; }
-        .social-icon {
-            width: 45px; height: 45px; background: #222; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            color: white; text-decoration: none; transition: 0.3s;
+        .footer-col h4 {
+            font-family: 'Orbitron'; color: var(--accent-red);
+            font-size: 15px; margin-bottom: 30px; letter-spacing: 2px;
         }
-        .social-icon:hover { background: var(--accent); transform: translateY(-5px); }
 
-        .copyright {
-            text-align: center; margin-top: 80px; padding-top: 40px;
-            border-top: 1px solid #222; color: #555; font-size: 13px;
+        .footer-list li { margin-bottom: 15px; }
+        .footer-list a { color: #666; font-size: 15px; transition: 0.3s; }
+        .footer-list a:hover { color: #fff; padding-left: 5px; }
+
+        .social-cluster { display: flex; gap: 15px; margin-top: 25px; }
+        .social-item {
+            width: 45px; height: 45px; border: 1px solid #333;
+            border-radius: 14px; display: flex; align-items: center;
+            justify-content: center; font-size: 20px; transition: 0.4s;
         }
+
+        .social-item:hover { background: var(--text-white); color: #000; transform: translateY(-5px); }
+
+        .legal-row {
+            margin-top: 100px; padding-top: 40px; border-top: 1px solid #1a1a1a;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
+        }
+
+        .legal-row p { color: #333; font-size: 12px; font-weight: 600; }
 
         /* ============================================================
-           7. TOAST NOTIFICATIONS
-           ============================================================ */
-        #toast-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 9999; }
-        .toast {
-            background: var(--primary); color: white; padding: 15px 30px;
-            border-radius: 50px; font-weight: 700; margin-top: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: slideUp 0.3s forwards;
+           9. MODAL & UI COMPONENTS (AUTH)
+           ============================================================ 
+        */
+        .bli-modal {
+            position: fixed; inset: 0; z-index: 5000;
+            display: none; align-items: center; justify-content: center;
+            padding: 20px; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
         }
-        @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
+        .bli-modal.active { display: flex; }
+
+        .modal-card {
+            background: #fff; width: 100%; max-width: 450px;
+            border-radius: 40px; padding: 50px; position: relative;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+        }
+
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-size: 11px; font-weight: 900; margin-bottom: 10px; color: #888; }
+        .input-control {
+            width: 100%; padding: 18px 25px; border-radius: 18px;
+            background: var(--bg-light); border: 2px solid transparent;
+            font-family: 'Inter'; font-weight: 700; transition: 0.3s;
+        }
+
+        .input-control:focus { border-color: #000; background: #fff; }
+
+        /* Toast Notifications */
+        #toast-master { position: fixed; bottom: 40px; right: 40px; z-index: 9999; }
+        .toast-msg {
+            background: #000; color: #fff; padding: 20px 35px;
+            border-radius: 20px; margin-top: 15px; font-weight: 700;
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
     </style>
 </head>
 <body>
 
-    <div id="loader" style="position:fixed; inset:0; background:#fff; z-index:9999; display:flex; align-items:center; justify-content:center;">
-        <div style="width:50px; height:50px; border:5px solid #f3f3f3; border-top:5px solid #000; border-radius:50%; animation:spin 1s linear infinite;"></div>
-    </div>
-    <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
-
-    <div class="search-overlay" id="searchBar">
-        <div class="search-container">
-            <i class="fa-solid fa-magnifying-glass" style="font-size: 24px; color: #888;"></i>
-            <input type="text" class="search-input" id="searchInput" placeholder="ELITE JERSEY, MOUSE, KEYBOARD...">
-            <i class="fa-solid fa-xmark" style="cursor:pointer; font-size: 30px;" onclick="closeSearch()"></i>
+    <div id="loading-layer" style="position:fixed; inset:0; background:#fff; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <img src="logo1616.png" style="height:60px; margin-bottom:20px;">
+        <div style="width:100px; height:2px; background:#eee; position:relative; overflow:hidden;">
+            <div id="load-progress" style="position:absolute; width:0; height:100%; background:#000; transition:0.5s;"></div>
         </div>
     </div>
 
-    <header class="navbar">
-        <div class="nav-logo" onclick="window.location.href='index.html'">
+    <div class="search-portal" id="searchPortal">
+        <div class="search-inner">
+            <div class="search-field-wrap">
+                <input type="text" id="mainSearchInput" placeholder="EKİPMAN VEYA KOLEKSİYON ARA...">
+                <i class="fa-solid fa-xmark search-close-btn" onclick="closeSearch()"></i>
+            </div>
+            <div id="searchSuggestions">
+                <p style="color:#aaa; font-weight:800; margin-bottom:20px;">POPÜLER ARAMALAR</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <span style="padding:10px 20px; border:1px solid #ddd; border-radius:30px; cursor:pointer;" onclick="setSearch('V1 PRO')">V1 PRO MOUSE</span>
+                    <span style="padding:10px 20px; border:1px solid #ddd; border-radius:30px; cursor:pointer;" onclick="setSearch('FORMA')">ELITE JERSEY</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNavbar">
+        <div class="nav-logo" onclick="location.href='index.html'">
             <img src="logo1616.png" alt="BLI ESPORTS">
         </div>
 
-        <div class="nav-actions">
-            <button class="nav-btn" onclick="openSearch()">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-
-            <a href="https://instagram.com/bliesportts" target="_blank" class="nav-btn">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-
-            <button class="nav-btn" onclick="toggleSidebar('cartSidebar')">
+        <div class="nav-tools">
+            <button class="tool-btn" onclick="openSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <a href="https://youtube.com/@bliesports?si=1ty2WY5Fv3Zj29h7" target="_blank" class="tool-btn"><i class="fa-brands fa-youtube"></i></a>
+            <button class="tool-btn" onclick="openPanel('cartPanel')">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span class="badge" id="cartBadge">0</span>
+                <span class="cart-badge" id="cartBadgeCount">0</span>
             </button>
-
-            <div class="hamburger" onclick="toggleSidebar('menuSidebar')">
+            <div class="hamburger" onclick="openPanel('menuPanel')">
                 <span></span><span></span><span></span>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <div class="overlay" id="pageOverlay" onclick="closeAllSidebars()"></div>
+    <div class="global-overlay" id="globalOverlay" onclick="closeAllPanels()"></div>
 
-    <aside class="sidebar" id="menuSidebar">
-        <div class="sidebar-close" onclick="closeAllSidebars()"><i class="fa-solid fa-xmark"></i></div>
-        <h2 class="sidebar-title">Gezinti</h2>
+    <aside class="side-panel" id="menuPanel">
+        <div class="panel-header">
+            <h2 class="panel-title">GEZİNTİ</h2>
+            <button class="close-panel-btn" onclick="closeAllPanels()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         
-        <ul class="nav-links">
-            <li><a href="index.html"><i class="fa-solid fa-house"></i> Ana Sayfa</a></li>
-            <li><a href="/ürünler/index.html"><i class="fa-solid fa- shop"></i> Tüm Ürünler</a></li>
-            <li><a href="/ürünler/mouse/index.html"><i class="fa-solid fa-mouse"></i> Ekipmanlar</a></li>
-            <li><a href="/ürünler/forma/index.html"><i class="fa-solid fa-shirt"></i> Giyim</a></li>
-            <li><a href="/basvuru/index.html"><i class="fa-solid fa-user-plus"></i> Ekibe Katıl</a></li>
+        <ul class="menu-list">
+            <li class="menu-item" style="transition-delay: 0.1s;"><a href="index.html" class="menu-link"><i class="fa-solid fa-house"></i> Ana Sayfa</a></li>
+            <li class="menu-item" style="transition-delay: 0.2s;"><a href="/ürünler/index.html" class="menu-link"><i class="fa-solid fa-shop"></i> Tüm Ürünler</a></li>
+            <li class="menu-item" style="transition-delay: 0.3s;"><a href="/basvuru/index.html" class="menu-link"><i class="fa-solid fa-user-plus"></i> Ekibe Katıl</a></li>
         </ul>
 
-        <div style="margin-top: auto;">
-            <div id="loggedOutUI">
-                <button class="btn-checkout" style="margin-bottom: 15px;" onclick="showModal('login')">GİRİŞ YAP</button>
-                <button class="btn-checkout" style="background:#fff; color:#000; border:2px solid #000;" onclick="showModal('register')">HESAP OLUŞTUR</button>
+        <div class="auth-section">
+            <div id="unauth-view">
+                <button class="checkout-btn" style="margin-bottom:15px;" onclick="showAuth('login')">GİRİŞ YAP</button>
+                <button class="checkout-btn" style="background:transparent; color:#000; border:2px solid #000;" onclick="showAuth('register')">HESAP OLUŞTUR</button>
             </div>
-            <div id="loggedInUI" style="display: none;">
-                <div style="display:flex; align-items:center; gap:15px; padding:20px; background:#f4f4f4; border-radius:15px; margin-bottom:15px;">
-                    <div style="width:40px; height:40px; background:#000; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900;" id="userInitial">U</div>
+            <div id="auth-view" style="display:none;">
+                <div style="display:flex; align-items:center; gap:20px; padding:25px; background:var(--bg-light); border-radius:25px; margin-bottom:15px;">
+                    <div id="uAvatar" style="width:50px; height:50px; background:#000; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Orbitron'; font-weight:900;">B</div>
                     <div>
-                        <p style="font-size:12px; color:#888;">Hoş geldin,</p>
-                        <p style="font-weight:800;" id="displayNameText">Oyuncu</p>
+                        <p style="font-size:12px; color:#aaa; font-weight:800;">HOŞ GELDİN,</p>
+                        <p id="uName" style="font-weight:900; font-size:18px;">Oyuncu</p>
                     </div>
                 </div>
-                <button class="btn-checkout" style="background:#ff3333;" onclick="handleLogout()">OTURUMU KAPAT</button>
+                <button class="checkout-btn" style="background:var(--accent-red);" onclick="processLogout()">OTURUMU KAPAT</button>
             </div>
         </div>
     </aside>
 
-    <aside class="sidebar" id="cartSidebar">
-        <div class="sidebar-close" onclick="closeAllSidebars()"><i class="fa-solid fa-xmark"></i></div>
-        <h2 class="sidebar-title">Sepetim</h2>
-        
-        <div class="cart-items-container" id="cartList">
+    <aside class="side-panel" id="cartPanel">
+        <div class="panel-header">
+            <h2 class="panel-title">SEPETİN</h2>
+            <button class="close-panel-btn" onclick="closeAllPanels()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="cart-flow" id="cartContent">
             </div>
 
-        <div class="cart-footer">
-            <div class="total-row">
-                <span>Ara Toplam</span>
-                <span id="cartTotalText">0.00 TL</span>
+        <div class="panel-footer">
+            <div class="total-box">
+                <span>ARA TOPLAM</span>
+                <span id="grandTotal">0.00 TL</span>
             </div>
-            <button class="btn-checkout" onclick="proceedToCheckout()">ÖDEME ADIMINA GEÇ</button>
-            <p style="text-align:center; font-size:11px; color:#888; margin-top:15px;">Kargo ücreti ödeme adımında hesaplanır.</p>
+            <button class="checkout-btn" onclick="startCheckout()">ÖDEME ADIMINA GEÇ</button>
         </div>
     </aside>
 
-    <main class="main-content">
-        <div class="section-header">
-            <h1>Elite Gaming Collection</h1>
-            <p style="color:#666; font-weight:500;">Oyunun kurallarını yeniden yazan ekipmanlar.</p>
-        </div>
-
-        <div class="banner-grid">
-            <a href="/ürünler/mouse/bliv1pro/index.html" class="hero-banner">
+    <main class="content-engine">
+        <div class="hero-matrix">
+            <div class="bli-banner-card">
                 <img src="v1pro-banner.png" alt="BLI V1 PRO MOUSE">
-            </a>
-
-            <a href="/ürünler/forma/classic/index.html" class="hero-banner">
+                <a href="/ürünler/mouse/bliv1pro/index.html" class="banner-overlay-link"></a>
+            </div>
+            <div class="bli-banner-card">
                 <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
-            </a>
+                <a href="/ürünler/forma/classic/index.html" class="banner-overlay-link"></a>
+            </div>
         </div>
     </main>
 
-    <footer class="footer">
+    <footer class="footer-terminal">
         <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="logo1616.png" alt="BLI">
-                <p style="color:#666; font-size:14px; margin-top:10px;">BLI Esports bir performans markasıdır. En iyisi için tasarlandı.</p>
-                <div class="social-row">
-                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-discord"></i></a>
+            <div class="footer-col">
+                <img src="logo1616.png" style="height:40px; filter:brightness(0) invert(1); margin-bottom:20px;">
+                <p style="color:#444; font-size:14px; line-height:1.8;">BLI Esports, rekabetçi arenalar için tasarlanmış profesyonel bir performans markasıdır. En iyiler için, en iyisi tarafından.</p>
+                <div class="social-cluster">
+                    <a href="https://instagram.com/bliesportts" target="_blank" class="social-item"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://youtube.com/@bliesports?si=1ty2WY5Fv3Zj29h7" target="_blank" class="social-item"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
-            <div class="footer-links">
-                <h3>MAĞAZA</h3>
-                <ul>
-                    <li><a href="#">Yeni Gelenler</a></li>
-                    <li><a href="#">Fareler</a></li>
-                    <li><a href="#">Klavyeler</a></li>
-                    <li><a href="#">Jersey Serisi</a></li>
+            <div class="footer-col">
+                <h4>MAĞAZA</h4>
+                <ul class="footer-list">
+                    <li><a href="/ürünler/index.html">Yeni Gelenler</a></li>
+                    <li><a href="/ürünler/mouse/index.html">Mouse Modelleri</a></li>
+                    <li><a href="/ürünler/forma/index.html">Jersey Koleksiyonu</a></li>
                 </ul>
             </div>
-            <div class="footer-links">
-                <h3>DESTEK</h3>
-                <ul>
-                    <li><a href="#">Sipariş Takibi</a></li>
-                    <li><a href="#">İade Politikası</a></li>
-                    <li><a href="#">Sıkça Sorulan Sorular</a></li>
-                    <li><a href="#">İletişim</a></li>
+            <div class="footer-col">
+                <h4>YARDIM</h4>
+                <ul class="footer-list">
+                    <li><a href="#">Siparişimi Takip Et</a></li>
+                    <li><a href="#">İade ve Değişim</a></li>
+                    <li><a href="#">Bize Ulaşın</a></li>
+                    <li><a href="#">S.S.S.</a></li>
                 </ul>
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2026 BLI ESPORTS WORLDWIDE. ALL RIGHTS RESERVED. <br>
-            Designed for the elite.
+        <div class="legal-row">
+            <p>&copy; 2026 BLI ESPORTS WORLDWIDE. ALL RIGHTS RESERVED.</p>
+            <div style="display:flex; gap:20px;">
+                <i class="fa-brands fa-cc-visa" style="color:#222; font-size:24px;"></i>
+                <i class="fa-brands fa-cc-mastercard" style="color:#222; font-size:24px;"></i>
+            </div>
         </div>
     </footer>
 
-    <div class="modal-container" id="authModal">
-        <div class="modal-box">
-            <i class="fa-solid fa-circle-xmark" style="position:absolute; right:25px; top:25px; cursor:pointer; font-size:24px;" onclick="closeModal()"></i>
+    <div class="bli-modal" id="authModal">
+        <div class="modal-card">
+            <button style="position:absolute; top:30px; right:30px; font-size:20px;" onclick="closeAuth()"><i class="fa-solid fa-xmark"></i></button>
             
-            <div id="loginForm">
-                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">Giriş Yap</h2>
-                <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI dünyasına geri dön kanka.</p>
-                
-                <div class="form-group">
+            <div id="loginCore">
+                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">GİRİŞ</h2>
+                <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI hesabınla oturum aç.</p>
+                <div class="input-group">
                     <label>E-POSTA ADRESİ</label>
-                    <input type="email" id="loginEmail" class="form-input" placeholder="ornek@mail.com">
+                    <input type="email" id="logEmail" class="input-control" placeholder="mail@example.com">
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>ŞİFRE</label>
-                    <input type="password" id="loginPass" class="form-input" placeholder="••••••••">
+                    <input type="password" id="logPass" class="input-control" placeholder="••••••••">
                 </div>
-                <button class="btn-checkout" onclick="handleLogin()">GİRİŞ YAP</button>
-                <p style="text-align:center; margin-top:20px; font-size:14px;">Hesabın yok mu? <a href="javascript:void(0)" style="color:red; font-weight:700;" onclick="switchForm('register')">Kayıt Ol</a></p>
+                <button class="checkout-btn" onclick="handleLogin()">GİRİŞ YAP</button>
             </div>
 
-            <div id="registerForm" style="display: none;">
-                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">Kayıt Ol</h2>
-                <p style="color:#888; margin-bottom:30px; font-size:14px;">Ekibe ilk adımını at.</p>
-                
-                <div class="form-group">
-                    <label>AD SOYAD</label>
-                    <input type="text" id="regName" class="form-input" placeholder="Ad Soyad">
-                </div>
-                <div class="form-group">
-                    <label>E-POSTA ADRESİ</label>
-                    <input type="email" id="regEmail" class="form-input" placeholder="ornek@mail.com">
-                </div>
-                <div class="form-group">
-                    <label>ŞİFRE</label>
-                    <input type="password" id="regPass" class="form-input" placeholder="En az 6 karakter">
-                </div>
-                <button class="btn-checkout" onclick="handleOTPRequest()">KOD GÖNDER</button>
-                <p style="text-align:center; margin-top:20px; font-size:14px;">Zaten üye misin? <a href="javascript:void(0)" style="color:red; font-weight:700;" onclick="switchForm('login')">Giriş Yap</a></p>
+            <div id="regCore" style="display:none;">
+                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">KAYIT</h2>
+                <div class="input-group"><label>AD SOYAD</label><input type="text" id="regName" class="input-control"></div>
+                <div class="input-group"><label>E-POSTA</label><input type="email" id="regEmail" class="input-control"></div>
+                <div class="input-group"><label>ŞİFRE</label><input type="password" id="regPass" class="input-control"></div>
+                <button class="checkout-btn" onclick="sendOtp()">DOĞRULAMA KODU GÖNDER</button>
             </div>
 
-            <div id="otpForm" style="display: none;">
-                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">Doğrulama</h2>
-                <p style="color:#888; margin-bottom:30px; font-size:14px;">E-postana gelen 6 haneli kodu gir.</p>
-                
-                <div class="form-group">
-                    <label>DOĞRULAMA KODU</label>
-                    <input type="text" id="otpInput" class="form-input" placeholder="000000" maxlength="6" style="text-align:center; letter-spacing:10px; font-size:24px;">
-                </div>
-                <button class="btn-checkout" onclick="handleVerifyOTP()">HESABI ONAYLA</button>
+            <div id="otpCore" style="display:none;">
+                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">DOĞRULAMA</h2>
+                <p style="color:#888; margin-bottom:30px; font-size:14px;">Kod e-postana gönderildi.</p>
+                <input type="text" id="otpVal" class="input-control" placeholder="000000" style="text-align:center; font-size:30px; letter-spacing:10px;">
+                <button class="checkout-btn" style="margin-top:20px;" onclick="verifyAndCreate()">ONAYLA VE KATIL</button>
             </div>
         </div>
     </div>
 
-    <div id="toast-container"></div>
+    <div id="toast-master"></div>
 
     <script>
-        // FIREBASE INITIALIZATION
-        const firebaseConfig = {
-            apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8",
-            authDomain: "bliesports.firebaseapp.com",
-            projectId: "bliesports",
-            storageBucket: "bliesports.firebasestorage.app",
-            messagingSenderId: "880767104142",
-            appId: "1:880767104142:web:5edbe111f42f16ab1545df"
-        };
-        firebase.initializeApp(firebaseConfig);
+        // -- Configuration --
+        const fCfg = { apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8", authDomain: "bliesports.firebaseapp.com", projectId: "bliesports", storageBucket: "bliesports.firebasestorage.app", messagingSenderId: "880767104142", appId: "1:880767104142:web:5edbe111f42f16ab1545df" };
+        firebase.initializeApp(fCfg);
         const auth = firebase.auth();
-        const db = firebase.firestore();
         emailjs.init("QQAT1SNb9qOdZw353");
 
-        // GLOBAL STATE
-        let cart = JSON.parse(localStorage.getItem('bli_cart')) || [];
-        let generatedOTP = "";
-        let pendingUser = null;
+        // -- Global State --
+        let basket = JSON.parse(localStorage.getItem('bli_basket')) || [];
+        let otpCode = "";
+        let userData = {};
 
-        // UI INITIALIZATION
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('loader').remove(), 500);
-            }, 1000);
-            updateCartUI();
-        });
+        // -- Initialization --
+        window.onload = () => {
+            const bar = document.getElementById('load-progress');
+            let p = 0;
+            const iv = setInterval(() => {
+                p += 20; bar.style.width = p + "%";
+                if(p >= 100) {
+                    clearInterval(iv);
+                    setTimeout(() => document.getElementById('loading-layer').style.display='none', 400);
+                }
+            }, 100);
+            renderBasket();
+        };
 
-        // AUTH STATE OBSERVER
-        auth.onAuthStateChanged(user => {
-            const loggedInUI = document.getElementById('loggedInUI');
-            const loggedOutUI = document.getElementById('loggedOutUI');
-            if (user) {
-                loggedInUI.style.display = 'block';
-                loggedOutUI.style.display = 'none';
-                document.getElementById('displayNameText').innerText = user.displayName || "Oyuncu";
-                document.getElementById('userInitial').innerText = (user.displayName || "U").charAt(0).toUpperCase();
+        // -- Scroll Management --
+        window.onscroll = () => {
+            const nav = document.getElementById('mainNavbar');
+            window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
+        };
+
+        // -- Panel Logic --
+        function openPanel(id) {
+            document.getElementById(id).classList.add('active');
+            document.getElementById('globalOverlay').style.display = 'block';
+            setTimeout(() => document.getElementById('globalOverlay').style.opacity = '1', 10);
+        }
+
+        function closeAllPanels() {
+            document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
+            const ov = document.getElementById('globalOverlay');
+            ov.style.opacity = '0';
+            setTimeout(() => ov.style.display = 'none', 400);
+        }
+
+        // -- Search Logic --
+        function openSearch() { document.getElementById('searchPortal').classList.add('active'); document.getElementById('mainSearchInput').focus(); }
+        function closeSearch() { document.getElementById('searchPortal').classList.remove('active'); }
+        function setSearch(val) { document.getElementById('mainSearchInput').value = val; }
+
+        // -- Auth Observer --
+        auth.onAuthStateChanged(u => {
+            const un = document.getElementById('unauth-view');
+            const au = document.getElementById('auth-view');
+            if(u) {
+                un.style.display = 'none'; au.style.display = 'block';
+                document.getElementById('uName').innerText = u.displayName || "Oyuncu";
+                document.getElementById('uAvatar').innerText = (u.displayName || "B")[0].toUpperCase();
             } else {
-                loggedInUI.style.display = 'none';
-                loggedOutUI.style.display = 'block';
+                un.style.display = 'block'; au.style.display = 'none';
             }
         });
 
-        // SIDEBAR CONTROLS
-        function toggleSidebar(id) {
-            const sidebar = document.getElementById(id);
-            const overlay = document.getElementById('pageOverlay');
-            
-            if(sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                overlay.style.display = 'none';
-            } else {
-                closeAllSidebars();
-                sidebar.classList.add('active');
-                overlay.style.display = 'block';
-            }
-        }
+        // -- Basket Logic --
+        function renderBasket() {
+            const box = document.getElementById('cartContent');
+            const badge = document.getElementById('cartBadgeCount');
+            const totalDisplay = document.getElementById('grandTotal');
+            let sum = 0;
 
-        function closeAllSidebars() {
-            document.querySelectorAll('.sidebar').forEach(s => s.classList.remove('active'));
-            document.getElementById('pageOverlay').style.display = 'none';
-        }
-
-        // SEARCH OVERLAY CONTROLS
-        function openSearch() {
-            document.getElementById('searchBar').classList.add('active');
-            document.getElementById('searchInput').focus();
-        }
-        function closeSearch() {
-            document.getElementById('searchBar').classList.remove('active');
-        }
-
-        // CART LOGIC
-        function addToCart(id, name, price, img) {
-            const exists = cart.find(item => item.id === id);
-            if(exists) {
-                exists.qty++;
-            } else {
-                cart.push({ id, name, price, img, qty: 1 });
-            }
-            showToast(`${name} sepete eklendi kanka!`);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cartList');
-            const badge = document.getElementById('cartBadge');
-            const totalText = document.getElementById('cartTotalText');
-            let total = 0;
-
-            if(cart.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align:center; padding:50px 0;">
-                        <i class="fa-solid fa-basket-shopping" style="font-size:50px; color:#eee; margin-bottom:20px;"></i>
-                        <p style="color:#888;">Sepetin şu an bomboş.</p>
-                    </div>`;
+            if(basket.length === 0) {
+                box.innerHTML = '<div class="cart-empty-state"><i class="fa-solid fa-ghost" style="font-size:40px;"></i><p style="margin-top:15px;">Henüz bir şey eklemedin.</p></div>';
                 badge.innerText = "0";
-                totalText.innerText = "0.00 TL";
+                totalDisplay.innerText = "0.00 TL";
             } else {
-                container.innerHTML = "";
-                cart.forEach((item, index) => {
-                    total += (item.price * item.qty);
-                    container.innerHTML += `
-                        <div class="cart-item">
+                box.innerHTML = "";
+                basket.forEach((item, idx) => {
+                    sum += item.price * item.qty;
+                    box.innerHTML += `
+                        <div class="cart-card">
                             <img src="${item.img}">
-                            <div class="cart-item-info">
+                            <div class="cart-card-details">
                                 <h4>${item.name}</h4>
                                 <p>${item.price} TL</p>
-                                <div class="quantity-control">
-                                    <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
-                                    <span style="font-weight:800; font-size:14px;">${item.qty}</span>
-                                    <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                                <div class="qty-controls">
+                                    <button class="qty-btn" onclick="adjustQty(${idx},-1)">-</button>
+                                    <span style="font-weight:900;">${item.qty}</span>
+                                    <button class="qty-btn" onclick="adjustQty(${idx},1)">+</button>
                                 </div>
                             </div>
-                            <i class="fa-solid fa-trash" style="position:absolute; right:15px; top:15px; color:#ff3333; cursor:pointer;" onclick="removeFromCart(${index})"></i>
+                            <i class="fa-solid fa-trash-can" style="position:absolute; right:20px; top:20px; color:#ddd; cursor:pointer;" onclick="killItem(${idx})"></i>
                         </div>`;
                 });
-                badge.innerText = cart.length;
-                totalText.innerText = total.toFixed(2) + " TL";
+                badge.innerText = basket.length;
+                totalDisplay.innerText = sum.toFixed(2) + " TL";
             }
-            localStorage.setItem('bli_cart', JSON.stringify(cart));
+            localStorage.setItem('bli_basket', JSON.stringify(basket));
         }
 
-        function updateQty(index, delta) {
-            cart[index].qty += delta;
-            if(cart[index].qty < 1) cart.splice(index, 1);
-            updateCartUI();
+        function adjustQty(i, d) {
+            basket[i].qty += d;
+            if(basket[i].qty < 1) basket.splice(i,1);
+            renderBasket();
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
+        function killItem(i) { basket.splice(i,1); renderBasket(); }
 
-        // AUTH ACTIONS
-        function showModal(mode) {
+        // -- Auth Handlers --
+        function showAuth(m) {
             document.getElementById('authModal').classList.add('active');
-            switchForm(mode);
+            document.getElementById('loginCore').style.display = m === 'login' ? 'block' : 'none';
+            document.getElementById('regCore').style.display = m === 'register' ? 'block' : 'none';
+            document.getElementById('otpCore').style.display = 'none';
         }
-        function closeModal() {
-            document.getElementById('authModal').classList.remove('active');
-        }
-        function switchForm(mode) {
-            document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
-            document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
-            document.getElementById('otpForm').style.display = mode === 'otp' ? 'block' : 'none';
-        }
+
+        function closeAuth() { document.getElementById('authModal').classList.remove('active'); }
 
         async function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPass').value;
+            const e = document.getElementById('logEmail').value;
+            const p = document.getElementById('logPass').value;
             try {
-                await auth.signInWithEmailAndPassword(email, pass);
-                showToast("Giriş başarılı! Hoş geldin kanka.");
-                closeModal();
-            } catch(e) { showToast("Hata: " + e.message); }
+                await auth.signInWithEmailAndPassword(e,p);
+                makeToast("Başarıyla giriş yapıldı.");
+                closeAuth();
+            } catch(err) { makeToast("Hata: " + err.message); }
         }
 
-        async function handleOTPRequest() {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPass').value;
+        async function sendOtp() {
+            const e = document.getElementById('regEmail').value;
+            const n = document.getElementById('regName').value;
+            const p = document.getElementById('regPass').value;
+            if(!e || !n || p.length < 6) return makeToast("Lütfen tüm alanları doğru doldur.");
 
-            if(!name || !email || pass.length < 6) return showToast("Bilgileri tam gir kanka (Şifre min 6).");
-
-            generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-            pendingUser = { name, email, pass };
+            otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+            userData = { e, n, p };
 
             try {
-                await emailjs.send("service_4l87xyp", "template_4qf4r88", {
-                    to_email: email,
-                    otp_code: generatedOTP,
-                    user_name: name
-                });
-                showToast("Doğrulama kodu gönderildi!");
-                switchForm('otp');
-            } catch(e) { showToast("E-posta gönderilemedi!"); }
+                await emailjs.send("service_4l87xyp", "template_4qf4r88", { to_email: e, otp_code: otpCode, user_name: n });
+                document.getElementById('regCore').style.display = 'none';
+                document.getElementById('otpCore').style.display = 'block';
+                makeToast("Doğrulama kodu e-postana uçtu.");
+            } catch(err) { makeToast("E-posta gönderilemedi."); }
         }
 
-        async function handleVerifyOTP() {
-            const val = document.getElementById('otpInput').value;
-            if(val !== generatedOTP) return showToast("Kod hatalı biraderim!");
-
+        async function verifyAndCreate() {
+            const input = document.getElementById('otpVal').value;
+            if(input !== otpCode) return makeToast("Kod hatalı kanka.");
             try {
-                const cred = await auth.createUserWithEmailAndPassword(pendingUser.email, pendingUser.pass);
-                await cred.user.updateProfile({ displayName: pendingUser.name });
-                showToast("Hesabın oluşturuldu!");
+                const res = await auth.createUserWithEmailAndPassword(userData.e, userData.p);
+                await res.user.updateProfile({ displayName: userData.n });
+                makeToast("BLI ekibine katıldın!");
                 location.reload();
-            } catch(e) { showToast(e.message); }
+            } catch(err) { makeToast(err.message); }
         }
 
-        function handleLogout() {
+        function processLogout() {
             auth.signOut().then(() => {
-                showToast("Görüşürüz kral!");
-                location.reload();
+                makeToast("Oturum kapatıldı. Hoşçakal... :(");
+                setTimeout(() => location.reload(), 1500);
             });
         }
 
-        // UTILITIES
-        function showToast(msg) {
+        // -- Toast Engine --
+        function makeToast(m) {
             const t = document.createElement('div');
-            t.className = 'toast';
-            t.innerText = msg;
-            document.getElementById('toast-container').appendChild(t);
-            setTimeout(() => t.remove(), 3000);
+            t.className = 'toast-msg';
+            t.innerHTML = `<i class="fa-solid fa-bell"></i> <span>${m}</span>`;
+            document.getElementById('toast-master').appendChild(t);
+            setTimeout(() => t.remove(), 4000);
         }
 
-        function proceedToCheckout() {
-            if(!auth.currentUser) {
-                showToast("Önce bir giriş yapman lazım kanka!");
-                showModal('login');
-            } else {
-                showToast("Ödeme sayfasına uçuyorsun...");
-                // window.location.href = "/checkout";
-            }
+        function startCheckout() {
+            if(!auth.currentUser) { makeToast("Önce giriş yapmalısın."); showAuth('login'); }
+            else { makeToast("Güvenli ödeme sayfasına uçuyorsun..."); }
         }
     </script>
 </body>
