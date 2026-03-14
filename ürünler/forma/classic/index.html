@@ -10,14 +10,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: #ffffff; color: #000; overflow-x: hidden; }
 
-        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 60px auto; }
+        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 40px auto; }
 
         /* Galeri Alanı */
         .gallery-container { display: flex; flex: 1.2; gap: 20px; }
         
-        /* PC Yan Fotolar (Küçük resimler) */
+        /* PC Yan Fotolar (Dikey Liste) */
         .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
-        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f9f9f9; padding: 5px; border: 1px solid #eee; transition: 0.3s; }
+        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f9f9f9; padding: 5px; border: 1px solid #eee; transition: 0.3s; height: 80px; object-fit: contain; }
         .thumb:hover { border-color: #000; }
 
         /* Ana Ekran / Mobil Slider */
@@ -58,15 +58,7 @@
             gap: 8px;
         }
 
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: #ccc;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
+        .dot { width: 8px; height: 8px; background: #ccc; border-radius: 50%; cursor: pointer; transition: 0.3s; }
         .dot.active { background: #000; width: 20px; border-radius: 10px; }
 
         /* Ürün Bilgileri */
@@ -78,20 +70,16 @@
         /* Beden Seçimi */
         .option-label { font-weight: bold; margin-bottom: 15px; display: block; color: #000; font-size: 14px; text-transform: uppercase;}
         .size-options { display: flex; gap: 12px; margin-bottom: 40px; }
-        .size-box { width: 50px; height: 50px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; background: #fff; font-weight: bold; }
+        .size-box { width: 50px; height: 50px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff; transition: 0.2s; }
         .size-box.active { border-color: #000; border-width: 2px; background: #f0f0f0; }
 
         /* Butonlar */
-        .pre-order-btn { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        .pre-order-btn:hover { background: #333; }
-        
-        .fav-btn { width: 100%; padding: 18px; background: #fff; color: #666; border: 1px solid #ddd; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .fav-btn:hover { border-color: #000; color: #000; }
+        .pre-order-btn { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; text-transform: uppercase; }
+        .fav-btn { width: 100%; padding: 18px; background: #fff; color: #666; border: 1px solid #ddd; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
         /* MOBİL AYARLAR */
         @media (max-width: 968px) {
             .product-page { flex-direction: column; margin: 0; padding: 10px; }
-            .gallery-container { flex-direction: column; }
             .side-thumbnails { display: none; } 
             .dots-container { display: flex; } 
             .main-display { min-height: 400px; border-radius: 0; margin: -10px -10px 20px -10px; }
@@ -110,8 +98,8 @@
 
         <div class="main-display" id="sliderContainer">
             <div class="slider-wrapper" id="sliderWrapper">
-                <img src="1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg" alt="Classic Jersey Ön">
-                <img src="IMG_20260313_164559.png" alt="Classic Jersey Arka">
+                <img src="1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg">
+                <img src="IMG_20260313_164559.png">
             </div>
             
             <div class="dots-container">
@@ -138,7 +126,7 @@
         <button class="fav-btn">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
         
         <p style="margin-top: 30px; line-height: 1.6; color: #555; font-size: 14px;">
-            <b>BLI Esports resmi forması.</b> Gelişmiş kumaş teknolojisi, hassas kesim ve dayanıklı baskı kalitesi ile üstün performans için tasarlandı. Profesyonel oyuncuların tercihi.
+            <b>Hız ve konforun yeni tanımı.</b> BLI Esports resmi forması, profesyonel oyuncular için geliştirilmiş ultra nefes alabilen yapısı ile rakiplerinizin bir adım önünde olmanızı sağlar.
         </p>
     </div>
 </div>
@@ -149,18 +137,16 @@
     let currentSlide = 0;
     let secilenBeden = "L";
 
-    function selectSize(el, beden) {
+    function selectSize(el, bdn) {
         document.querySelectorAll('.size-box').forEach(box => box.classList.remove('active'));
         el.classList.add('active');
-        secilenBeden = beden;
+        secilenBeden = bdn;
     }
 
     function goToSlide(index) {
         currentSlide = index;
-        const offset = index * -100;
-        wrapper.style.transform = `translateX(${offset}%)`;
-        
-        dots.forEach(dot => dot.classList.remove('active'));
+        wrapper.style.transform = `translateX(${index * -100}%)`;
+        dots.forEach(d => d.classList.remove('active'));
         dots[index].classList.add('active');
     }
 
@@ -169,24 +155,22 @@
         sepet.push({ 
             ad: 'Classic Jersey (' + secilenBeden + ')', 
             fiyat: 899, 
-            resim: 'ürünler/forma/classic/1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg',
+            resim: '1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg',
             beden: secilenBeden 
         });
-        
         localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-        alert(secilenBeden + " Beden sepete eklendi! Ana sayfaya uçuyorsun...");
+        alert(secilenBeden + " Beden sepete eklendi! Ana sayfaya uçuyorsun birader.");
         window.location.href = "../../../index.html"; 
     }
 
-    // Swipe desteği
-    let touchStartX = 0;
-    let touchEndX = 0;
+    // Mobil Swipe
+    let startX = 0;
     const slider = document.getElementById('sliderContainer');
-    slider.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    slider.addEventListener('touchstart', e => startX = e.changedTouches[0].screenX);
     slider.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50 && currentSlide < 1) goToSlide(1);
-        if (touchEndX - touchStartX > 50 && currentSlide > 0) goToSlide(0);
+        let endX = e.changedTouches[0].screenX;
+        if (startX - endX > 50 && currentSlide < 1) goToSlide(1);
+        if (endX - startX > 50 && currentSlide > 0) goToSlide(0);
     });
 </script>
 
