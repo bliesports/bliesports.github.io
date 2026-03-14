@@ -187,34 +187,27 @@
         if (touchEndX - touchStartX > 50) { if(currentSlide > 0) goToSlide(currentSlide - 1); }
     }
 
-// SEPETE EKLEME (TAM UYUMLU HALİ)
-    function sepeteEkle(name, price) {
-        // 1. Ana sayfanla aynı LocalStorage ismini kullanıyoruz
-        let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-        
-        const renkler = ['Siyah', 'Beyaz', 'Turuncu', 'Pembe'];
-        
-        // ÖNEMLİ: Resim yolu ana sayfaya (index.html) göre olmalı. 
-        // Eğer index.html ile aynı klasörde v1pro-banner.png varsa böyle kalsın.
-        const resimYolu = "v1pro-banner.png"; 
+function sepeteEkle(name, price) {
+    let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+    
+    // Renk isimleri ve o renge ait resim dosyaları
+    const renkler = ['Siyah', 'Beyaz', 'Turuncu', 'Pembe'];
+    const resimler = ['siyah.jpg', 'beyaz.png', 'turuncu.png', 'pembe.png'];
 
-        sepet.push({ 
-            id: 101, 
-            name: name, 
-            price: price, 
-            img: resimYolu, 
-            renk: renkler[currentSlide] 
-        });
-        
-        // 2. Veriyi kaydet
-        localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
-        
-        // 3. KRİTİK NOKTA: Diğer sekmeleri ve ana sayfayı tetikle
-        window.dispatchEvent(new Event('storage'));
-        
-        // Görsel geri bildirim (Opsiyonel: alert yerine daha şık bir şey yapabilirsin)
-        alert(name + " (" + renkler[currentSlide] + ") sepete eklendi!");
-    }
+    sepet.push({ 
+        id: 101, 
+        name: name, 
+        price: price, 
+        // currentSlide o an hangi rengin seçili olduğunu biliyor
+        img: resimler[currentSlide], 
+        renk: renkler[currentSlide] 
+    });
+    
+    localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
+    window.dispatchEvent(new Event('storage'));
+    
+    alert(renkler[currentSlide] + " renkli " + name + " sepete eklendi!");
+}
 </script>
 
 </body>
