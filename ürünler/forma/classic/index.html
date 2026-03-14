@@ -150,28 +150,30 @@
         dots[index].classList.add('active');
     }
 
-    function onSiparisVer() {
-        let sepet = JSON.parse(localStorage.getItem('bli_sepet')) || [];
-        sepet.push({ 
-            ad: 'Classic Jersey (' + secilenBeden + ')', 
-            fiyat: 899, 
-            resim: '1773409104630-019ce76b-03fd-7009-a7ae-4042ba85843a.jpeg',
-            beden: secilenBeden 
-        });
-        localStorage.setItem('bli_sepet', JSON.stringify(sepet));
-        alert(secilenBeden + " Beden sepete eklendi! Ana sayfaya uçuyorsun birader.");
-        window.location.href = "../../../index.html"; 
-    }
-
-    // Mobil Swipe
-    let startX = 0;
-    const slider = document.getElementById('sliderContainer');
-    slider.addEventListener('touchstart', e => startX = e.changedTouches[0].screenX);
-    slider.addEventListener('touchend', e => {
-        let endX = e.changedTouches[0].screenX;
-        if (startX - endX > 50 && currentSlide < 1) goToSlide(1);
-        if (endX - startX > 50 && currentSlide > 0) goToSlide(0);
+    function sepeteEkle() {
+    // 1. Mevcut sepeti çek
+    let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+    
+    // 2. Yeni ürünü ekle (Forma ID: 102 olsun)
+    sepet.push({ 
+        id: 102, 
+        name: "BLI 2024 PRO JERSEY", 
+        price: 899, 
+        img: "forma-resmi.png", // Ana dizindeki forma resmin
+        renk: selectedSize // Seçilen beden bilgisi
     });
+    
+    // 3. Kaydet
+    localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
+    
+    // 4. Ana sayfaya haber ver
+    window.dispatchEvent(new Event('storage'));
+    
+    alert("Forma sepete eklendi! Ana sayfaya yönlendiriliyorsunuz...");
+    
+    // 5. ANA SAYFAYA AT (Yolunu kendine göre kontrol et)
+    window.location.href = "../../../index.html"; 
+}
 </script>
 
 </body>
