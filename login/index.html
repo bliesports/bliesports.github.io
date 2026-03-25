@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLI LOGIN | Erişimi Doğrula</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bli-krem: #F5F5DC;
+            --accent-red: #ff3333;
+            --input-bg: #161616;
+            --transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        body {
+            margin: 0; font-family: 'Inter', sans-serif;
+            background: var(--bg-dark); color: white;
+            display: flex; align-items: center; justify-content: center; height: 100vh;
+            overflow: hidden;
+        }
+
+        .login-card {
+            width: 100%; max-width: 400px; padding: 50px;
+            background: #111; border: 1px solid rgba(255,255,255,0.03);
+            text-align: center; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+        }
+
+        .login-logo { width: 70px; margin-bottom: 25px; opacity: 0.9; }
+        
+        h2 { font-family: 'Orbitron'; font-size: 22px; margin-bottom: 35px; color: var(--bli-krem); letter-spacing: 3px; }
+
+        .form-group { text-align: left; margin-bottom: 22px; }
+        .form-group label { display: block; font-family: 'Orbitron'; font-size: 10px; color: #555; margin-bottom: 8px; letter-spacing: 1px; }
+
+        input {
+            width: 100%; padding: 16px; background: var(--input-bg); border: 2px solid transparent;
+            color: white; border-radius: 2px; outline: none; transition: var(--transition);
+            font-size: 14px;
+        }
+        input:focus { border-color: var(--accent-red); background: #1a1a1a; }
+
+        .btn-primary {
+            width: 100%; padding: 16px; background: var(--accent-red); color: white;
+            border: none; font-family: 'Orbitron'; font-weight: 900; cursor: pointer;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); transition: 0.3s;
+            margin-top: 10px; font-size: 14px;
+        }
+        .btn-primary:hover { transform: scale(1.03); background: var(--bli-krem); color: black; }
+
+        .divider { margin: 35px 0; border-bottom: 1px solid #222; position: relative; }
+        .divider span { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #111; padding: 0 15px; color: #333; font-size: 11px; font-family: 'Orbitron'; }
+
+        .google-btn {
+            width: 100%; padding: 14px; background: white; color: black; border: none;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-weight: 800; cursor: pointer; border-radius: 2px; transition: 0.3s;
+            font-family: 'Inter'; font-size: 14px;
+        }
+        .google-btn:hover { background: #ccc; transform: translateY(-2px); }
+
+        /* Kayıt Ol Kısmı */
+        .signup-text {
+            margin-top: 30px; font-size: 13px; color: #666; font-weight: 400;
+        }
+        .signup-text a {
+            color: var(--bli-krem); text-decoration: none; font-weight: 800; margin-left: 5px;
+            transition: 0.3s;
+        }
+        .signup-text a:hover { color: var(--accent-red); text-decoration: underline; }
+
+        #error-message { color: var(--accent-red); font-size: 11px; margin-top: 20px; display: none; font-family: 'Orbitron'; font-weight: 400; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <img src="https://bliesports.github.io/File_000000000eec720ab2516100c48b9aba.png" class="login-logo">
+    <h2>OTURUM AÇ</h2>
+
+    <div class="form-group">
+        <label>E-POSTA ADRESİ</label>
+        <input type="email" id="email" spellcheck="false">
+    </div>
+
+    <div class="form-group">
+        <label>ŞİFRE</label>
+        <input type="password" id="password">
+    </div>
+
+    <button class="btn-primary" id="loginBtn">GİRİŞ YAP</button>
+
+    <div class="divider"><span>SOSYAL</span></div>
+
+    <button class="google-btn" id="googleBtn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google ile Oturum Aç
+    </button>
+
+    <div id="error-message">Erişim reddedildi: Kullanıcı bulunamadı.</div>
+
+    <div class="signup-text">
+        Üye değil misin? <a href="https://bliesports.github.io/register">KAYIT OL</a>
+    </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  // BURAYA KENDİ FIREBASE BİLGİLERİNİ YAPIŞTIR
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const errBox = document.getElementById('error-message');
+
+  // Normal Giriş
+  document.getElementById('loginBtn').onclick = () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => window.location.href = "../index.html")
+      .catch((error) => {
+          errBox.style.display = 'block';
+          errBox.innerText = "Hatalı bilgiler veya kayıt bulunamadı.";
+      });
+  };
+
+  // Google Giriş (Sadece kayıtlıysa içeri alır)
+  document.getElementById('googleBtn').onclick = async () => {
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        // Profesyonel Kontrol: Kullanıcı yeni mi oluşturuldu? 
+        // Eğer metadata'da creationTime ve lastSignInTime aynıysa bu yeni bir kayıttır.
+        // Senin isteğin üzerine: Eğer kayıtlı değilse (yeni oluşturuluyorsa) girişi engelle.
+        if (user.metadata.creationTime === user.metadata.lastSignInTime) {
+            await user.delete(); // Yeni oluşturulan hesabı hemen sil
+            errBox.style.display = 'block';
+            errBox.innerText = "Google hesabınız sistemde kayıtlı değil.";
+            auth.signOut();
+        } else {
+            window.location.href = "../index.html";
+        }
+    } catch (error) {
+        console.log("Sistem Hatası:", error);
+    }
+  };
+</script>
+
+</body>
+</html>
