@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLI REGISTER | Aramıza Katıl</title>
+    <title>BLI AUTH | Premium Access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;800&display=swap" rel="stylesheet">
     
@@ -11,113 +11,122 @@
         :root {
             --bg-dark: #0a0a0a;
             --bli-krem: #F5F5DC;
-            --accent-gray: #1a1a1a;
-            --input-focus: #252525;
-            --transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            --accent-gray: #161616;
+            --input-focus: #1c1c1c;
+            --error-red: #ff4444;
+            --transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         body {
             margin: 0; font-family: 'Inter', sans-serif;
             background: var(--bg-dark); color: white;
-            display: flex; align-items: center; justify-content: center; min-height: 100vh;
-            overflow-x: hidden; padding: 40px 0;
+            display: flex; align-items: center; justify-content: center; height: 100vh;
+            overflow: hidden;
         }
 
+        /* Premium Glow Arkaplan */
         body::before {
-            content: ''; position: fixed; width: 100%; height: 100%;
+            content: ''; position: absolute; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #111 0%, #000 100%);
             z-index: -1;
         }
 
-        .register-card {
-            width: 100%; max-width: 480px; padding: 50px;
+        .auth-card {
+            width: 100%; max-width: 420px; padding: 50px;
             background: #0d0d0d; border: 1px solid rgba(245, 245, 220, 0.05);
-            text-align: center; box-shadow: 0 60px 120px rgba(0,0,0,0.9);
+            text-align: center; box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            position: relative; animation: cardFade 1s ease-out;
         }
 
-        .reg-logo { width: 70px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(245,245,220,0.15)); }
+        @keyframes cardFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .logo { width: 75px; margin-bottom: 25px; filter: drop-shadow(0 0 15px rgba(245,245,220,0.1)); }
         
-        h2 { 
-            font-family: 'Orbitron'; font-size: 24px; margin-bottom: 35px; 
-            color: var(--bli-krem); letter-spacing: 4px; font-weight: 900;
-        }
+        h2 { font-family: 'Orbitron'; font-size: 22px; margin-bottom: 35px; color: var(--bli-krem); letter-spacing: 5px; }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
-        .full-width { grid-column: span 2; }
+        .form-group { text-align: left; margin-bottom: 20px; position: relative; }
+        .form-group label { display: block; font-family: 'Orbitron'; font-size: 10px; color: #555; margin-bottom: 8px; letter-spacing: 2px; }
 
-        .form-group { margin-bottom: 20px; }
-        .form-group label { 
-            display: block; font-family: 'Orbitron'; font-size: 10px; 
-            color: #444; margin-bottom: 8px; letter-spacing: 2px; font-weight: 800;
-        }
+        .input-wrapper { position: relative; width: 100%; }
 
         input {
-            width: 100%; padding: 15px; background: var(--accent-gray); border: 2px solid transparent;
-            color: var(--bli-krem); border-radius: 4px; outline: none; transition: var(--transition);
+            width: 100%; padding: 16px; background: var(--accent-gray); border: 1px solid #222;
+            color: var(--bli-krem); border-radius: 2px; outline: none; transition: var(--transition);
             font-size: 14px; box-sizing: border-box;
         }
-        input:focus { border-color: var(--bli-krem); background: var(--input-focus); }
+        input:focus { border-color: var(--bli-krem); background: var(--input-focus); box-shadow: 0 0 15px rgba(245,245,220,0.05); }
 
-        .btn-register {
-            width: 100%; padding: 18px; background: var(--bli-krem); color: black;
+        /* Şifre Gözü */
+        .toggle-password {
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; color: #444; transition: 0.3s; z-index: 10;
+        }
+        .toggle-password:hover { color: var(--bli-krem); }
+
+        .btn-main {
+            width: 100%; padding: 16px; background: var(--bli-krem); color: black;
             border: none; font-family: 'Orbitron'; font-weight: 900; cursor: pointer;
-            clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%); transition: var(--transition);
-            margin-top: 20px; font-size: 15px; letter-spacing: 2px;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); transition: var(--transition);
+            margin-top: 15px; font-size: 14px; letter-spacing: 2px;
         }
-        .btn-register:hover { transform: scale(1.02); filter: brightness(1.1); box-shadow: 0 0 20px rgba(245,245,220,0.2); }
+        .btn-main:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        .login-text { margin-top: 30px; font-size: 13px; color: #444; }
-        .login-text a {
-            color: var(--bli-krem); text-decoration: none; font-weight: 800; margin-left: 5px;
-            transition: 0.3s;
-        }
-        .login-text a:hover { color: white; text-decoration: underline; }
+        .divider { margin: 35px 0; border-bottom: 1px solid #1a1a1a; position: relative; }
+        .divider span { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #0d0d0d; padding: 0 15px; color: #333; font-size: 10px; font-family: 'Orbitron'; }
 
-        #msg-box { 
-            font-size: 11px; margin-top: 20px; display: none; 
-            font-family: 'Orbitron'; padding: 12px; border-radius: 4px;
+        .google-btn {
+            width: 100%; padding: 14px; background: transparent; color: white; border: 1px solid #333;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-weight: 700; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 13px;
         }
-        .error { color: #ff4444; background: rgba(255,0,0,0.1); }
-        .success { color: #44ff44; background: rgba(0,255,0,0.1); }
+        .google-btn:hover { border-color: var(--bli-krem); background: rgba(255,255,255,0.02); }
+
+        .footer-text { margin-top: 30px; font-size: 12px; color: #444; }
+        .footer-text a { color: var(--bli-krem); text-decoration: none; font-weight: 800; margin-left: 5px; }
+
+        #alert-box { 
+            color: var(--error-red); font-size: 11px; margin-top: 20px; display: none; 
+            font-family: 'Orbitron'; background: rgba(255,0,0,0.05); padding: 10px; border: 1px solid rgba(255,0,0,0.1);
+        }
     </style>
 </head>
 <body>
 
-<div class="register-card">
-    <img src="https://bliesports.github.io/File_000000000eec720ab2516100c48b9aba.png" class="reg-logo">
-    <h2>KAYIT OL</h2>
+<div class="auth-card">
+    <img src="https://bliesports.github.io/File_000000000eec720ab2516100c48b9aba.png" class="logo">
+    <h2 id="page-title">GİRİŞ YAP</h2>
 
-    <div class="form-grid">
-        <div class="form-group">
-            <label>ADINIZ</label>
-            <input type="text" id="firstName" placeholder="Örn: Ali">
-        </div>
-        <div class="form-group">
-            <label>SOYADINIZ</label>
-            <input type="text" id="lastName" placeholder="Örn: Yılmaz">
-        </div>
-        <div class="form-group full-width">
-            <label>E-POSTA ADRESİ</label>
-            <input type="email" id="email" placeholder="isim@ornek.com">
-        </div>
-        <div class="form-group full-width">
-            <label>ŞİFRE BELİRLE</label>
+    <div class="form-group">
+        <label>E-POSTA ADRESİ</label>
+        <input type="email" id="email" placeholder="isim@ornek.com" autocomplete="off">
+    </div>
+
+    <div class="form-group">
+        <label>ŞİFRE</label>
+        <div class="input-wrapper">
             <input type="password" id="password" placeholder="••••••••">
+            <i class="fa-solid fa-eye toggle-password" id="eyeIcon"></i>
         </div>
     </div>
 
-    <button class="btn-register" id="regBtn">HESABI OLUŞTUR</button>
+    <button class="btn-main" id="submitBtn">ERİŞİMİ BAŞLAT</button>
 
-    <div id="msg-box"></div>
+    <div class="divider"><span>SOSYAL HESAP</span></div>
 
-    <div class="login-text">
-        Zaten bir hesabın var mı? <a href="https://bliesports.github.io/login">GİRİŞ YAP</a>
+    <button class="google-btn" id="googleBtn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google ile Oturum Aç
+    </button>
+
+    <div id="alert-box"></div>
+
+    <div class="footer-text" id="toggleText">
+        Üye değil misin? <a href="https://bliesports.github.io/register">KAYIT OL</a>
     </div>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
   const firebaseConfig = { 
         apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8", 
@@ -130,31 +139,55 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const msgBox = document.getElementById('msg-box');
+  const provider = new GoogleAuthProvider();
+  const alertBox = document.getElementById('alert-box');
 
-  document.getElementById('regBtn').onclick = () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+  // --- Şifre Gözü Fonksiyonu ---
+  const eyeIcon = document.getElementById('eyeIcon');
+  const passwordInput = document.getElementById('password');
 
-    if(password.length < 6) {
-        msgBox.style.display = 'block';
-        msgBox.className = 'error';
-        msgBox.innerText = "Şifre en az 6 karakter olmalıdır!";
-        return;
-    }
+  eyeIcon.onclick = () => {
+      if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
+      }
+  };
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-          msgBox.style.display = 'block';
-          msgBox.className = 'success';
-          msgBox.innerText = "Kayıt Başarılı! Yönlendiriliyorsunuz...";
-          setTimeout(() => { window.location.href = "../login/index.html"; }, 2000);
-      })
-      .catch((error) => {
-          msgBox.style.display = 'block';
-          msgBox.className = 'error';
-          msgBox.innerText = "Hata: " + error.message;
-      });
+  // --- Google Giriş (Sıfırdan Pro Yapı) ---
+  document.getElementById('googleBtn').onclick = async () => {
+      try {
+          // Google Popup penceresini zorla
+          provider.setCustomParameters({ prompt: 'select_account' });
+          const result = await signInWithPopup(auth, provider);
+          
+          if (result.user.metadata.creationTime === result.user.metadata.lastSignInTime) {
+              await result.user.delete();
+              alertBox.style.display = 'block';
+              alertBox.innerText = "HATA: GOOGLE HESABINIZ SİSTEMDE KAYITLI DEĞİL.";
+              await auth.signOut();
+          } else {
+              window.location.href = "../index.html";
+          }
+      } catch (error) {
+          alertBox.style.display = 'block';
+          alertBox.innerText = "GOOGLE HATASI: " + error.code;
+      }
+  };
+
+  // --- Normal Giriş ---
+  document.getElementById('submitBtn').onclick = () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+          .then(() => window.location.href = "../index.html")
+          .catch(() => {
+              alertBox.style.display = 'block';
+              alertBox.innerText = "ERİŞİM REDDEDİLDİ: HATALI BİLGİLER.";
+          });
   };
 </script>
 
