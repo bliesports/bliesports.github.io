@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLI CLIENT | Pro Management</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;800&display=swap" rel="stylesheet">
     
@@ -11,23 +12,63 @@
         :root {
             --primary-black: #000000;
             --pure-white: #ffffff;
-            --bli-krem: #F5F5DC; /* İstediğin krem rengi */
+            --bli-krem: #F5F5DC; 
+            --accent-red: #ff3333;
             --transition-smooth: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            margin: 0; font-family: 'Inter', sans-serif;
-            background: var(--pure-white); color: var(--primary-black);
+            font-family: 'Inter', sans-serif;
+            background: var(--pure-white);
+            color: var(--primary-black);
             overflow-x: hidden;
+        }
+
+        /* Geri Dön Butonu */
+        .back-home {
+            position: absolute;
+            top: 40px;
+            left: 6%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--primary-black);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            transition: var(--transition-smooth);
+            z-index: 100;
+        }
+        .back-home:hover {
+            transform: translateX(-8px);
+            color: var(--accent-red);
         }
 
         /* Hero Section */
         .client-hero {
-            height: 80vh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center; background: var(--pure-white);
-            padding-top: 100px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: var(--pure-white);
+        }
+
+        .hero-logo {
+            width: 150px; /* Logonun büyüklüğü */
+            height: auto;
+            margin-bottom: -10px;
+            animation: logoFade 1.5s ease-out;
+        }
+
+        @keyframes logoFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .client-title {
@@ -36,13 +77,11 @@
             font-weight: 900;
             color: var(--bli-krem);
             letter-spacing: -3px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-transform: uppercase;
-            /* Hafif bir gölge ile derinlik verdim */
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
         }
 
-        /* Şeffaf Detaylı Bilgi Butonu */
         .btn-info-ghost {
             background: transparent;
             border: none;
@@ -71,7 +110,7 @@
 
         .section-tag {
             font-family: 'Orbitron';
-            color: #ff3333;
+            color: var(--accent-red);
             font-size: 12px;
             letter-spacing: 4px;
             margin-bottom: 15px;
@@ -85,9 +124,11 @@
             font-family: 'Orbitron';
         }
 
-        /* İndirme Penceresi (Cards) */
         .os-grid {
-            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
         }
 
         .os-card {
@@ -105,9 +146,9 @@
             box-shadow: 0 40px 80px rgba(0,0,0,0.08);
         }
 
-        .os-card i { font-size: 45px; margin-bottom: 25px; color: #333; }
+        .os-card i { font-size: 50px; margin-bottom: 25px; color: #333; }
         .os-card h3 { font-family: 'Orbitron'; font-size: 18px; margin-bottom: 10px; }
-        .os-card p { color: #888; font-size: 13px; margin-bottom: 25px; }
+        .os-card p { color: #888; font-size: 13px; margin-bottom: 25px; line-height: 1.6; }
 
         .btn-download {
             color: var(--primary-black);
@@ -119,15 +160,20 @@
             transition: 0.3s;
         }
 
-        .btn-download:hover { color: #ff3333; border-color: #ff3333; }
-
-        /* Mouse Modelleri Bölümü Buraya Gelecek */
-        .spacer { height: 100px; }
+        .btn-download:hover {
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+        }
     </style>
 </head>
 <body>
 
+    <a href="https://bliesports.github.io/index.html" class="back-home">
+        <i class="fa-solid fa-arrow-left-long"></i> GERİ DÖN
+    </a>
+
     <section class="client-hero">
+        <img src="File_000000000eec720ab2516100c48b9aba.png" alt="BLI Logo" class="hero-logo">
         <h1 class="client-title">BLI CLIENT</h1>
         <a href="/bliclient/detayli-bilgi" class="btn-info-ghost">DETAYLI BİLGİ</a>
     </section>
@@ -140,25 +186,25 @@
             <div class="os-card">
                 <i class="fa-brands fa-windows"></i>
                 <h3>WINDOWS</h3>
-                <p>Windows 10, 11 (64-bit)</p>
+                <p>BLI Dashboard v1.0.4<br>Windows 10, 11 (64-bit)</p>
                 <a href="#" class="btn-download">WINDOWS İÇİN YÜKLE</a>
             </div>
 
             <div class="os-card">
                 <i class="fa-brands fa-apple"></i>
                 <h3>MACOS</h3>
-                <p>macOS 12.0 veya üzeri</p>
+                <p>BLI Dashboard v1.0.4<br>macOS 12.0 veya üzeri</p>
                 <a href="#" class="btn-download">MAC İÇİN YÜKLE</a>
             </div>
 
             <div class="os-card">
                 <i class="fa-brands fa-linux"></i>
                 <h3>LINUX</h3>
-                <p>.deb veya .rpm paketleri</p>
+                <p>BLI Dashboard v1.0.4<br>.deb veya .rpm paketleri</p>
                 <a href="#" class="btn-download">LINUX İÇİN YÜKLE</a>
             </div>
         </div>
     </section>
 
-    </body>
+</body>
 </html>
