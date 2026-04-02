@@ -113,6 +113,29 @@
             border: 2px solid #fff;
         }
 
+        /* Üst Menü İndirme Butonu Stili */
+        .nav-download-btn {
+            background: var(--primary-black);
+            color: var(--pure-white) !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .nav-download-btn:hover {
+            background: #222;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
         /* ============================================================
            4. SEARCH SYSTEM (CLEAN MINIMAL)
            ============================================================ 
@@ -208,7 +231,10 @@
             box-shadow: -20px 0 60px rgba(0,0,0,0.1);
         }
 
-        @media (max-width: 480px) { .panel { width: 100%; } }
+        @media (max-width: 480px) { 
+            .panel { width: 100%; } 
+            .nav-download-btn { padding: 8px 12px; font-size: 9px; }
+        }
 
         .panel.active { right: 0; }
 
@@ -368,6 +394,9 @@
             <div class="hamburger" id="hamburgerTrigger" onclick="openSidePanel('menuPanel')">
                 <span></span><span></span><span></span>
             </div>
+            <a href="BLI CLIENT_0.1.0_x64_en-US.msi" download="BLI_CLIENT_0.1.0_x64_en-US.msi" class="nav-download-btn">
+                ŞİMDİ İNDİR
+            </a>
         </div>
     </nav>
 
@@ -601,7 +630,6 @@
         }
     }
 
-    // --- SADECE BUNLARI EKLEDİM ---
     function initCheckout() {
         // Ödeme adımına geçince sepet sayfasına yollar
         window.location.href = "cart/index.html";
@@ -616,8 +644,6 @@
         userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
         refreshCartDisplay();
     });
-    // ---------------------------
-
 </script>
 
 </body>
