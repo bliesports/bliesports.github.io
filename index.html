@@ -112,6 +112,36 @@
             display: flex; align-items: center; justify-content: center;
             border: 2px solid #fff;
         }
+        /* PC ÖZEL İNDİRME BUTONU */
+        .btn-pc-download {
+            background: var(--primary-black);
+            color: var(--pure-white) !important;
+            padding: 12px 22px;
+            border-radius: 14px;
+            font-family: 'Orbitron';
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 12px;
+            transition: var(--transition-smooth);
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-pc-download:hover {
+            background: var(--accent-red);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
+        }
+
+        /* MOBİLDE GİZLEME */
+        @media (max-width: 1024px) {
+            .btn-pc-download { display: none !important; }
+        }
 
         /* ============================================================
            4. SEARCH SYSTEM (CLEAN MINIMAL)
@@ -368,7 +398,10 @@
             <div class="hamburger" id="hamburgerTrigger" onclick="openSidePanel('menuPanel')">
                 <span></span><span></span><span></span>
             </div>
-        </div>
+         <a href="https://github.com/bliesports/bliesports.github.io/releases/download/v1.0.0/BLI.CLIENT_0.1.0_x64_en-US.msi" class="btn-pc-download">
+    <i class="fa-brands fa-windows"></i> ŞİMDİ İNDİR
+</a>
+    </div>
     </nav>
 
     <div class="global-dimmer" id="globalDimmer" onclick="closeAllSidePanels()"></div>
