@@ -364,6 +364,20 @@
         }
 
         @keyframes toastIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    /* AÇILIŞ LOGO ANİMASYONU */
+    #loader-overlay img {
+        animation: logoPulse 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes logoPulse {
+        from { transform: scale(1); opacity: 0.8; }
+        to { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 15px rgba(0,0,0,0.1)); }
+    }
+
+    /* İNDİR BUTONU MASAÜSTÜ MODU FİX */
+    @media (min-width: 1025px) {
+        .btn-pc-download { display: inline-flex !important; }
+    }
 
     </style>
 </head>
@@ -544,14 +558,7 @@
     ];
 
     let userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-    // --- LOADER VE SİTE BAŞLATICI ---
-        window.addEventListener('load', () => {
-        const loader = document.getElementById('loader-overlay');
-        if(loader) {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 300);
-        }
-        refreshCartDisplay();
+     
     });
 
 
@@ -564,6 +571,107 @@
         pushNotification(name + " sepete eklendi kral!");
         openSidePanel('cartPanel');
     }
+    function refreshCartDisplay() {
+        const list = document.getElementById('cartItemsContainer');
+        const badge = document.getElementById('cartBadgeCount');
+        const totalBox = document.getElementById('grandTotalDisplay');
+        let totalSum = 0;
+
+        if(!list) return;
+
+        if(userCart.length === 0) {
+            list.innerHTML = `<div style="text-align:center; padding-top:100px; color:#ccc;"><p>Sepetin boş birader.</p></div>`;
+            if(badge) badge.innerText = "0";
+            if(totalBox) totalBox.innerText = "0.00 TL";
+        } else {
+            list.innerHTML = "";
+            userCart.forEach((item, index) => {
+                totalSum += item.price;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img}" style="width:50px; border-radius:8px;">
+                        <div style="flex:1">
+                            <h4 style="font-size:12px;">${item.name}</h4>
+                            <p style="color:#ff3333; font-weight:700;">${item.price} TL</p>
+                        </div>
+                        <button onclick="removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button>
+                    </div>`;
+            });
+            if(badge) badge.innerText = userCart.length;
+            if(totalBox) totalBox.innerText = totalSum.toFixed(2) + " TL";
+        }
+        localStorage.setItem('bli_user_cart', JSON.stringify(userCart));
+    }
+
+    function removeCartItem(idx) {
+        userCart.splice(idx, 1);
+        refreshCartDisplay();
+    }
+
+    // --- 3. PANEL & UI KONTROLLERİ ---
+    function openSidePanel(id) {
+        closeAllSidePanels();
+        const  panel = document.getElementById(id);
+        const dimmer = document.getElementById('globalDimmer');
+        if(panel) panel.classList.add('active');
+        if(dimmer) {
+            dimmer.style.display = 'block';
+            setTimeout(() => dimmer.style.opacity = '1', 10);
+        }
+    }
+
+    function closeAllSidePanels() {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        const dimmer = document.getElementById('globalDimmer');
+        if(dimmer) {
+            dimmer.style.opacity = '0';
+            setTimeout(() => dimmer.style.display = 'none', 400);
+        }
+    }
+
+    function pushNotification(msg) {
+        const toastMaster = document.getElementById('toast-master');
+        if(toastMaster) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg';
+            toast.innerHTML = `<span>${msg}</span>`;
+            toastMaster.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    }
+
+    function initCheckout() {
+        window.location.href = "cart/index.html";
+    }
+
+    // --- 1. CONFIG & INITIALIZATION ---
+    const firebaseConfig = { 
+        apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8", 
+        authDomain: "bliesports.firebaseapp.com", 
+        projectId: "bliesports", 
+        storageBucket: "bliesports.firebasestorage.app", 
+        messagingSenderId: "880767104142", 
+        appId: "1:880767104142:web:5edbe111f42f16ab1545df" 
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const PRODUCT_DB = [
+        { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", keywords: "v1 pro mouse fare" },
+        { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", keywords: "forma jersey tshirt" }
+    ];
+
+    let userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+
+    // --- 2. SEPET MOTORU ---
+    function addToCart(id, name, price, img) {
+        const product = { id, name, price, img };
+        userCart.push(product);
+        refreshCartDisplay();
+        pushNotification(name + " sepete eklendi kral!");
+        openSidePanel('cartPanel');
+    }
+
     function refreshCartDisplay() {
         const list = document.getElementById('cartItemsContainer');
         const badge = document.getElementById('cartBadgeCount');
@@ -637,7 +745,6 @@
         window.location.href = "cart/index.html";
     }
 
-    // Arama portalını aç kapa
     function toggleSearchPortal() {
         const portal = document.getElementById('searchPortal');
         if(portal.classList.contains('active')) {
@@ -648,6 +755,7 @@
         }
     }
 
+    // Sekmeler arası sepet senkronizasyonu
     window.addEventListener('focus', () => {
         userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
         refreshCartDisplay();
@@ -657,9 +765,36 @@
         userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
         refreshCartDisplay();
     });
-</script>
+
+    // --- 🚀 AÇILIŞ MOTORU ---
+    window.addEventListener('load', () => {
+        const progressBar = document.getElementById('load-progress-bar');
+        const loader = document.getElementById('loader-overlay');
+        
+        refreshCartDisplay(); // Açılışta sepeti yükle
+
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    if(loader) {
+                        loader.style.transition = "transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s";
+                        loader.style.transform = "translateY(-100%)";
+                        loader.style.opacity = "0";
+                        setTimeout(() => loader.style.display = 'none', 800);
+                    }
+                }, 200);
+            } else {
+                width += Math.random() * 25; // Hızlı dolum
+                if(width > 100) width = 100;
+                if(progressBar) progressBar.style.width = width + '%';
+            }
+        }, 60);
+    });
+
+    </script>
 
 </body>
 </html>
 
-    
