@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda | BLI Esports Official</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #ff3333;
+            --black: #000000;
+            --white: #ffffff;
+            --gray: #f8f8f8;
+            --dark-gray: #111;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+
+        /* HEADER SECTION */
+        .hero-section {
+            background: var(--black);
+            color: var(--white);
+            padding: 150px 10% 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('../logo1616.png') no-repeat center; opacity: 0.05; filter: grayscale(1);
+        }
+
+        .hero-section h1 { font-family: 'Orbitron'; font-size: clamp(32px, 5vw, 60px); font-weight: 900; margin-bottom: 20px; }
+        .hero-section p { max-width: 700px; margin: 0 auto; color: #888; font-size: 18px; }
+
+        /* GRID SYSTEM */
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 6%; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; align-items: center; }
+
+        /* INFO CARDS */
+        .info-card { background: var(--gray); padding: 40px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; }
+        .info-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .info-card i { font-size: 40px; color: var(--accent); margin-bottom: 20px; }
+        .info-card h3 { font-family: 'Orbitron'; margin-bottom: 15px; font-weight: 700; }
+
+        /* TEAM & MEMBERSHIP */
+        .join-section { background: var(--dark-gray); color: var(--white); border-radius: 40px; padding: 60px; margin-top: 50px; }
+        .badge { display: inline-block; padding: 5px 15px; background: var(--accent); border-radius: 5px; font-family: 'Orbitron'; font-size: 12px; margin-bottom: 15px; }
+
+        /* BUTTONS */
+        .btn-main {
+            display: inline-block; padding: 18px 35px; background: var(--accent); color: white; 
+            border-radius: 15px; font-family: 'Orbitron'; font-weight: 900; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer; margin-top: 20px;
+        }
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(255, 51, 51, 0.3); }
+
+        /* CLIENT SECTION */
+        .client-box { background: linear-gradient(135deg, #000 0%, #111 100%); color: white; padding: 80px 6%; border-radius: 40px; margin: 80px 0; position: relative; }
+        .client-box h2 { font-family: 'Orbitron'; color: var(--accent); margin-bottom: 20px; }
+        
+        @media (max-width: 768px) {
+            .hero-section { padding-top: 100px; }
+            .grid-2 { gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <div class="badge">EST. 2026</div>
+        <h1>GELECEĞİN ARENASI</h1>
+        <p>BLI Esports, sadece bir takım değil; yazılım, donanım ve rekabetin birleştiği devasa bir ekosistemdir.</p>
+    </section>
+
+    <div class="container">
+        
+        <div class="grid-2">
+            <div class="info-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Güvenli Alışveriş</h3>
+                <p>Mağazamızda yapılan tüm işlemler 256-bit SSL sertifikası ile korunur. Ödeme sistemlerimiz dünya standartlarında şifreleme ile paranızı ve verilerinizi güvence altına alır.</p>
+            </div>
+            <div class="info-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Orijinal Donanım</h3>
+                <p>Sattığımız her ürün (V1 PRO Mouse vb.) BLI Esports mühendisleri tarafından test edilmiş, esporcular için optimize edilmiş orijinal ekipmanlardır.</p>
+            </div>
+        </div>
+
+        <div class="client-box">
+            <div class="grid-2">
+                <div>
+                    <h2>BLI CLIENT v0.1.0</h2>
+                    <p style="color: #ccc; margin-bottom: 20px;">
+                        Tüm BLI ekosistemini tek bir yerden yönet. Oyunlarını indir, mağazaya eriş ve özel etkinliklere katıl. 
+                        <strong>A STRANGE MAN: FYDEL</strong> gibi korku ve gerilim dolu oyunlarımıza ilk sen eriş.
+                    </p>
+                    <ul style="list-style: none; color: #888; margin-bottom: 20px;">
+                        <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Hızlı Oyun İndirme Sistemi</li>
+                        <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Entegre Mağaza Arayüzü</li>
+                        <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Otomatik Güncelleme Desteği</li>
+                    </ul>
+                    <a href="/bliclient/index.html" class="btn-main">CLIENT'I KEŞFET</a>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-microchip" style="font-size: 150px; opacity: 0.2;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="join-section">
+            <div style="max-width: 800px;">
+                <h2 style="font-family: 'Orbitron'; margin-bottom: 20px;">TAKIM ÜYELİĞİ & KARİYER</h2>
+                <p style="color: #aaa; margin-bottom: 30px;">
+                    BLI Esports bünyesinde yer almak her oyuncunun hayalidir. Takımımıza katılmak için sadece iyi oyun oynamak yetmez; disiplin, etik ve teknik beceri önceliğimizdir. 
+                    Şu an sadece **Resmi Başvuru Formu** üzerinden alım yapmaktayız.
+                </p>
+                <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div>
+                        <h4 style="color: var(--accent);">Nasıl Katılırım?</h4>
+                        <p style="font-size: 14px; color: #888;">Hamburger menüdeki 'Katıl' sekmesinden başvurunu ilet, ekibimiz seni incelesin.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent);">Üyelik Şartları</h4>
+                        <p style="font-size: 14px; color: #888;">Takım ruhuna uyum, düzenli antrenman ve profesyonel yaklaşım.</p>
+                    </div>
+                </div>
+                <a href="/basvuru/index.html" class="btn-main" style="background: white; color: black;">HEMEN BAŞVUR</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer style="background: #000; color: #333; padding: 50px 6%; text-align: center; border-top: 1px solid #111;">
+        <p>&copy; 2026 BLI ESPORTS WORLDWIDE. TÜM HAKLARI SAKLIDIR.</p>
+    </footer>
+
+</body>
+</html>
