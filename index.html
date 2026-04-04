@@ -544,27 +544,17 @@
     ];
 
     let userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-window.addEventListener('load', () => {
-    const bar = document.getElementById('load-progress-bar');
-    const loader = document.getElementById('loader-overlay');
-    
-    // Barı hemen sona ittiriyoruz
-    if(bar) bar.style.width = "100%";
-    
-    // Çok kısa bir bekleme payı bırakıp kapatıyoruz
-    setTimeout(() => {
+    // --- LOADER VE SİTE BAŞLATICI ---
+        window.addEventListener('load', () => {
+        const loader = document.getElementById('loader-overlay');
         if(loader) {
             loader.style.opacity = '0';
             setTimeout(() => loader.style.display = 'none', 300);
         }
-    }, 400); // Buradaki 400ms değeri hızı belirler, istersen 200 yapabilirsin.
-});
-
-                }, 200);
-            }
-        }, 100);
         refreshCartDisplay();
     });
+
+
 
     // --- 2. SEPET MOTORU ---
     function addToCart(id, name, price, img) {
@@ -574,7 +564,6 @@ window.addEventListener('load', () => {
         pushNotification(name + " sepete eklendi kral!");
         openSidePanel('cartPanel');
     }
-
     function refreshCartDisplay() {
         const list = document.getElementById('cartItemsContainer');
         const badge = document.getElementById('cartBadgeCount');
@@ -644,10 +633,19 @@ window.addEventListener('load', () => {
         }
     }
 
-    // --- SADECE BUNLARI EKLEDİM ---
     function initCheckout() {
-        // Ödeme adımına geçince sepet sayfasına yollar
         window.location.href = "cart/index.html";
+    }
+
+    // Arama portalını aç kapa
+    function toggleSearchPortal() {
+        const portal = document.getElementById('searchPortal');
+        if(portal.classList.contains('active')) {
+            portal.classList.remove('active');
+        } else {
+            portal.classList.add('active');
+            document.getElementById('masterSearchInput').focus();
+        }
     }
 
     window.addEventListener('focus', () => {
@@ -659,9 +657,9 @@ window.addEventListener('load', () => {
         userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
         refreshCartDisplay();
     });
-    // ---------------------------
-
 </script>
 
 </body>
-    </html>
+</html>
+
+    
