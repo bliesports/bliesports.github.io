@@ -2,18 +2,18 @@
 <html lang="tr">
 <head>
     <meta name="application-name" content="BLI ESPORTS">
-<meta property="og:site_name" content="BLI ESPORTS">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "BLI ESPORTS",
-  "url": "https://bliesports.github.io/"
-}
-</script>
+    <meta property="og:site_name" content="BLI ESPORTS">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "BLI ESPORTS",
+      "url": "https://bliesports.github.io/"
+    }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BLI Esports | Official Pro Store</title>
+    <title>BLI ESPORTS | Official</title>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
@@ -21,20 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@100;300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="logo1616.png">
-
-<title>BLI ESPORTS | Official</title>
-<meta name="application-name" content="BLI ESPORTS">
-<meta property="og:site_name" content="BLI ESPORTS">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "BLI ESPORTS",
-  "url": "https://bliesports.github.io/"
-}
-</script>
+    <link rel="icon" type="image/png" href="logo1616.png">
 
     <style>
         :root {
@@ -108,10 +95,6 @@
             cursor: pointer; position: relative;
         }
 
-        .hamburger::after {
-            content: ''; position: absolute; inset: -5px;
-        }
-
         .hamburger span {
             width: 28px; height: 3px; background: var(--primary-black);
             border-radius: 10px; transition: var(--transition-smooth);
@@ -150,10 +133,41 @@
             box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
         }
 
+        /* --- WRAITH GRID STYLE ADDED BY GEMINI --- */
+        .wraith-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            grid-template-rows: 280px 280px;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .grid-box {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            background: #000;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+
+        .grid-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .grid-box:hover img { transform: scale(1.08); }
+        .tall-box { grid-row: span 2; }
+
         @media (max-width: 1024px) {
-            .btn-pc-download { 
-                display: none !important; 
+            .btn-pc-download { display: none !important; }
+            .wraith-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
             }
+            .tall-box { grid-row: span 1; height: 450px; }
         }
 
         .search-portal {
@@ -171,8 +185,6 @@
             transition: 0.3s;
         }
 
-        .search-close-top:hover { color: var(--accent-red); transform: rotate(90deg); }
-
         .search-field-wrapper {
             display: flex; align-items: center; gap: 30px;
             border-bottom: 4px solid var(--primary-black);
@@ -185,45 +197,12 @@
             text-transform: uppercase; letter-spacing: -1px;
         }
 
-        .search-results-box {
-            margin-top: 50px; display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px; overflow-y: auto;
-        }
-
-        .s-card {
-            display: flex; align-items: center; gap: 20px; padding: 20px;
-            background: var(--bg-light-gray); border-radius: 20px;
-            cursor: pointer; transition: 0.3s;
-        }
-
-        .s-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .s-card img { width: 90px; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px; }
-        .s-card h4 { font-family: 'Orbitron'; font-size: 16px; }
-
         .content-engine {
             margin-top: 120px; padding: 0 5% 100px;
             animation: fadeIn 1s ease-out;
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .banner-stack { display: grid; grid-template-columns: 1fr; gap: 35px; }
-
-        .pro-banner {
-            width: 100%; aspect-ratio: 16 / 9;
-            border-radius: var(--card-radius);
-            overflow: hidden; background: #000;
-            position: relative; cursor: pointer;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.1);
-        }
-
-        .pro-banner img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .pro-banner:hover img { transform: scale(1.06); }
 
         .global-dimmer {
             position: fixed; inset: 0; background: rgba(0,0,0,0.5);
@@ -239,8 +218,6 @@
             box-shadow: -20px 0 60px rgba(0,0,0,0.1);
         }
 
-        @media (max-width: 480px) { .panel { width: 100%; } }
-
         .panel.active { right: 0; }
 
         .panel-header {
@@ -250,14 +227,11 @@
 
         .panel-header h2 { font-family: 'Orbitron'; font-weight: 900; letter-spacing: -1px; }
 
-        .menu-list { flex: 1; }
-        .menu-item { margin-bottom: 15px; }
-        
         .menu-link {
             display: flex; align-items: center; gap: 20px;
             padding: 24px 30px; border-radius: 20px;
             background: var(--bg-light-gray); font-weight: 800; font-size: 20px;
-            transition: 0.3s;
+            transition: 0.3s; margin-bottom: 15px;
         }
 
         .menu-link:hover {
@@ -271,101 +245,38 @@
         
         .cart-item {
             display: flex; gap: 20px; padding: 20px; background: var(--bg-light-gray);
-            border-radius: 20px; margin-bottom: 15px; position: relative;
+            border-radius: 20px; margin-bottom: 15px;
         }
-
-        .cart-item img { width: 90px; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px; }
 
         .btn-premium {
             width: 100%; padding: 24px; background: var(--primary-black);
             color: var(--pure-white); border-radius: 20px; font-weight: 900;
             font-family: 'Orbitron'; font-size: 17px; transition: 0.4s;
-            margin-bottom: 10px; border: 2px solid transparent;
+            margin-bottom: 10px;
         }
 
-        .btn-premium:hover { background: var(--accent-red); transform: translateY(-3px); }
-
-        .btn-outline {
-            width: 100%; padding: 24px; background: transparent;
-            color: var(--primary-black); border: 2px solid var(--primary-black);
-            border-radius: 20px; font-weight: 900; font-family: 'Orbitron';
-            transition: 0.3s;
-        }
-
-        .btn-outline:hover { background: var(--primary-black); color: #fff; }
-
-        .footer-terminal {
-            background: #050505; color: var(--pure-white);
-            padding: 100px 6% 40px;
-        }
-
-        .footer-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 60px; max-width: 1400px; margin: 0 auto;
-        }
-
-        .footer-col h4 {
-            font-family: 'Orbitron'; color: var(--accent-red);
-            font-size: 14px; margin-bottom: 30px; letter-spacing: 2px;
-        }
-
-        .footer-list li { margin-bottom: 15px; }
-        .footer-list a { color: #555; font-size: 15px; transition: 0.3s; }
-        .footer-list a:hover { color: var(--pure-white); padding-left: 5px; }
-
-        .legal-box {
-            margin-top: 100px; padding-top: 40px; border-top: 1px solid #111;
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 12px; color: #222;
-        }
+        .footer-terminal { background: #050505; color: var(--pure-white); padding: 100px 6% 40px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; }
+        .footer-col h4 { font-family: 'Orbitron'; color: var(--accent-red); margin-bottom: 30px; font-size: 14px; }
+        .footer-list a { color: #555; transition: 0.3s; font-size: 15px; }
+        .footer-list a:hover { color: #fff; padding-left: 5px; }
 
         .bli-modal {
             position: fixed; inset: 0; z-index: 5000;
             display: none; align-items: center; justify-content: center;
             background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
-            padding: 20px;
         }
 
         .bli-modal.active { display: flex; }
-
-        .modal-card {
-            background: var(--pure-white); width: 100%; max-width: 460px;
-            border-radius: 40px; padding: 50px; position: relative;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-        }
-
-        .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; font-size: 11px; font-weight: 900; margin-bottom: 10px; color: #aaa; }
-        .form-input {
-            width: 100%; padding: 20px; border-radius: 18px;
-            background: var(--bg-light-gray); border: 2px solid transparent;
-            font-family: 'Inter'; font-weight: 700; transition: 0.3s;
-        }
-        .form-input:focus { border-color: var(--primary-black); background: #fff; }
-
+        .modal-card { background: #fff; width: 460px; border-radius: 40px; padding: 50px; position: relative; }
+        .form-input { width: 100%; padding: 20px; border-radius: 18px; background: #f8f8f8; border: 2px solid transparent; margin-top: 10px; }
+        
         #toast-master { position: fixed; bottom: 40px; right: 40px; z-index: 9999; }
-        .toast-msg {
-            background: var(--primary-black); color: var(--pure-white); padding: 22px 35px;
-            border-radius: 20px; margin-top: 15px; font-weight: 800;
-            display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            animation: toastIn 0.5s cubic-bezier(0.17, 0.88, 0.32, 1.27);
-        }
-
+        .toast-msg { background: #000; color: #fff; padding: 22px 35px; border-radius: 20px; margin-top: 15px; font-weight: 800; animation: toastIn 0.5s; }
         @keyframes toastIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-        #loader-overlay img {
-            animation: logoPulse 1.5s infinite alternate ease-in-out;
-        }
-
-        @keyframes logoPulse {
-            from { transform: scale(1); opacity: 0.8; }
-            to { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 15px rgba(0,0,0,0.1)); }
-        }
-
-        @media (min-width: 1025px) {
-            .btn-pc-download { display: inline-flex !important; }
-        }
+        
+        #loader-overlay img { animation: logoPulse 1.5s infinite alternate ease-in-out; }
+        @keyframes logoPulse { from { transform: scale(1); } to { transform: scale(1.1); } }
     </style>
 </head>
 <body>
@@ -377,83 +288,45 @@
         </div>
     </div>
 
-    <div class="search-portal" id="searchPortal">
-        <div class="search-close-top" onclick="toggleSearchPortal()">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
-        <div class="search-field-wrapper">
-            <i class="fa-solid fa-magnifying-glass" style="font-size:30px;"></i>
-            <input type="text" id="masterSearchInput" placeholder="ARA..." oninput="executeLiveSearch()">
-        </div>
-        <div id="searchResultsDisplay" class="search-results-box"></div>
-    </div>
-
     <nav class="navbar" id="mainNavbar">
         <div class="nav-logo" onclick="location.href='index.html'">
             <img src="logo1616.png" alt="BLI ESPORTS">
         </div>
-
         <div class="nav-tools">
-    <a href="https://github.com/bliesports/bliesports.github.io/releases/download/v1.0.0/BLI.CLIENT_0.1.0_x64_en-US.msi" class="btn-pc-download">
-        <i class="fa-brands fa-windows"></i> ŞİMDİ İNDİR
-    </a>
-    
-    <button class="tool-btn" onclick="toggleSearchPortal()">
-        <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
-    
-    <button class="tool-btn" onclick="openSidePanel('cartPanel')">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span class="cart-badge" id="cartBadgeCount">0</span>
-    </button>
-    
-    <!-- KULLANICI BUTONU - HAMBURGER'IN SOLU -->
-    <button class="tool-btn" onclick="window.location.href='https://account-bli.github.io'">
-        <i class="fa-solid fa-user"></i>
-    </button>
-    
-    <div class="hamburger" id="hamburgerTrigger" onclick="openSidePanel('menuPanel')">
-        <span></span><span></span><span></span>
-    </div>
+            <a href="https://github.com/bliesports/bliesports.github.io/releases/download/v1.0.0/BLI.CLIENT_0.1.0_x64_en-US.msi" class="btn-pc-download">
+                <i class="fa-brands fa-windows"></i> ŞİMDİ İNDİR
+            </a>
+            <button class="tool-btn" onclick="toggleSearchPortal()"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="tool-btn" onclick="openSidePanel('cartPanel')">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cartBadgeCount">0</span>
+            </button>
+            <button class="tool-btn" onclick="window.location.href='https://account-bli.github.io'"><i class="fa-solid fa-user"></i></button>
+            <div class="hamburger" id="hamburgerTrigger" onclick="openSidePanel('menuPanel')">
+                <span></span><span></span><span></span>
+            </div>
         </div>
     </nav>
 
     <div class="global-dimmer" id="globalDimmer" onclick="closeAllSidePanels()"></div>
 
     <aside class="panel" id="menuPanel">
-        <div class="panel-header">
-            <h2>HIZLI ERİŞİM</h2>
-            <button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        
+        <div class="panel-header"><h2>HIZLI ERİŞİM</h2><button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button></div>
         <div class="menu-list">
-            <div class="menu-item"><a href="index.html" class="menu-link"><i class="fa-solid fa-house"></i> ANA SAYFA</a></div>
-            <div class="menu-item"><a href="/ürünler/index.html" class="menu-link"><i class="fa-solid fa-shop"></i> TÜM ÜRÜNLER</a></div>
-            <div class="menu-item"><a href="/basvuru/index.html" class="menu-link"><i class="fa-solid fa-user-plus"></i> BİZE KATIL</a></div>
-            <div class="menu-item"><a href="/bliclient/index.html" class="menu-link"><i class="fa-solid fa-microchip"></i> BLI CLIENT</a></div>
-            <div class="menu-item">
-    <a href="https://ai-bli.github.io" class="menu-link">
-        <i class="fa-solid fa-robot"></i> BLI AI
-    </a>
-</div>
-
-
+            <a href="index.html" class="menu-link"><i class="fa-solid fa-house"></i> ANA SAYFA</a>
+            <a href="/ürünler/index.html" class="menu-link"><i class="fa-solid fa-shop"></i> TÜM ÜRÜNLER</a>
+            <a href="/basvuru/index.html" class="menu-link"><i class="fa-solid fa-user-plus"></i> BİZE KATIL</a>
+            <a href="/bliclient/index.html" class="menu-link"><i class="fa-solid fa-microchip"></i> BLI CLIENT</a>
+            <a href="https://ai-bli.github.io" class="menu-link"><i class="fa-solid fa-robot"></i> BLI AI</a>
         </div>
-
-        <div id="authPanelContainer"></div>
     </aside>
 
     <aside class="panel" id="cartPanel">
-        <div class="panel-header">
-            <h2>SEPETİN</h2>
-            <button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-
+        <div class="panel-header"><h2>SEPETİN</h2><button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button></div>
         <div class="cart-flow" id="cartItemsContainer"></div>
-
         <div style="margin-top:auto; padding-top:30px; border-top:1px dashed #ddd;">
             <div style="display:flex; justify-content:space-between; margin-bottom:25px;">
-                <span style="color:#aaa; font-weight:600;">TOPLAM</span>
+                <span style="color:#aaa;">TOPLAM</span>
                 <span id="grandTotalDisplay" style="font-family:'Orbitron'; font-size:26px; font-weight:900;">0.00 TL</span>
             </div>
             <button class="btn-premium" onclick="initCheckout()">SİPARİŞİ TAMAMLA</button>
@@ -461,13 +334,18 @@
     </aside>
 
     <main class="content-engine">
-        <div class="banner-stack">
-            <div class="pro-banner" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
-                <img src="v1pro-banner.png" alt="BLI V1 PRO MOUSE">
+        <div class="wraith-grid">
+            <div class="grid-box tall-box">
+                <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI Detail">
             </div>
-
-            <div class="pro-banner" onclick="location.href='/ürünler/forma/classic/index.html'">
-                <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
+            <div class="grid-box" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
+                <img src="v1pro-banner.png" alt="BLI V1 PRO">
+            </div>
+            <div class="grid-box tall-box">
+                <img src="logo1616.png" style="object-fit: contain; padding: 50px; background: #050505;" alt="BLI Logo">
+            </div>
+            <div class="grid-box" onclick="location.href='/ürünler/forma/classic/index.html'">
+                <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="ELITE JERSEY">
             </div>
         </div>
     </main>
@@ -476,7 +354,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <img src="logo1616.png" style="height:40px; filter:invert(1); margin-bottom:25px;">
-                <p style="color:#333; line-height:1.8; font-size:14px;">Profesyonel espor sahneleri için geliştirilmiş yüksek performanslı ekipmanların tek adresi.</p>
+                <p style="color:#333; font-size:14px;">Profesyonel espor sahneleri için geliştirilmiş yüksek performanslı ekipmanların tek adresi.</p>
             </div>
             <div class="footer-col">
                 <h4>MAĞAZA</h4>
@@ -488,55 +366,18 @@
             <div class="footer-col">
                 <h4>YARDIM</h4>
                 <ul class="footer-list">
-                    <li><a href="#">Siparişimi Takip Et</a></li>
-                    <li><a href="#">Bize Ulaşın</a></li>
-                    <li><a href="#">Gizlilik Politikası</a></li>
+                    <li><a href="#">Sipariş Takibi</a></li>
                     <li><a href="/about-us/index.html">Hakkımızda</a></li>
                 </ul>
             </div>
         </div>
-        <div class="legal-box">
-            <p>&copy; 2026 BLI ESPORTS WORLDWIDE. ALL RIGHTS RESERVED.</p>
-            <div style="display:flex; gap:15px; font-size:24px; color:#111;">
-                <i class="fa-brands fa-cc-visa"></i>
-                <i class="fa-brands fa-cc-mastercard"></i>
-            </div>
+        <div style="margin-top:100px; padding-top:40px; border-top:1px solid #111; display:flex; justify-content:space-between; font-size:12px; color:#222;">
+            <p>&copy; 2026 BLI ESPORTS WORLDWIDE.</p>
+            <div><i class="fa-brands fa-cc-visa"></i> <i class="fa-brands fa-cc-mastercard"></i></div>
         </div>
     </footer>
 
-    <div class="bli-modal" id="authModal">
-        <div class="modal-card">
-            <button style="position:absolute; top:30px; right:30px; font-size:24px;" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
-            
-            <div id="loginSection">
-                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">GİRİŞ</h2>
-                <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI hesabınla oturum aç ve savaşa hazır ol.</p>
-                <div class="form-group">
-                    <label>E-POSTA ADRESİ</label>
-                    <input type="email" id="loginEmail" class="form-input" placeholder="mail@example.com">
-                </div>
-                <div class="form-group">
-                    <label>ŞİFRE</label>
-                    <input type="password" id="loginPass" class="form-input" placeholder="••••••••">
-                </div>
-                <button class="btn-premium" onclick="handleUserLogin()">GİRİŞ YAP</button>
-            </div>
-
-            <div id="registerSection" style="display:none;">
-                <h2 style="font-family:'Orbitron'; margin-bottom:10px;">KAYIT OL</h2>
-                <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI ekibine katılarak özel avantajlardan yararlan.</p>
-                <div class="form-group"><label>AD SOYAD</label><input type="text" id="regFullName" class="form-input"></div>
-                <div class="form-group"><label>E-POSTA</label><input type="email" id="regUserEmail" class="form-input"></div>
-                <div class="form-group"><label>ŞİFRE</label><input type="password" id="regUserPass" class="form-input"></div>
-                <button class="btn-premium" onclick="handleUserRegister()">HESAP OLUŞTUR</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="toast-master"></div>
-
     <script>
-    // --- 1. CONFIG & INITIALIZATION ---
     const firebaseConfig = { 
         apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8", 
         authDomain: "bliesports.firebaseapp.com", 
@@ -546,155 +387,70 @@
         appId: "1:880767104142:web:5edbe111f42f16ab1545df" 
     };
     firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    const PRODUCT_DB = [
-        { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", keywords: "v1 pro mouse fare" },
-        { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", keywords: "forma jersey tshirt" }
-    ];
 
     let userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-
-    // --- 2. SEPET MOTORU ---
-    function addToCart(id, name, price, img) {
-        const product = { id, name, price, img };
-        userCart.push(product);
-        refreshCartDisplay();
-        pushNotification(name + " sepete eklendi kral!");
-        openSidePanel('cartPanel');
-    }
 
     function refreshCartDisplay() {
         const list = document.getElementById('cartItemsContainer');
         const badge = document.getElementById('cartBadgeCount');
         const totalBox = document.getElementById('grandTotalDisplay');
         let totalSum = 0;
-
         if(!list) return;
-
-        if(userCart.length === 0) {
-            list.innerHTML = `<div style="text-align:center; padding-top:100px; color:#ccc;"><p>Sepetin boş birader.</p></div>`;
-            if(badge) badge.innerText = "0";
-            if(totalBox) totalBox.innerText = "0.00 TL";
-        } else {
-            list.innerHTML = "";
-            userCart.forEach((item, index) => {
-                totalSum += item.price;
-                list.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${item.img}" style="width:50px; border-radius:8px;">
-                        <div style="flex:1">
-                            <h4 style="font-size:12px;">${item.name}</h4>
-                            <p style="color:#ff3333; font-weight:700;">${item.price} TL</p>
-                        </div>
-                        <button onclick="removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button>
-                    </div>`;
-            });
-            if(badge) badge.innerText = userCart.length;
-            if(totalBox) totalBox.innerText = totalSum.toFixed(2) + " TL";
-        }
+        list.innerHTML = "";
+        userCart.forEach((item, index) => {
+            totalSum += item.price;
+            list.innerHTML += `<div class="cart-item"><img src="${item.img}" style="width:50px;"><div style="flex:1"><h4 style="font-size:12px;">${item.name}</h4><p style="color:#f33;">${item.price} TL</p></div><button onclick="removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button></div>`;
+        });
+        badge.innerText = userCart.length;
+        totalBox.innerText = totalSum.toFixed(2) + " TL";
         localStorage.setItem('bli_user_cart', JSON.stringify(userCart));
     }
 
-    function removeCartItem(idx) {
-        userCart.splice(idx, 1);
-        refreshCartDisplay();
-    }
+    function removeCartItem(idx) { userCart.splice(idx, 1); refreshCartDisplay(); }
 
-    // --- 3. PANEL & UI KONTROLLERİ ---
     function openSidePanel(id) {
         closeAllSidePanels();
-        const panel = document.getElementById(id);
+        document.getElementById(id).classList.add('active');
         const dimmer = document.getElementById('globalDimmer');
-        if(panel) panel.classList.add('active');
-        if(dimmer) {
-            dimmer.style.display = 'block';
-            setTimeout(() => dimmer.style.opacity = '1', 10);
-        }
+        dimmer.style.display = 'block';
+        setTimeout(() => dimmer.style.opacity = '1', 10);
     }
 
     function closeAllSidePanels() {
         document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
         const dimmer = document.getElementById('globalDimmer');
-        if(dimmer) {
-            dimmer.style.opacity = '0';
-            setTimeout(() => dimmer.style.display = 'none', 400);
-        }
+        dimmer.style.opacity = '0';
+        setTimeout(() => dimmer.style.display = 'none', 400);
     }
 
-    function pushNotification(msg) {
-        const toastMaster = document.getElementById('toast-master');
-        if(toastMaster) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-msg';
-            toast.innerHTML = `<span>${msg}</span>`;
-            toastMaster.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-    }
+    function initCheckout() { window.location.href = "cart/index.html"; }
 
-    function initCheckout() {
-        window.location.href = "cart/index.html";
-    }
-
-    function toggleSearchPortal() {
-        const portal = document.getElementById('searchPortal');
-        if(portal.classList.contains('active')) {
-            portal.classList.remove('active');
-        } else {
-            portal.classList.add('active');
-            document.getElementById('masterSearchInput').focus();
-        }
-    }
-
-    // Sekmeler arası sepet senkronizasyonu
-    window.addEventListener('focus', () => {
-        userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-        refreshCartDisplay();
-    });
-
-    window.addEventListener('storage', () => {
-        userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-        refreshCartDisplay();
-    });
-
-    // --- 🚀 AÇILIŞ MOTORU ---
     window.addEventListener('load', () => {
         const progressBar = document.getElementById('load-progress-bar');
         const loader = document.getElementById('loader-overlay');
-        
-        refreshCartDisplay(); // Açılışta sepeti yükle
-
+        refreshCartDisplay();
         let width = 0;
         const interval = setInterval(() => {
             if (width >= 100) {
                 clearInterval(interval);
                 setTimeout(() => {
-                    if(loader) {
-                        loader.style.transition = "transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s";
-                        loader.style.transform = "translateY(-100%)";
-                        loader.style.opacity = "0";
-                        setTimeout(() => loader.style.display = 'none', 800);
-                    }
+                    loader.style.transform = "translateY(-100%)";
+                    loader.style.opacity = "0";
+                    setTimeout(() => loader.style.display = 'none', 800);
                 }, 200);
             } else {
                 width += Math.random() * 25;
                 if(width > 100) width = 100;
-                if(progressBar) progressBar.style.width = width + '%';
+                progressBar.style.width = width + '%';
             }
         }, 60);
     });
 
-    // Navbar scroll efekti
     window.addEventListener('scroll', () => {
         const navbar = document.getElementById('mainNavbar');
-        if(window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+        if(window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
     });
     </script>
-
 </body>
-                </html>
+</html>
