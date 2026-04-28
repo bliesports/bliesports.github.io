@@ -150,12 +150,31 @@
             box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
         }
 
-        @media (max-width: 1024px) {
-            .btn-pc-download { 
-                display: none !important; 
-            }
-        }
+      /* Mobilde her şeyin normal alt alta ve düzgün görünmesi için güncelleme */
+@media (max-width: 1024px) {
+    .banner-stack {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        padding: 0 10px !important;
+    }
 
+    .center-column {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    .pro-banner.vertical, .pro-banner.horizontal {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9 !important; /* Mobilde hepsi standart yatay olsun */
+    }
+
+    .left-spacer { 
+        display: none !important; 
+    }
+}
         .search-portal {
             position: fixed; top: -100%; left: 0; width: 100%; height: 100vh;
             background: var(--pure-white); z-index: 2500;
