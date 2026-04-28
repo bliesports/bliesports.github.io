@@ -230,7 +230,7 @@
             backdrop-filter: blur(12px); z-index: 1900;
             display: none; opacity: 0; transition: 0.5s;
         }
-
+        
         .panel {
             position: fixed; top: 0; right: -100%; width: 450px; height: 100vh;
             background: var(--pure-white); z-index: 2000;
@@ -366,6 +366,48 @@
         @media (min-width: 1025px) {
             .btn-pc-download { display: inline-flex !important; }
         }
+        /* --- BENTO GRID MOTORU (BURAYI EKLE) --- */
+@media (min-width: 1025px) {
+    .banner-stack {
+        display: grid;
+        /* 3 Sütun: Sol boşluk, Orta geniş, Sağ dik banner */
+        grid-template-columns: 0.3fr 2fr 1fr; 
+        gap: 25px;
+        align-items: stretch;
+    }
+
+    .center-column {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    /* Orta sütundaki yatay bannerlar */
+    .pro-banner.horizontal {
+        aspect-ratio: 16 / 9;
+    }
+
+    /* Sağdaki dik banner (Ceket için) */
+    .pro-banner.vertical {
+        height: 100%;
+        aspect-ratio: auto; /* Boyu içeriğe göre uzasın */
+    }
+
+    .pro-banner.vertical img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Mobilde her şeyin normal alt alta görünmesi için */
+@media (max-width: 1024px) {
+    .banner-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .left-spacer { display: none; }
+}
     </style>
 </head>
 <body>
