@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLI WIN 2026 LIMITED JACKET | BLI Esports</title>
+    <link rel="icon" type="image/png" href="../../../logo1616.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #ffffff; color: #000; overflow-x: hidden; }
+
+        .product-page { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 60px auto; }
+
+        /* Galeri Alanı */
+        .gallery-container { display: flex; flex: 1.2; gap: 20px; }
+        
+        /* PC Yan Fotolar */
+        .side-thumbnails { display: flex; flex-direction: column; gap: 10px; width: 80px; }
+        .thumb { width: 100%; cursor: pointer; border-radius: 8px; background: #f9f9f9; padding: 5px; border: 1px solid #eee; transition: 0.3s; aspect-ratio: 1/1; object-fit: cover; }
+        .thumb:hover { border-color: #000; }
+
+        /* Ana Ekran / Slider */
+        .main-display { 
+            flex: 1; 
+            background: #f9f9f9; 
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            min-height: 600px; 
+            overflow: hidden;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
+            padding: 20px;
+        }
+
+        /* Mobil Noktalar */
+        .dots-container {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: 8px;
+        }
+
+        .dot { width: 8px; height: 8px; background: #ccc; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .dot.active { background: #000; width: 20px; border-radius: 10px; }
+
+        /* Ürün Bilgileri */
+        .product-info { flex: 1; padding: 0 40px; min-width: 350px; }
+        .brand-tag { color: #888; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px;}
+        .product-title { font-size: 32px; font-weight: 900; margin: 0 0 10px 0; color: #000; line-height: 1.1; }
+        .product-price { font-size: 28px; font-weight: bold; margin-bottom: 30px; color: #000; }
+
+        /* Butonlar */
+        .add-to-cart { width: 100%; padding: 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .add-to-cart:hover { background: #333; transform: translateY(-2px); }
+        
+        .fav-btn { width: 100%; padding: 18px; background: #fff; color: #000; border: 1px solid #ddd; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .fav-btn:hover { border-color: #000; background: #f9f9f9; }
+
+        .pre-order-tag { background: #ff3333; color: white; padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+
+        /* MOBİL AYARLAR */
+        @media (max-width: 968px) {
+            .product-page { flex-direction: column; margin: 0; padding: 10px; }
+            .gallery-container { flex-direction: column; }
+            .side-thumbnails { display: none; }
+            .dots-container { display: flex; }
+            .main-display { min-height: 450px; border-radius: 0; margin: -10px -10px 20px -10px; }
+            .product-info { padding: 20px 10px; }
+            .product-title { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="product-page">
+    <div class="gallery-container">
+        <div class="side-thumbnails">
+            <img src="../../../file_0000000046ec71fd9bd3cacd652394b1.png" class="thumb" onclick="goToSlide(0)">
+            <img src="../../../file_00000000db8071fdb39fa59255fd250a.png" class="thumb" onclick="goToSlide(1)">
+        </div>
+
+        <div class="main-display" id="sliderContainer">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <img src="../../../file_0000000046ec71fd9bd3cacd652394b1.png" alt="BLI WIN Jacket Front">
+                <img src="../../../file_00000000db8071fdb39fa59255fd250a.png" alt="BLI WIN Jacket Back">
+            </div>
+            
+            <div class="dots-container">
+                <div class="dot active" onclick="goToSlide(0)"></div>
+                <div class="dot" onclick="goToSlide(1)"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-info">
+        <div class="pre-order-tag">ÖN SİPARİŞ</div>
+        <span class="brand-tag">BLI APPAREL / #BLIWIN</span>
+        <h1 class="product-title">BLI WIN 2026 LİMİTED JACKET</h1>
+        <div class="product-price">1.599,00 ₺</div>
+
+        <button class="add-to-cart" onclick="sepeteEkle('BLI WIN 2026 Jacket', 1599)">SEPETE EKLE</button>
+        <button class="fav-btn">Favorilere Ekle <i class="fa-regular fa-heart"></i></button>
+        
+        <p style="margin-top: 30px; line-height: 1.6; color: #555; font-size: 15px;">
+            <b>Zaferin yeni zırhı.</b> #BLIWIN mottosuyla tasarlanan 2026 sınırlı üretim ceket, suya dayanıklı özel kumaşı ve nefes alan iç astarıyla hem sokakta hem sahnede en üst segment konfor sunar. Limited Edition nakış detayları ve reflektörlü BLI logosu ile sadece en iyiler için.
+        </p>
+    </div>
+</div>
+
+<script>
+    const wrapper = document.getElementById('sliderWrapper');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+
+    function goToSlide(index) {
+        currentSlide = index;
+        const offset = index * -100;
+        wrapper.style.transform = `translateX(${offset}%)`;
+        
+        dots.forEach(dot => dot.classList.remove('active'));
+        if(dots[index]) dots[index].classList.add('active');
+    }
+
+    // MOBİL SWIPE
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const slider = document.getElementById('sliderContainer');
+
+    slider.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    slider.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) { if(currentSlide < 1) goToSlide(currentSlide + 1); }
+        if (touchEndX - touchStartX > 50) { if(currentSlide > 0) goToSlide(currentSlide - 1); }
+    });
+
+    function sepeteEkle(name, price) {
+        let sepet = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
+        
+        sepet.push({ 
+            id: 2026, 
+            name: name, 
+            price: price, 
+            img: "file_0000000046ec71fd9bd3cacd652394b1.png",
+            desc: "Limited Edition"
+        });
+        
+        localStorage.setItem('bli_user_cart', JSON.stringify(sepet));
+        window.dispatchEvent(new Event('storage'));
+        
+        alert(name + " başarıyla sepete eklendi! Ödeme için Shopier'e yönlendirileceksiniz.");
+    }
+</script>
+
+</body>
+</html>
