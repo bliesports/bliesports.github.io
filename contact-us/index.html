@@ -3,231 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLI ESPORTS | Secure Operation Center</title>
+    <title>BLI ESPORTS | Operational Command Center</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;600;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --black: #000000;
             --white: #ffffff;
-            --gray: #111111;
-            --border: #222222;
+            --dark-gray: #0a0a0a;
+            --border: rgba(255, 255, 255, 0.1);
             --font-tech: 'Orbitron', sans-serif;
             --font-main: 'Inter', sans-serif;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--black); color: var(--white); font-family: var(--font-main); overflow-x: hidden; }
+        body { 
+            background: var(--black); 
+            color: var(--white); 
+            font-family: var(--font-main); 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+        }
 
-        /* --- SİYAH BEYAZ NAVIGASYON --- */
+        /* --- PROFESYONEL SİYAH NAV --- */
         nav {
-            position: fixed; top: 0; width: 100%; height: 80px;
+            position: fixed; top: 0; width: 100%; height: 90px;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 6%; background: var(--black); 
-            border-bottom: 1px solid var(--border); z-index: 1000;
+            border-bottom: 2px solid var(--white); z-index: 1000;
         }
-        .logo { font-family: var(--font-tech); font-weight: 900; font-size: 22px; letter-spacing: 3px; }
+        .nav-brand { font-family: var(--font-tech); font-weight: 900; font-size: 24px; letter-spacing: 4px; }
+        .nav-status { font-family: 'JetBrains Mono'; font-size: 10px; color: #555; }
 
-        /* --- ANA KONTEYNER --- */
+        /* --- ANA CONTAINER --- */
         .wrapper {
-            max-width: 1200px;
-            margin: 140px auto 100px;
+            max-width: 1400px;
+            margin: 160px auto 100px;
             padding: 0 6%;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 100px;
+            animation: fadeIn 1.2s ease;
         }
 
-        /* SOL TARAF: İLETİŞİM BİLGİLERİ (GERİ GELDİ) */
-        .info-side h1 { font-family: var(--font-tech); font-size: 60px; font-weight: 900; line-height: 1; margin-bottom: 30px; }
-        
-        .contact-entry {
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- SOL: İLETİŞİM BİLGİLERİ --- */
+        .info-side h1 { 
+            font-family: var(--font-tech); font-size: clamp(40px, 6vw, 80px); 
+            font-weight: 950; line-height: 0.85; margin-bottom: 40px; 
+            text-transform: uppercase;
+        }
+
+        .contact-box {
+            background: var(--dark-gray);
             border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 20px;
             margin-bottom: 20px;
-            transition: var(--transition);
-            background: var(--gray);
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
+            transition: var(--transition);
         }
-        .contact-entry:hover { border-color: var(--white); transform: translateX(10px); }
-        .contact-entry i { font-size: 24px; color: var(--white); }
-        .contact-entry span { font-family: 'JetBrains Mono'; font-size: 12px; color: #666; display: block; margin-bottom: 5px; }
-        .contact-entry h4 { font-family: var(--font-tech); font-size: 16px; letter-spacing: 1px; }
+        .contact-box:hover { 
+            background: var(--white); 
+            color: var(--black); 
+            transform: scale(1.02) translateX(10px);
+            border-color: var(--white);
+        }
+        .contact-box i { font-size: 28px; }
+        .contact-box .meta span { display: block; font-family: 'JetBrains Mono'; font-size: 11px; opacity: 0.5; margin-bottom: 5px; }
+        .contact-box .meta h4 { font-family: var(--font-tech); font-size: 17px; }
 
-        /* SAĞ TARAF: FORMSPREE FORM */
+        /* --- SAĞ: FORMSPREE KODLU FORM --- */
         .form-side {
             background: var(--white);
             color: var(--black);
-            padding: 50px;
-            border-radius: 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            padding: 60px;
+            border-radius: 40px;
+            position: relative;
         }
-        .field { margin-bottom: 25px; }
-        .field label { display: block; font-family: var(--font-tech); font-size: 11px; font-weight: 900; margin-bottom: 10px; }
+        .form-side::before {
+            content: "SECURE_FORM";
+            position: absolute; top: -15px; left: 40px;
+            background: var(--black); color: var(--white);
+            padding: 5px 15px; font-family: var(--font-tech); font-size: 10px; border-radius: 5px;
+        }
+
+        .field { margin-bottom: 30px; }
+        .field label { display: block; font-family: var(--font-tech); font-size: 12px; font-weight: 900; margin-bottom: 12px; }
         
         .bli-input {
-            width: 100%; padding: 18px; border: 2px solid #eee; border-radius: 12px;
-            background: #f9f9f9; font-family: var(--font-main); font-weight: 700; transition: var(--transition);
+            width: 100%; padding: 20px; border: 2px solid #e0e0e0; border-radius: 15px;
+            background: #f8f8f8; font-family: var(--font-main); font-weight: 700; 
+            font-size: 16px; transition: var(--transition);
         }
         .bli-input:focus { border-color: var(--black); background: var(--white); outline: none; }
 
-        .btn-send {
-            width: 100%; padding: 22px; background: var(--black); color: var(--white);
-            border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900;
-            cursor: pointer; transition: var(--transition);
+        .btn-submit {
+            width: 100%; padding: 25px; background: var(--black); color: var(--white);
+            border: none; border-radius: 15px; font-family: var(--font-tech); font-weight: 900;
+            font-size: 16px; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; gap: 15px;
         }
-        .btn-send:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); opacity: 0.9; }
+        .btn-submit:hover { transform: translateY(-5px); letter-spacing: 2px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
 
-        /* --- ÖZEL KONUMLU CANLI DESTEK BALONU --- */
-        .support-bubble {
+        /* --- YARDIM BALONCUĞU (ÖZEL KONUM) --- */
+        .chat-bubble {
             position: fixed;
-            right: 40px;
-            bottom: 120px; /* İstediğin özel konum */
-            width: 65px;
-            height: 65px;
+            right: 50px;
+            bottom: 140px; /* Alttan biraz yukarıda, sağda */
+            width: 70px;
+            height: 70px;
             background: var(--white);
             color: var(--black);
-            border-radius: 50% 50% 2px 50%;
+            border-radius: 50% 50% 0 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 30px;
             cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            z-index: 2000;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
             transition: var(--transition);
+            border: 3px solid var(--black);
         }
-        .support-bubble:hover { transform: scale(1.1) rotate(-10deg); }
+        .chat-bubble:hover { transform: scale(1.1) rotate(-10deg); }
 
         /* CANLI DESTEK PENCERESİ */
         .chat-ui {
-            position: fixed; right: 40px; bottom: 200px; width: 330px;
-            background: var(--white); color: var(--black); border-radius: 20px;
-            display: none; flex-direction: column; overflow: hidden; z-index: 1002;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 2px solid var(--black);
+            position: fixed; right: 50px; bottom: 230px; width: 350px;
+            background: var(--white); color: var(--black); border-radius: 25px;
+            display: none; flex-direction: column; overflow: hidden; z-index: 2001;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6); border: 2px solid var(--black);
         }
-        .chat-ui.active { display: flex; animation: slideIn 0.4s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-ui.active { display: flex; animation: chatPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes chatPop { from { opacity: 0; transform: scale(0.8) translateY(50px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        .chat-head { background: var(--black); color: var(--white); padding: 15px; font-family: var(--font-tech); font-size: 12px; display: flex; justify-content: space-between; }
-        .chat-body { height: 280px; padding: 20px; background: #f0f0f0; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 10px 15px; border-radius: 12px; font-size: 13px; max-width: 85%; line-height: 1.4; }
-        .msg.bot { background: #ddd; align-self: flex-start; }
-        .msg.user { background: var(--black); color: var(--white); align-self: flex-end; }
-        .chat-foot { padding: 10px; display: flex; gap: 8px; border-top: 1px solid #eee; }
-        .chat-foot input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        .chat-head { background: var(--black); color: var(--white); padding: 20px; font-family: var(--font-tech); font-size: 13px; display: flex; justify-content: space-between; }
+        .chat-body { height: 320px; padding: 20px; background: #f0f0f0; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .msg { padding: 12px 18px; border-radius: 15px; font-size: 14px; max-width: 85%; font-weight: 600; }
+        .msg.bot { background: #e0e0e0; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg.user { background: var(--black); color: var(--white); align-self: flex-end; border-bottom-right-radius: 2px; }
+        
+        .chat-input-box { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; }
+        .chat-input-box input { flex: 1; border: none; background: #f0f0f0; padding: 12px; border-radius: 10px; outline: none; font-weight: 600; }
 
-        @media (max-width: 900px) {
-            .wrapper { grid-template-columns: 1fr; margin-top: 100px; gap: 40px; }
-            .support-bubble { bottom: 30px; right: 30px; }
-            .chat-ui { right: 20px; bottom: 100px; width: calc(100% - 40px); }
+        @media (max-width: 1024px) {
+            .wrapper { grid-template-columns: 1fr; margin-top: 120px; gap: 60px; }
+            .chat-bubble { right: 30px; bottom: 50px; }
+            .chat-ui { right: 20px; bottom: 130px; width: calc(100% - 40px); }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">BLI ESPORTS</div>
-        <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: #444;">// MONOCHROME_MODE</div>
+        <div class="nav-brand">BLI ESPORTS</div>
+        <div class="nav-status">// SYSTEM_AUTH: VERIFIED</div>
     </nav>
 
     <main class="wrapper">
         <div class="info-side">
-            <h1>CONTACT<br>TERMINAL</h1>
+            <span style="font-family: 'JetBrains Mono'; color: #555; letter-spacing: 5px;">[ TERMINAL_01 ]</span>
+            <h1>SECURE<br>CONNECT</h1>
             
-            <div class="contact-entry">
-                <i class="fa-solid fa-envelope"></i>
-                <div>
-                    <span>SİSTEM DESTEK</span>
+            <div class="contact-box">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <div class="meta">
+                    <span>GENEL DESTEK</span>
                     <h4>support@bliesports.com.tr</h4>
                 </div>
             </div>
 
-            <div class="contact-entry">
-                <i class="fa-solid fa-code"></i>
-                <div>
-                    <span>GELİŞTİRİCİ EKİBİ</span>
+            <div class="contact-box">
+                <i class="fa-solid fa-microchip"></i>
+                <div class="meta">
+                    <span>GELİŞTİRİCİ MERKEZİ</span>
                     <h4>dev@bliesports.com.tr</h4>
                 </div>
             </div>
 
-            <div class="contact-entry">
-                <i class="fa-solid fa-map-pin"></i>
-                <div>
-                    <span>MERKEZ ÜS</span>
+            <div class="contact-box">
+                <i class="fa-solid fa-tower-broadcast"></i>
+                <div class="meta">
+                    <span>KONUM</span>
                     <h4>İzmir, Türkiye</h4>
                 </div>
             </div>
         </div>
 
         <div class="form-side">
-            <form action="https://formspree.io/f/mvgzpboe" method="POST">
+            <form action="https://formspree.io/f/xvzlgqvw" method="POST">
                 <div class="field">
                     <label>OPERATÖR İSMİ</label>
-                    <input type="text" name="name" class="bli-input" placeholder="Adınız Soyadınız" required>
+                    <input type="text" name="operator_name" class="bli-input" placeholder="Adınız Soyadınız" required>
                 </div>
                 <div class="field">
-                    <label>İLETİŞİM KODU (E-POSTA)</label>
-                    <input type="email" name="email" class="bli-input" placeholder="mail@example.com" required>
+                    <label>İLETİŞİM KANALI (EMAIL)</label>
+                    <input type="email" name="email" class="bli-input" placeholder="mail@domain.com" required>
                 </div>
                 <div class="field">
-                    <label>OPERASYONEL MESAJ</label>
-                    <textarea name="message" class="bli-input" rows="5" placeholder="Mesajınızı sisteme iletin..." required></textarea>
+                    <label>OPERASYONEL NOTLAR</label>
+                    <textarea name="message" class="bli-input" rows="6" placeholder="Mesajınızı buraya yazın..." required></textarea>
                 </div>
-                <button type="submit" class="btn-send">BAĞLANTI KUR</button>
+                <button type="submit" class="btn-submit">
+                    BAĞLANTIYI BAŞLAT <i class="fa-solid fa-paper-plane"></i>
+                </button>
             </form>
         </div>
     </main>
 
-    <div class="support-bubble" onclick="toggleChat()">
-        <i class="fa-solid fa-headset"></i>
+    <div class="chat-bubble" onclick="toggleChat()">
+        <i class="fa-solid fa-comment-dots"></i>
     </div>
 
-    <div class="chat-ui" id="chatWindow">
+    <div class="chat-ui" id="chatWin">
         <div class="chat-head">
-            <span>BLI LIVE CHAT</span>
+            <span>BLI CORE LIVE</span>
             <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="toggleChat()"></i>
         </div>
-        <div class="chat-body" id="chatDisplay">
-            <div class="msg bot">Merhaba Operatör. BLI Sistemine hoş geldin. Nasıl yardımcı olabilirim?</div>
+        <div class="chat-body" id="chatDisp">
+            <div class="msg bot">BLI Destek birimine hoş geldin. Bir operatörün cevap vermesini bekle veya formu kullan.</div>
         </div>
-        <div class="chat-foot">
-            <input type="text" id="chatIn" placeholder="Mesaj yazın...">
-            <button onclick="sendMsg()" style="background:var(--black); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+        <div class="chat-input-box">
+            <input type="text" id="chatIn" placeholder="Mesajınızı yazın...">
+            <button onclick="sendMsg()" style="background:var(--black); color:white; border:none; padding:10px 15px; border-radius:10px; cursor:pointer;">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 
     <script>
-        function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
+        // Chat Aç/Kapat
+        function toggleChat() { document.getElementById('chatWin').classList.toggle('active'); }
         
+        // Mesaj Gönderimi
         function sendMsg() {
-            const input = document.getElementById('chatIn');
-            const display = document.getElementById('chatDisplay');
-            if(input.value.trim() === "") return;
+            const inp = document.getElementById('chatIn');
+            const disp = document.getElementById('chatDisp');
+            if(inp.value.trim() === "") return;
 
-            const u = document.createElement('div');
-            u.className = 'msg user';
-            u.innerText = input.value;
-            display.appendChild(u);
+            const uMsg = document.createElement('div');
+            uMsg.className = 'msg user';
+            uMsg.innerText = inp.value;
+            disp.appendChild(uMsg);
             
-            const text = input.value;
-            input.value = "";
-            display.scrollTop = display.scrollHeight;
+            inp.value = "";
+            disp.scrollTop = disp.scrollHeight;
 
+            // Yapay Cevap
             setTimeout(() => {
-                const b = document.createElement('div');
-                b.className = 'msg bot';
-                b.innerText = "Operatör şu an meşgul. Lütfen yandaki iletişim formunu kullanın.";
-                display.appendChild(b);
-                display.scrollTop = display.scrollHeight;
+                const bMsg = document.createElement('div');
+                bMsg.className = 'msg bot';
+                bMsg.innerText = "Sistem yoğunluğu nedeniyle şu an aktif değiliz. Lütfen iletişim formunu kullanın.";
+                disp.appendChild(bMsg);
+                disp.scrollTop = disp.scrollHeight;
             }, 1000);
         }
+
+        // Enter ile mesaj gönder
+        document.getElementById('chatIn').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') sendMsg();
+        });
     </script>
 </body>
 </html>
