@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BLI ESPORTS | Contact Center</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo1616.png">
+
+    <style>
+        :root {
+            --primary-black: #000000;
+            --pure-white: #ffffff;
+            --accent-red: #ff3333;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #050505; /* Koyu tema daha profesyonel durur */
+            color: var(--pure-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- ARKA PLAN EFEKTİ --- */
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a0a0a 0%, #050505 100%);
+            z-index: -1;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; top: 0; width: 100%; height: 90px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 6%; z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .nav-logo img { height: 45px; filter: invert(1); cursor: pointer; }
+
+        /* --- CONTACT WRAPPER --- */
+        .contact-container {
+            max-width: 1400px;
+            margin: 160px auto 100px;
+            padding: 0 6%;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+            animation: slideUp 1s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- SOL TARAF: BİLGİLER --- */
+        .info-side h1 {
+            font-family: 'Orbitron';
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #555);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .info-side p { color: #888; font-size: 18px; margin-bottom: 40px; }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(15px);
+            border-color: var(--accent-red);
+        }
+
+        .contact-card i { font-size: 30px; color: var(--accent-red); }
+        .card-meta span { display: block; font-family: 'Orbitron'; font-size: 11px; color: #666; letter-spacing: 2px; }
+        .card-meta h4 { font-size: 20px; font-weight: 700; margin-top: 5px; }
+
+        /* --- SAĞ TARAF: FORM --- */
+        .form-card {
+            background: #fff;
+            padding: 60px;
+            border-radius: 40px;
+            color: #000;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+        }
+
+        .form-group { margin-bottom: 30px; }
+        .form-group label {
+            display: block;
+            font-family: 'Orbitron';
+            font-size: 12px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .bli-input {
+            width: 100%;
+            padding: 20px 25px;
+            background: #f4f4f4;
+            border: 2px solid transparent;
+            border-radius: 18px;
+            font-family: 'Inter';
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .bli-input:focus {
+            background: #fff;
+            border-color: var(--primary-black);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 25px;
+            background: var(--primary-black);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Orbitron';
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-red);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 51, 51, 0.3);
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 1100px) {
+            .contact-container { grid-template-columns: 1fr; margin-top: 120px; }
+            .info-side h1 { font-size: 48px; }
+            .form-card { padding: 40px 30px; }
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        #toast {
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--accent-red); color: #fff; padding: 20px 40px;
+            border-radius: 50px; font-family: 'Orbitron'; font-weight: 900;
+            z-index: 5000; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #toast.active { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <nav class="navbar">
+        <div class="nav-logo" onclick="location.href='index.html'">
+            <img src="logo1616.png" alt="BLI ESPORTS">
+        </div>
+        <div style="font-family:'JetBrains Mono'; font-size:12px; color:#555;">// SECURE_LINE: ACTIVE</div>
+    </nav>
+
+    <main class="contact-container">
+        <div class="info-side">
+            <span style="font-family:'JetBrains Mono'; color:var(--accent-red); letter-spacing:5px;">[ CONTACT_CORE ]</span>
+            <h1>BİZE<br>ULAŞIN</h1>
+            <p>Sistemle bağlantı kurun. Teknik destek, sponsorluk veya kariyer için operasyon merkezimize veri gönderin.</p>
+
+            <div class="contact-card">
+                <i class="fa-solid fa-satellite-dish"></i>
+                <div class="card-meta">
+                    <span>SİSTEM DESTEĞİ</span>
+                    <h4>support@bliesports.com.tr</h4>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <i class="fa-solid fa-microchip"></i>
+                <div class="card-meta">
+                    <span>GELİŞTİRİCİ EKİBİ</span>
+                    <h4>dev@bliesports.com.tr</h4>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <div class="card-meta">
+                    <span>OPERASYON ÜSSÜ</span>
+                    <h4>İzmir, Türkiye / Digital Hub</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>OPERATÖR İSMİ</label>
+                    <input type="text" id="name" class="bli-input" placeholder="Adınız Soyadınız" required>
+                </div>
+
+                <div class="form-group">
+                    <label>İLETİŞİM KANALI (E-POSTA)</label>
+                    <input type="email" id="email" class="bli-input" placeholder="mail@domain.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>MESAJINIZ</label>
+                    <textarea id="message" class="bli-input" rows="5" placeholder="Sisteme iletmek istediğiniz mesajı girin..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    SİSTEME GÖNDER <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <div id="toast">MESAJ BAŞARIYLA AKTARILDI!</div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = this.querySelector('.btn-submit');
+            const toast = document.getElementById('toast');
+            
+            // Animasyonlu Gönderim Efekti
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> VERİLER AKTARILIYOR...';
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                // Başarılı toast bildirimi
+                toast.classList.add('active');
+                btn.innerHTML = 'VERİ İLETİLDİ <i class="fa-solid fa-check"></i>';
+                btn.style.background = '#28a745';
+                
+                this.reset();
+
+                setTimeout(() => {
+                    toast.classList.remove('active');
+                    btn.innerHTML = 'SİSTEME GÖNDER <i class="fa-solid fa-paper-plane"></i>';
+                    btn.style.background = '#000';
+                    btn.style.opacity = '1';
+                    btn.style.pointerEvents = 'all';
+                }, 4000);
+            }, 2000);
+        });
+    </script>
+
+</body>
+</html>
