@@ -150,6 +150,28 @@
             box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
         }
 
+        /* "Şimdi İndir" butonunu varsayılan olarak mobilde gizle */
+.btn-pc-download {
+    display: none !important;
+}
+
+/* Sadece ekran genişliği 1025px ve üzeri (PC) olduğunda butonu göster */
+@media (min-width: 1025px) {
+    .btn-pc-download {
+        display: inline-flex !important;
+    }
+}
+
+/* Mobilde kutuların yan yana (PC teması gibi) kalmasını sağla */
+@media (max-width: 1024px) {
+    .banner-stack {
+        display: flex !important;
+        flex-direction: row !important; /* Alt alta dizilimi engelle, yan yana kalsın */
+        overflow-x: auto; /* Eğer ekran çok daralırsa kutular taşmasın, kaydırılabilsin */
+        gap: 10px;
+    }
+}
+        
       /* Mobilde her şeyin normal alt alta ve düzgün görünmesi için güncelleme */
 @media (max-width: 1024px) {
     .banner-stack {
