@@ -245,7 +245,7 @@
        /* --- BENTO GRID ANA MOTORU --- */
 .content-engine {
     margin-top: 110px;
-    padding: 0 4% 100px;
+    padding: 0 4% 50px;
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
@@ -253,68 +253,66 @@
 
 .banner-stack {
     display: grid;
-    /* Wraith tarzı: Sol dikey, Orta sütun (2 yatay), Sağ dikey */
-    grid-template-columns: 1fr 1.8fr 1fr; 
-    gap: 15px; /* Boşlukları biraz daralttık ki fotoğraflar daha kompakt dursun */
-    align-items: stretch;
+    /* Wraith Düzeni: Sol (1), Orta (1.8), Sağ (1) */
+    grid-template-columns: 1fr 1.8fr 1fr;
+    gap: 15px;
+    height: 600px; /* PC'de kutu yüksekliğini sabitliyoruz ki taşma olmasın */
 }
 
 .center-column {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 1fr 1fr; /* Ortayı yatayda ikiye böler */
     gap: 15px;
 }
 
-/* Kartların Genel Tasarımı */
+/* Kartların Temel Ayarları */
 .pro-banner {
-    width: 100%;
-    border-radius: 20px; /* Biraz daha keskin ve modern bir radius */
-    overflow: hidden;
-    background: #f0f0f0;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.pro-banner.horizontal {
-    aspect-ratio: 16 / 9;
-}
-
-.pro-banner.vertical {
-    height: 100%;
+    border-radius: 20px; /* Wraith tarzı yumuşak köşeler */
+    overflow: hidden;
+    cursor: pointer;
+    background: #111; /* Görsel yüklenene kadar koyu zemin */
 }
 
 .pro-banner img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+    object-fit: cover; /* GÖRSELİN PATLAMASINI ÖNLEYEN KRİTİK KOMUT */
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-/* --- MOBİL ÖZEL AYARLAR (WRAITH TARZI) --- */
+/* Hover Efekti */
+.pro-banner:hover img {
+    transform: scale(1.05);
+}
+
+/* --- MOBİL ÖZEL AYARLAR --- */
 @media (max-width: 1024px) {
     .content-engine {
-        margin-top: 90px;
-        padding: 0 10px;
+        margin-top: 80px;
+        padding: 0 15px;
     }
 
     .banner-stack {
-        /* Mobilde yan yana 2 sütun yaparak fotoları küçültüyoruz */
-        grid-template-columns: 1fr 1fr !important; 
-        gap: 10px !important;
+        display: flex;
+        flex-direction: column; /* Mobilde her şey alt alta */
+        height: auto; /* Mobilde yükseklik sınırını kaldır */
+        gap: 12px;
     }
 
     .center-column {
-        grid-column: span 2; /* Orta sütun mobilde tam genişlik kaplasın */
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Kendi içinde 2'ye bölünsün */
-        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
-    /* Görsellerin çok uzamasını engellemek için mobilde oranları sabitliyoruz */
-    .pro-banner.vertical, .pro-banner.horizontal {
-        height: 150px !important; /* Fotoların küçük olması için sabit yükseklik */
-        aspect-ratio: auto !important;
+    .pro-banner.vertical, 
+    .pro-banner.horizontal {
+        height: 220px; /* Mobilde her bir banner'ın standart boyu */
+        border-radius: 15px;
     }
+}
 
     /* Sol taraftaki spacer'ı mobilde tamamen kaldır */
     .left-spacer {
@@ -604,29 +602,28 @@
     </aside>
 
 <main class="content-engine">
-    <div class="grid-container">
-        <!-- SOL DİKEY (Kontrolcüler) -->
-        <div class="grid-item vertical" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
+    <div class="banner-stack">
+        <!-- SOL DİKEY -->
+        <div class="pro-banner vertical" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
             <img src="v1pro-banner.png" alt="BLI V1 PRO">
         </div>
 
-        <!-- ORTA SÜTUN (Mouse ve Klavye) -->
-        <div class="center-stack">
-            <div class="grid-item horizontal" onclick="location.href='/ürünler/forma/classic/index.html'">
+        <!-- ORTA SÜTUN (Üst Üste İki Yatay) -->
+        <div class="center-column">
+            <div class="pro-banner horizontal" onclick="location.href='/ürünler/forma/classic/index.html'">
                 <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
             </div>
-            <div class="grid-item horizontal" onclick="location.href='/ürünler/forma/bli-win-2026-limited-jacket/index.html'">
+            <div class="pro-banner horizontal" onclick="location.href='/ürünler/forma/bli-win-2026-limited-jacket/index.html'">
                 <img src="file_0000000027a071fd8925b258d38214b4.png" alt="BLI WIN 2026">
             </div>
         </div>
 
-        <!-- SAĞ DİKEY (Amfi/Ses Kartı) -->
-        <div class="grid-item vertical" onclick="location.href='/ürünler/ekstra/index.html'">
-            <img src="yeni-ekstra-foto.png" alt="EKSTRA">
+        <!-- SAĞ DİKEY -->
+        <div class="pro-banner vertical" onclick="location.href='/ürünler/ekstra/index.html'">
+            <img src="yeni-ekstra-foto.png" alt="BLI EXTRA">
         </div>
     </div>
 </main>
-
     <footer class="footer-terminal">
         <div class="footer-grid">
             <div class="footer-col">
