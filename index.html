@@ -208,21 +208,20 @@
             margin-left: auto;
             margin-right: auto;
         }
-.banner-stack {
-            display: flex;
+
+        .banner-stack {
+            display: grid;
+            grid-template-columns: 1fr 1fr 0.8fr;
             gap: 20px;
-            height: 600px; /* PC için ideal dikey yükseklik */
-            margin-bottom: 50px;
+            height: 550px;
         }
 
         .pro-banner {
-            flex: 1; /* Hepsini eşit genişliğe zorlar */
             position: relative;
-            border-radius: 30px; /* Daha yumuşak köşeler */
+            border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
             background: #111;
-            transition: var(--transition-smooth);
         }
 
         .pro-banner img {
@@ -230,76 +229,32 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .pro-banner:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .pro-banner:hover img {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
-        /* MOBİL DÜZENLEME */
         @media (max-width: 1024px) {
+            .content-engine {
+                margin-top: 80px;
+                padding: 0 15px;
+            }
+
             .banner-stack {
-                height: 500px;
-                overflow-x: auto; /* Mobilde yan yana kaydırılabilir yapar */
-                padding-bottom: 20px;
-                -webkit-overflow-scrolling: touch;
-                scroll-snap-type: x mandatory;
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
             }
 
             .pro-banner {
-                min-width: 85%; /* Mobilde kartlar daha belirgin olur */
-                flex: 0 0 auto;
-                scroll-snap-align: center;
-                border-radius: 20px;
-            }
-            
-            .content-engine {
-                margin-top: 100px;
-                padding: 0 20px;
+                height: 220px;
+                border-radius: 15px;
             }
         }
-/* Banner'ı 16:9 oranında tut ve içindekileri üst üste bindir */
-.custom-stack-banner {
-    position: relative;
-    aspect-ratio: 16 / 9; /* 16.9 oranını zorunlu kılar */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
 
-/* Alttaki mavi görsel (arka plan) */
-.bg-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-}
-
-/* Üstteki mouse görseli */
-.fg-layer {
-    position: relative;
-    z-index: 2;
-    width: 60%; /* Mouse'un büyüklüğünü buradan ayarla */
-    height: auto;
-    /* Hafif bir derinlik katmak için gölge ekleyebilirsin */
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Üzerine gelince mouse'un canlanması için küçük bir efekt */
-.custom-stack-banner:hover .fg-layer {
-    transform: scale(1.1) translateY(-10px);
-}
         .global-dimmer {
             position: fixed; inset: 0; background: rgba(0,0,0,0.5);
             backdrop-filter: blur(12px); z-index: 1900;
@@ -533,23 +488,22 @@
         </div>
     </aside>
 
-<main class="content-engine">
-    <div class="banner-stack">
-        <!-- 1. KART: MOUSE (ARTIK KATMANLI YAPI) -->
-        <div class="pro-banner custom-stack-banner" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
-            <!-- Arka plandaki mavi efektli görsel (16:9) -->
-            <img src="v1pro-banner.png" class="bg-layer" alt="BLI V1 PRO BG">
-            <!-- Üstte duran transparan mouse görseli -->
-            <img src="v1-mouse-foreground.png" class="fg-layer" alt="BLI V1 PRO MOUSE">
+    <main class="content-engine">
+        <div class="banner-stack">
+            <!-- 1. SIRA: MOUSE (SOL) -->
+            <div class="pro-banner" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
+                <img src="v1pro-banner.png" alt="BLI V1 PRO">
+            </div>
+            <!-- 2. SIRA: b_sağ_alttaki (ORTA) -->
+            <div class="pro-banner" onclick="location.href='/ürünler/forma/classic/index.html'">
+                <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
+            </div>
+            <!-- 3. SIRA: CEKET DİKEY (SAĞ) -->
+            <div class="pro-banner" onclick="location.href='/ürünler/forma/bli-win-2026-limited-jacket/index.html'">
+                <img src="file_0000000027a071fd8925b258d38214b4.png" alt="BLI WIN 2026">
+            </div>
         </div>
-        
-        <!-- Diğer kartların (Forma ve Ceket) yapısı aynı kalabilir -->
-        <div class="pro-banner" onclick="location.href='/ürünler/forma/classic/index.html'">
-            <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
-        </div>
-        ...
-    </div>
-</main>
+    </main>
 
     <footer class="footer-terminal">
         <div class="footer-grid">
