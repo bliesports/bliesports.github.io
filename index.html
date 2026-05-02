@@ -2,15 +2,7 @@
 <html lang="tr">
 <head>
     <meta name="application-name" content="BLI ESPORTS">
-<meta property="og:site_name" content="BLI ESPORTS">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "BLI ESPORTS",
-  "url": "https://bliesports.github.io/"
-}
-</script>
+    <meta property="og:site_name" content="BLI ESPORTS">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BLI Esports | Home</title>
@@ -21,20 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@100;300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="logo1616.png">
-
-<title>BLI ESPORTS | Official</title>
-<meta name="application-name" content="BLI ESPORTS">
-<meta property="og:site_name" content="BLI ESPORTS">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "BLI ESPORTS",
-  "url": "https://bliesports.github.io/"
-}
-</script>
+    <link rel="icon" type="image/png" href="logo1616.png">
 
     <style>
         :root {
@@ -72,7 +51,7 @@
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(25px);
             z-index: 1000; display: flex; align-items: center; justify-content: space-between;
             padding: 0 6%; transition: var(--transition-smooth);
             border-bottom: 1px solid var(--border-subtle);
@@ -241,14 +220,12 @@
                 margin-top: 80px;
                 padding: 0 15px;
             }
-
             .banner-stack {
                 display: flex;
                 flex-direction: column;
                 height: auto;
                 gap: 15px;
             }
-
             .pro-banner {
                 height: 220px;
                 border-radius: 15px;
@@ -422,25 +399,20 @@
         <div class="nav-logo" onclick="location.href='index.html'">
             <img src="logo1616.png" alt="BLI ESPORTS">
         </div>
-
         <div class="nav-tools">
             <a href="https://github.com/bliesports/bliesports.github.io/releases/download/v1.0.0/BLI.CLIENT_0.1.0_x64_en-US.msi" class="btn-pc-download">
                 <i class="fa-brands fa-windows"></i> ŞİMDİ İNDİR
             </a>
-            
             <button class="tool-btn" onclick="toggleSearchPortal()">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-            
             <button class="tool-btn" onclick="openSidePanel('cartPanel')">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span class="cart-badge" id="cartBadgeCount">0</span>
             </button>
-            
             <button class="tool-btn" onclick="window.location.href='http://account.bliesports.com.tr/'">
                 <i class="fa-solid fa-user"></i>
             </button>
-            
             <div class="hamburger" id="hamburgerTrigger" onclick="openSidePanel('menuPanel')">
                 <span></span><span></span><span></span>
             </div>
@@ -454,21 +426,14 @@
             <h2>HIZLI ERİŞİM</h2>
             <button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        
         <div class="menu-list">
             <div class="menu-item"><a href="index.html" class="menu-link"><i class="fa-solid fa-house"></i> ANA SAYFA</a></div>
             <div class="menu-item"><a href="/ürünler/index.html" class="menu-link"><i class="fa-solid fa-shop"></i> TÜM ÜRÜNLER</a></div>
             <div class="menu-item"><a href="https://bliesports.com.tr/games" class="menu-link"><i class="fa-solid fa-gamepad"></i> OYUNLAR</a></div>
             <div class="menu-item"><a href="/basvuru/index.html" class="menu-link"><i class="fa-solid fa-user-plus"></i> BİZE KATIL</a></div>
             <div class="menu-item"><a href="/bliclient/index.html" class="menu-link"><i class="fa-solid fa-microchip"></i> BLI CLIENT</a></div>
-            <div class="menu-item">
-                <a href="http://ai.bliesports.com.tr" class="menu-link">
-                    <i class="fa-solid fa-robot"></i> BLI AI
-                </a>
-            </div>
+            <div class="menu-item"><a href="http://ai.bliesports.com.tr" class="menu-link"><i class="fa-solid fa-robot"></i> BLI AI</a></div>
         </div>
-
-        <div id="authPanelContainer"></div>
     </aside>
 
     <aside class="panel" id="cartPanel">
@@ -476,9 +441,7 @@
             <h2>SEPETİN</h2>
             <button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-
         <div class="cart-flow" id="cartItemsContainer"></div>
-
         <div style="margin-top:auto; padding-top:30px; border-top:1px dashed #ddd;">
             <div style="display:flex; justify-content:space-between; margin-bottom:25px;">
                 <span style="color:#aaa; font-weight:600;">TOPLAM</span>
@@ -490,17 +453,15 @@
 
     <main class="content-engine">
         <div class="banner-stack">
-            <!-- 1. SIRA: MOUSE (SOL) -->
+            <!-- DİZAYN.JPEG'DEKİ GİBİ: 1.MOUSE | 2.b_sağ_alttaki | 3.CEKET DİKEY -->
             <div class="pro-banner" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
-                <img src="v1pro-banner.png" alt="BLI V1 PRO">
+                <img src="v1pro-banner.png" alt="MOUSE">
             </div>
-            <!-- 2. SIRA: b_sağ_alttaki (ORTA) -->
             <div class="pro-banner" onclick="location.href='/ürünler/forma/classic/index.html'">
-                <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
+                <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="b_sağ_alttaki">
             </div>
-            <!-- 3. SIRA: CEKET DİKEY (SAĞ) -->
             <div class="pro-banner" onclick="location.href='/ürünler/forma/bli-win-2026-limited-jacket/index.html'">
-                <img src="file_0000000027a071fd8925b258d38214b4.png" alt="BLI WIN 2026">
+                <img src="file_0000000027a071fd8925b258d38214b4.png" alt="CEKET 9.16">
             </div>
         </div>
     </main>
@@ -547,7 +508,6 @@
     <div class="bli-modal" id="authModal">
         <div class="modal-card">
             <button style="position:absolute; top:30px; right:30px; font-size:24px;" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
-            
             <div id="loginSection">
                 <h2 style="font-family:'Orbitron'; margin-bottom:10px;">GİRİŞ</h2>
                 <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI hesabınla oturum aç ve savaşa hazır ol.</p>
@@ -561,7 +521,6 @@
                 </div>
                 <button class="btn-premium" onclick="handleUserLogin()">GİRİŞ YAP</button>
             </div>
-
             <div id="registerSection" style="display:none;">
                 <h2 style="font-family:'Orbitron'; margin-bottom:10px;">KAYIT OL</h2>
                 <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI ekibine katılarak özel avantajlardan yararlan.</p>
@@ -587,29 +546,14 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    const PRODUCT_DB = [
-        { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", keywords: "v1 pro mouse fare" },
-        { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", keywords: "forma jersey tshirt" }
-    ];
-
     let userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
-
-    function addToCart(id, name, price, img) {
-        const product = { id, name, price, img };
-        userCart.push(product);
-        refreshCartDisplay();
-        pushNotification(name + " sepete eklendi kral!");
-        openSidePanel('cartPanel');
-    }
 
     function refreshCartDisplay() {
         const list = document.getElementById('cartItemsContainer');
         const badge = document.getElementById('cartBadgeCount');
         const totalBox = document.getElementById('grandTotalDisplay');
         let totalSum = 0;
-
         if(!list) return;
-
         if(userCart.length === 0) {
             list.innerHTML = `<div style="text-align:center; padding-top:100px; color:#ccc;"><p>Sepetin boş birader.</p></div>`;
             if(badge) badge.innerText = "0";
@@ -618,15 +562,7 @@
             list.innerHTML = "";
             userCart.forEach((item, index) => {
                 totalSum += item.price;
-                list.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${item.img}" style="width:50px; border-radius:8px;">
-                        <div style="flex:1">
-                            <h4 style="font-size:12px;">${item.name}</h4>
-                            <p style="color:#ff3333; font-weight:700;">${item.price} TL</p>
-                        </div>
-                        <button onclick="removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button>
-                    </div>`;
+                list.innerHTML += `<div class="cart-item"><img src="${item.img}" style="width:50px; border-radius:8px;"><div style="flex:1"><h4 style="font-size:12px;">${item.name}</h4><p style="color:#ff3333; font-weight:700;">${item.price} TL</p></div><button onclick="removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button></div>`;
             });
             if(badge) badge.innerText = userCart.length;
             if(totalBox) totalBox.innerText = totalSum.toFixed(2) + " TL";
@@ -697,9 +633,7 @@
     window.addEventListener('load', () => {
         const progressBar = document.getElementById('load-progress-bar');
         const loader = document.getElementById('loader-overlay');
-        
         refreshCartDisplay();
-
         let width = 0;
         const interval = setInterval(() => {
             if (width >= 100) {
