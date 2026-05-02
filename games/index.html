@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLI STUDIO | Games Portal</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gold: #D4AF37;
+            --red: #8B0000;
+            --gray: #111111;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--black); 
+            color: var(--white); 
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND TEXT EFFECT --- */
+        .bg-text {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-family: var(--font-tech); font-size: 20vw; font-weight: 900;
+            color: rgba(255,255,255,0.02); z-index: -1; pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 6%; background: rgba(0,0,0,0.9); 
+            border-bottom: 1px solid #222; z-index: 1000; backdrop-filter: blur(10px);
+        }
+        .logo { font-family: var(--font-tech); font-weight: 900; font-size: 24px; letter-spacing: 4px; }
+
+        /* --- MAIN SECTION --- */
+        .container {
+            max-width: 1300px;
+            margin: 150px auto 100px;
+            padding: 0 5%;
+        }
+
+        .section-title {
+            text-align: center; margin-bottom: 100px;
+        }
+        .section-title h1 { 
+            font-family: var(--font-tech); font-size: clamp(40px, 6vw, 80px); 
+            font-weight: 900; text-transform: uppercase; letter-spacing: 10px;
+        }
+        .section-title p { font-family: 'JetBrains Mono'; color: #555; margin-top: 10px; }
+
+        /* --- GAMES GRID --- */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+
+        .game-card {
+            position: relative;
+            height: 600px;
+            background: var(--gray);
+            border: 1px solid #222;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 40px;
+        }
+
+        /* Hover Effects */
+        .game-card:hover { border-color: var(--white); transform: translateY(-10px); }
+        .game-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            z-index: 1;
+        }
+
+        /* Specific Game Themes */
+        .asm-card { border-left: 5px solid var(--red); }
+        .gg-card { border-left: 5px solid var(--gold); }
+
+        .game-status {
+            position: absolute; top: 30px; right: 30px;
+            font-family: 'JetBrains Mono'; font-size: 12px;
+            background: rgba(255,255,255,0.1); padding: 5px 15px;
+            border-radius: 50px; z-index: 2; border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .game-info { position: relative; z-index: 2; }
+        .game-series { font-family: 'JetBrains Mono'; font-size: 14px; color: #888; margin-bottom: 10px; }
+        .game-title { font-family: var(--font-tech); font-size: 32px; font-weight: 900; margin-bottom: 20px; line-height: 1.1; }
+        .game-desc { color: #aaa; font-size: 16px; margin-bottom: 30px; line-height: 1.6; max-width: 90%; }
+
+        /* --- BUTTONS --- */
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; }
+
+        .btn-main {
+            padding: 15px 30px; background: var(--white); color: var(--black);
+            text-decoration: none; font-family: var(--font-tech); font-weight: 700;
+            font-size: 12px; letter-spacing: 2px; transition: 0.3s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .btn-main:hover { background: #ccc; transform: scale(1.05); }
+
+        .btn-outline {
+            padding: 15px 30px; background: transparent; color: var(--white);
+            border: 1px solid #444; text-decoration: none; font-family: var(--font-tech);
+            font-weight: 700; font-size: 12px; letter-spacing: 2px; transition: 0.3s;
+        }
+        .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
+
+        /* --- CLIENT PROMO --- */
+        .client-banner {
+            margin-top: 100px; padding: 60px;
+            background: linear-gradient(90deg, #050505 0%, #111 100%);
+            border: 1px solid #222; text-align: center;
+        }
+        .client-banner h2 { font-family: var(--font-tech); margin-bottom: 20px; letter-spacing: 3px; }
+
+        @media (max-width: 768px) {
+            .games-grid { grid-template-columns: 1fr; }
+            .game-card { height: 500px; }
+            .section-title h1 { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-text">BLI STUDIO</div>
+
+    <nav>
+        <div class="logo">BLI ESPORTS</div>
+        <div style="font-family:'JetBrains Mono'; font-size:12px; border-left: 2px solid var(--white); padding-left: 15px;">PROJECT: MULTIVERSE</div>
+    </nav>
+
+    <div class="container">
+        <header class="section-title">
+            <h1>GAMES</h1>
+            <p>// BLI STUDIO TARAFINDAN GELİŞTİRİLEN YENİ NESİL DENEYİMLER</p>
+        </header>
+
+        <div class="games-grid">
+            <!-- A STRANGE MAN: FYDEL -->
+            <div class="game-card asm-card">
+                <div class="game-status">YAPIM AŞAMASINDA (IN-DEV)</div>
+                <div class="game-info">
+                    <p class="game-series">SERİ: A STRANGE MAN</p>
+                    <h2 class="game-title">A STRANGE MAN:<br>FYDEL</h2>
+                    <p class="game-desc">Karanlığın içindeki bilinmezlik sizi çağırıyor. BLI Studio'nun amiral gemisi korku projesi, psikolojik gerilimi ve derin hikaye anlatımını bir araya getiriyor. Fidel'in dünyasına girmeye hazır mısınız?</p>
+                    <div class="btn-group">
+                        <a href="https://github.com/bliesports/client/releases/latest/download/BliClient.exe" class="btn-main">
+                            <i class="fas fa-download"></i> CLIENT İNDİR
+                        </a>
+                        <a href="https://astrangeman.bliesports.com.tr" class="btn-outline">PROJE SAYFASI</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GOLD GUN -->
+            <div class="game-card gg-card">
+                <div class="game-status">ERKEN ERİŞİM YAKINDA</div>
+                <div class="game-info">
+                    <p class="game-series">TÜR: FAST-PACED FPS</p>
+                    <h2 class="game-title">GOLD GUN</h2>
+                    <p class="game-desc">Reflekslerin ve stratejinin konuştuğu, altın standartlarda bir nişancı deneyimi. BLI Esports ekosistemi için özel olarak tasarlanan rekabetçi FPS arenasına giriş yapın.</p>
+                    <div class="btn-group">
+                        <a href="https://github.com/bliesports/client/releases/latest/download/BliClient.exe" class="btn-main">
+                            <i class="fas fa-download"></i> CLIENT İNDİR
+                        </a>
+                        <a href="#" class="btn-outline">WISH LIST</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLIENT PROMO -->
+        <div class="client-banner">
+            <h2>TÜM OYUNLAR TEK BİR MERKEZDE</h2>
+            <p style="color: #666; margin-bottom: 30px; font-family: 'JetBrains Mono';">BLI Client ile kütüphaneni yönet, güncellemeleri otomatik al ve toplulukla etkileşime geç.</p>
+            <a href="https://github.com/bliesports/client/releases/latest/download/BliClient.exe" class="btn-main" style="display: inline-flex; margin: 0 auto;">
+                <i class="fas fa-rocket"></i> BLI CLIENT'I ŞİMDİ YÜKLE
+            </a>
+        </div>
+    </div>
+
+    <footer style="padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 12px;">
+        &copy; 2026 BLI STUDIO & ESPORTS | FOUNDED BY FATIH EROL
+    </footer>
+
+</body>
+</html>
