@@ -577,8 +577,8 @@
             <div class="footer-col">
                 <h4>OYUNLAR</h4>
                 <ul class="footer-list">
-                    <li><a href="https://astrangeman.bliesports.com.tr">A Strange Man</a></li>
-                    <li><a href="https://goldgun.bliesports.com.tr">Gold Gun</a></li>
+                    <li><a href="https://astrangeman.bliesports.com.tr">A STRANGE MAN</a></li>
+                    <li><a href="https://goldgun.bliesports.com.tr">GOLD GUN</a></li>
                 </ul>
             </div>
         </div>
@@ -632,22 +632,22 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // ARAMA VERİTABANINA BLI BASIC OVERSIZE TSHIRT EKLENDI
+    // ARAMA VERİTABANI - TSHIRT LINKI DÜZELTİLDİ
     const searchDatabase = [
         { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", keywords: "v1 pro mouse fare", type: "ürün", icon: "fa-solid fa-mouse" },
         { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", keywords: "forma jersey tshirt", type: "ürün", icon: "fa-solid fa-tshirt" },
         { id: 103, name: "BLI WIN 2026 CEKET", price: 1299, img: "file_0000000027a071fd8925b258d38214b4.png", link: "/ürünler/forma/bli-win-2026-limited-jacket/index.html", keywords: "ceket jacket", type: "ürün", icon: "fa-solid fa-jacket" },
-        { id: 104, name: "BLI BASIC OVERSIZE TSHIRT", price: 399, img: "basic-tshirt.png", link: "/ürünler/tshirt/basic-oversize/index.html", keywords: "basic oversize tshirt tişört", type: "ürün", icon: "fa-solid fa-shirt" },
+        { id: 104, name: "BLI BASIC OVERSIZE TSHIRT", price: 399, img: "basic-tshirt.png", link: "https://bliesports.com.tr/ürünler/forma/basic-oversize-tshirt/index.html", keywords: "basic oversize tshirt tişört", type: "ürün", icon: "fa-solid fa-shirt" },
         { id: 201, name: "A STRANGE MAN", type: "oyun", link: "https://astrangeman.bliesports.com.tr", keywords: "strange man oyun", icon: "fa-solid fa-gamepad" },
         { id: 202, name: "GOLD GUN", type: "oyun", link: "https://goldgun.bliesports.com.tr", keywords: "gold gun oyun", icon: "fa-solid fa-gun" },
         { id: 301, name: "BLI CLIENT", type: "yazılım", link: "/bliclient/index.html", keywords: "client yazılım", icon: "fa-solid fa-microchip" },
         { id: 401, name: "BLI AI", type: "yapay zeka", link: "http://ai.bliesports.com.tr", keywords: "ai yapay zeka", icon: "fa-solid fa-robot" }
     ];
 
-    // Öne Çıkan Ürünler (arama kutusu boşken gösterilecek)
+    // Öne Çıkan Ürünler (linkler düzeltildi)
     const featuredProducts = [
         { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", icon: "fa-solid fa-mouse" },
-        { id: 104, name: "BLI BASIC OVERSIZE TSHIRT", price: 399, img: "basic-tshirt.png", link: "/ürünler/tshirt/basic-oversize/index.html", icon: "fa-solid fa-shirt" },
+        { id: 104, name: "BLI BASIC OVERSIZE TSHIRT", price: 399, img: "basic-tshirt.png", link: "https://bliesports.com.tr/ürünler/forma/basic-oversize-tshirt/index.html", icon: "fa-solid fa-shirt" },
         { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", icon: "fa-solid fa-tshirt" }
     ];
 
@@ -658,7 +658,6 @@
         const resultsDiv = document.getElementById('searchResultsDisplay');
         
         if (query === "") {
-            // Boşsa öne çıkan ürünleri göster
             resultsDiv.innerHTML = `
                 <div style="margin-bottom:30px;">
                     <h3 style="font-family:'Orbitron'; margin-bottom:20px; font-size:18px;">🔥 ÖNE ÇIKAN ÜRÜNLER</h3>
@@ -844,5 +843,6 @@
         }
     });
     </script>
+
 </body>
 </html>
