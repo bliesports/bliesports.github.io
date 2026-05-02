@@ -150,53 +150,48 @@
             box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
         }
 
-        /* "Şimdi İndir" butonunu varsayılan olarak mobilde gizle */
-.btn-pc-download {
-    display: none !important;
-}
+        .btn-pc-download {
+            display: none !important;
+        }
 
-/* Sadece ekran genişliği 1025px ve üzeri (PC) olduğunda butonu göster */
-@media (min-width: 1025px) {
-    .btn-pc-download {
-        display: inline-flex !important;
-    }
-}
+        @media (min-width: 1025px) {
+            .btn-pc-download {
+                display: inline-flex !important;
+            }
+        }
 
-/* Mobilde kutuların yan yana (PC teması gibi) kalmasını sağla */
-@media (max-width: 1024px) {
-    .banner-stack {
-        display: flex !important;
-        flex-direction: row !important; /* Alt alta dizilimi engelle, yan yana kalsın */
-        overflow-x: auto; /* Eğer ekran çok daralırsa kutular taşmasın, kaydırılabilsin */
-        gap: 10px;
-    }
-}
+        @media (max-width: 1024px) {
+            .banner-stack {
+                display: flex !important;
+                flex-direction: row !important;
+                overflow-x: auto;
+                gap: 10px;
+            }
+        }
         
-      /* Mobilde her şeyin normal alt alta ve düzgün görünmesi için güncelleme */
-@media (max-width: 1024px) {
-    .banner-stack {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 15px !important;
-        padding: 0 10px !important;
-    }
+        @media (max-width: 1024px) {
+            .banner-stack {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 15px !important;
+                padding: 0 10px !important;
+            }
+            .center-column {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
+            .pro-banner.vertical, .pro-banner.horizontal {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 16 / 9 !important;
+            }
+            .left-spacer { 
+                display: none !important; 
+            }
+        }
 
-    .center-column {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 15px !important;
-    }
-
-    .pro-banner.vertical, .pro-banner.horizontal {
-        width: 100% !important;
-        height: auto !important;
-        aspect-ratio: 16 / 9 !important; /* Mobilde hepsi standart yatay olsun */
-    }
-
-    .left-spacer { 
-        display: none !important; 
-    }
-}
+        /* SEARCH PORTAL */
         .search-portal {
             position: fixed; top: -100%; left: 0; width: 100%; height: 100vh;
             background: var(--pure-white); z-index: 2500;
@@ -227,102 +222,99 @@
         }
 
         .search-results-box {
-            margin-top: 50px; display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px; overflow-y: auto;
+            margin-top: 50px;
+            overflow-y: auto;
+            max-height: 60vh;
         }
+
+        /* Öne Çıkan Ürünler Grid */
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .featured-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: var(--bg-light-gray);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            background: var(--primary-black);
+            color: white;
+        }
+
+        .featured-card:hover .featured-price { color: var(--accent-red); }
+        .featured-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 16px; }
+        .featured-card h4 { font-family: 'Orbitron'; font-size: 16px; margin-bottom: 5px; }
+        .featured-price { color: var(--accent-red); font-weight: 700; margin-top: 5px; }
 
         .s-card {
             display: flex; align-items: center; gap: 20px; padding: 20px;
             background: var(--bg-light-gray); border-radius: 20px;
             cursor: pointer; transition: 0.3s;
         }
-
-        .s-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .s-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); background: var(--primary-black); color: white; }
         .s-card img { width: 90px; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px; }
         .s-card h4 { font-family: 'Orbitron'; font-size: 16px; }
 
-       /* --- BENTO GRID ANA MOTORU --- */
-.content-engine {
-    margin-top: 110px;
-    padding: 0 4% 50px;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-}
+        .content-engine {
+            margin-top: 110px;
+            padding: 0 4% 50px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-.banner-stack {
-    display: grid;
-    grid-template-columns: 1fr 1fr 0.8fr;
-    gap: 20px;
-    height: 550px;
-}
+        .banner-stack {
+            display: grid;
+            grid-template-columns: 1fr 1fr 0.8fr;
+            gap: 20px;
+            height: 550px;
+        }
 
-.center-column {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 15px;
-}
+        .center-column {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 15px;
+        }
 
-/* Kartların Temel Ayarları */
-.pro-banner {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    background: #111;
-}
+        .pro-banner {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #111;
+        }
 
-.pro-banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+        .pro-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
 
-/* Hover Efekti */
-.pro-banner:hover img {
-    transform: scale(1.05);
-}
+        .pro-banner:hover img { transform: scale(1.05); }
 
-/* --- MOBİL ÖZEL AYARLAR --- */
-@media (max-width: 1024px) {
-    .content-engine {
-        margin-top: 80px;
-        padding: 0 15px;
-    }
+        @media (max-width: 1024px) {
+            .content-engine { margin-top: 80px; padding: 0 15px; }
+            .banner-stack { display: flex; flex-direction: column; height: auto; gap: 12px; }
+            .center-column { display: flex; flex-direction: column; gap: 12px; }
+            .pro-banner.vertical, .pro-banner.horizontal { height: 220px; border-radius: 15px; }
+        }
 
-    .banner-stack {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        gap: 12px;
-    }
+        .left-spacer { display: none !important; }
+        .btn-pc-download { display: none !important; }
 
-    .center-column {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .pro-banner.vertical, 
-    .pro-banner.horizontal {
-        height: 220px;
-        border-radius: 15px;
-    }
-}
-
-    /* Sol taraftaki spacer'ı mobilde tamamen kaldır */
-    .left-spacer {
-        display: none !important;
-    }
-
-    /* Mobilde indirme butonunu gizle demiştin, o kuralı koruyoruz */
-    .btn-pc-download {
-        display: none !important;
-    }
-}
         .global-dimmer {
             position: fixed; inset: 0; background: rgba(0,0,0,0.5);
             backdrop-filter: blur(12px); z-index: 1900;
@@ -338,14 +330,12 @@
         }
 
         @media (max-width: 480px) { .panel { width: 100%; } }
-
         .panel.active { right: 0; }
 
         .panel-header {
             display: flex; align-items: center; justify-content: space-between;
             margin-bottom: 50px;
         }
-
         .panel-header h2 { font-family: 'Orbitron'; font-weight: 900; letter-spacing: -1px; }
 
         .menu-list { flex: 1; }
@@ -357,12 +347,7 @@
             background: var(--bg-light-gray); font-weight: 800; font-size: 20px;
             transition: 0.3s;
         }
-
-        .menu-link:hover {
-            background: var(--primary-black); color: var(--pure-white);
-            transform: translateX(10px);
-        }
-
+        .menu-link:hover { background: var(--primary-black); color: var(--pure-white); transform: translateX(10px); }
         .menu-link i { color: var(--accent-red); width: 25px; }
 
         .cart-flow { flex: 1; overflow-y: auto; }
@@ -371,7 +356,6 @@
             display: flex; gap: 20px; padding: 20px; background: var(--bg-light-gray);
             border-radius: 20px; margin-bottom: 15px; position: relative;
         }
-
         .cart-item img { width: 90px; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px; }
 
         .btn-premium {
@@ -380,7 +364,6 @@
             font-family: 'Orbitron'; font-size: 17px; transition: 0.4s;
             margin-bottom: 10px; border: 2px solid transparent;
         }
-
         .btn-premium:hover { background: var(--accent-red); transform: translateY(-3px); }
 
         .btn-outline {
@@ -389,7 +372,6 @@
             border-radius: 20px; font-weight: 900; font-family: 'Orbitron';
             transition: 0.3s;
         }
-
         .btn-outline:hover { background: var(--primary-black); color: #fff; }
 
         .footer-terminal {
@@ -423,7 +405,6 @@
             background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
             padding: 20px;
         }
-
         .bli-modal.active { display: flex; }
 
         .modal-card {
@@ -449,13 +430,9 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             animation: toastIn 0.5s cubic-bezier(0.17, 0.88, 0.32, 1.27);
         }
-
         @keyframes toastIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
-        #loader-overlay img {
-            animation: logoPulse 1.5s infinite alternate ease-in-out;
-        }
-
+        #loader-overlay img { animation: logoPulse 1.5s infinite alternate ease-in-out; }
         @keyframes logoPulse {
             from { transform: scale(1); opacity: 0.8; }
             to { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 15px rgba(0,0,0,0.1)); }
@@ -464,48 +441,24 @@
         @media (min-width: 1025px) {
             .btn-pc-download { display: inline-flex !important; }
         }
-        /* --- BENTO GRID MOTORU (BURAYI EKLE) --- */
-@media (min-width: 1025px) {
-    .banner-stack {
-        display: grid;
-        /* 3 Sütun: Sol yatay, Orta yatay, Sağ dikey banner */
-        grid-template-columns: 1fr 1fr 0.8fr; 
-        gap: 20px;
-        align-items: stretch;
-    }
 
-    .center-column {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+        @media (min-width: 1025px) {
+            .banner-stack {
+                display: grid;
+                grid-template-columns: 1fr 1fr 0.8fr; 
+                gap: 20px;
+                align-items: stretch;
+            }
+            .center-column { display: flex; flex-direction: column; gap: 20px; }
+            .pro-banner.horizontal { aspect-ratio: 16 / 9; }
+            .pro-banner.vertical { height: 100%; aspect-ratio: auto; }
+            .pro-banner.vertical img { height: 100%; object-fit: cover; }
+        }
 
-    /* Orta sütundaki yatay bannerlar */
-    .pro-banner.horizontal {
-        aspect-ratio: 16 / 9;
-    }
-
-    /* Sağdaki dik banner (Ceket için) */
-    .pro-banner.vertical {
-        height: 100%;
-        aspect-ratio: auto;
-    }
-
-    .pro-banner.vertical img {
-        height: 100%;
-        object-fit: cover;
-    }
-}
-
-/* Mobilde her şeyin normal alt alta görünmesi için */
-@media (max-width: 1024px) {
-    .banner-stack {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    .left-spacer { display: none; }
-}
+        @media (max-width: 1024px) {
+            .banner-stack { display: flex; flex-direction: column; gap: 20px; }
+            .left-spacer { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -532,29 +485,23 @@
         <div class="nav-logo" onclick="location.href='index.html'">
             <img src="logo1616.png" alt="BLI ESPORTS">
         </div>
-
         <div class="nav-tools">
-    <a href="https://github.com/bliesports/bliesports.github.io/releases/download/v1.0.0/BLI.CLIENT_0.1.0_x64_en-US.msi" class="btn-pc-download">
-        <i class="fa-brands fa-windows"></i> ŞİMDİ İNDİR
-    </a>
-    
-    <button class="tool-btn" onclick="toggleSearchPortal()">
-        <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
-    
-    <button class="tool-btn" onclick="openSidePanel('cartPanel')">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span class="cart-badge" id="cartBadgeCount">0</span>
-    </button>
-    
-    <!-- KULLANICI BUTONU - HAMBURGER'IN SOLU -->
-    <button class="tool-btn" onclick="window.location.href='http://account.bliesports.com.tr/'">
-        <i class="fa-solid fa-user"></i>
-    </button>
-    
-    <div class="hamburger" id="hamburgerTrigger" onclick="openSidePanel('menuPanel')">
-        <span></span><span></span><span></span>
-    </div>
+            <a href="https://github.com/bliesports/bliesports.github.io/releases/download/v1.0.0/BLI.CLIENT_0.1.0_x64_en-US.msi" class="btn-pc-download">
+                <i class="fa-brands fa-windows"></i> ŞİMDİ İNDİR
+            </a>
+            <button class="tool-btn" onclick="toggleSearchPortal()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <button class="tool-btn" onclick="openSidePanel('cartPanel')">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cartBadgeCount">0</span>
+            </button>
+            <button class="tool-btn" onclick="window.location.href='http://account.bliesports.com.tr/'">
+                <i class="fa-solid fa-user"></i>
+            </button>
+            <div class="hamburger" id="hamburgerTrigger" onclick="openSidePanel('menuPanel')">
+                <span></span><span></span><span></span>
+            </div>
         </div>
     </nav>
 
@@ -565,22 +512,14 @@
             <h2>HIZLI ERİŞİM</h2>
             <button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        
         <div class="menu-list">
             <div class="menu-item"><a href="index.html" class="menu-link"><i class="fa-solid fa-house"></i> ANA SAYFA</a></div>
             <div class="menu-item"><a href="/ürünler/index.html" class="menu-link"><i class="fa-solid fa-shop"></i> TÜM ÜRÜNLER</a></div>
             <div class="menu-item"><a href="https://bliesports.com.tr/games" class="menu-link"><i class="fa-solid fa-gamepad"></i> OYUNLAR</a></div>
             <div class="menu-item"><a href="/basvuru/index.html" class="menu-link"><i class="fa-solid fa-user-plus"></i> BİZE KATIL</a></div>
             <div class="menu-item"><a href="/bliclient/index.html" class="menu-link"><i class="fa-solid fa-microchip"></i> BLI CLIENT</a></div>
-            <div class="menu-item">
-    <a href="http://ai.bliesports.com.tr" class="menu-link">
-        <i class="fa-solid fa-robot"></i> BLI AI
-    </a>
-</div>
-
-
+            <div class="menu-item"><a href="http://ai.bliesports.com.tr" class="menu-link"><i class="fa-solid fa-robot"></i> BLI AI</a></div>
         </div>
-
         <div id="authPanelContainer"></div>
     </aside>
 
@@ -589,9 +528,7 @@
             <h2>SEPETİN</h2>
             <button class="tool-btn" onclick="closeAllSidePanels()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-
         <div class="cart-flow" id="cartItemsContainer"></div>
-
         <div style="margin-top:auto; padding-top:30px; border-top:1px dashed #ddd;">
             <div style="display:flex; justify-content:space-between; margin-bottom:25px;">
                 <span style="color:#aaa; font-weight:600;">TOPLAM</span>
@@ -601,24 +538,20 @@
         </div>
     </aside>
 
-<main class="content-engine">
-    <div class="banner-stack">
-        <!-- SOL - MOUSE (YATAY) -->
-        <div class="pro-banner horizontal" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
-            <img src="v1pro-banner.png" alt="BLI V1 PRO">
+    <main class="content-engine">
+        <div class="banner-stack">
+            <div class="pro-banner horizontal" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
+                <img src="v1pro-banner.png" alt="BLI V1 PRO">
+            </div>
+            <div class="pro-banner horizontal" onclick="location.href='/ürünler/forma/classic/index.html'">
+                <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
+            </div>
+            <div class="pro-banner vertical" onclick="location.href='/ürünler/forma/bli-win-2026-limited-jacket/index.html'">
+                <img src="file_0000000027a071fd8925b258d38214b4.png" alt="BLI WIN 2026">
+            </div>
         </div>
+    </main>
 
-        <!-- ORTA - b_sağ_alttaki (YATAY) -->
-        <div class="pro-banner horizontal" onclick="location.href='/ürünler/forma/classic/index.html'">
-            <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
-        </div>
-
-        <!-- SAĞ - CEKET DİKEY -->
-        <div class="pro-banner vertical" onclick="location.href='/ürünler/forma/bli-win-2026-limited-jacket/index.html'">
-            <img src="file_0000000027a071fd8925b258d38214b4.png" alt="BLI WIN 2026">
-        </div>
-    </div>
-</main>
     <footer class="footer-terminal">
         <div class="footer-grid">
             <div class="footer-col">
@@ -641,13 +574,13 @@
                     <li><a href="/about-us/index.html">Hakkımızda</a></li>
                 </ul>
             </div>
-              <div class="footer-col">
+            <div class="footer-col">
                 <h4>OYUNLAR</h4>
-                   <ul class="footer-list">
-                   <li><a href="https://astrangeman.bliesports.com.tr">A STRANGE MAN</a></li>
-                    <li><a href="https://goldgun.bliesports.com.tr">GOLD GUN</a></li>
-                       </ul>
-                  </div>
+                <ul class="footer-list">
+                    <li><a href="https://astrangeman.bliesports.com.tr">A Strange Man</a></li>
+                    <li><a href="https://goldgun.bliesports.com.tr">Gold Gun</a></li>
+                </ul>
+            </div>
         </div>
         <div class="legal-box">
             <p>&copy; 2026 BLI ESPORTS WORLDWIDE. ALL RIGHTS RESERVED.</p>
@@ -661,7 +594,6 @@
     <div class="bli-modal" id="authModal">
         <div class="modal-card">
             <button style="position:absolute; top:30px; right:30px; font-size:24px;" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
-            
             <div id="loginSection">
                 <h2 style="font-family:'Orbitron'; margin-bottom:10px;">GİRİŞ</h2>
                 <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI hesabınla oturum aç ve savaşa hazır ol.</p>
@@ -675,7 +607,6 @@
                 </div>
                 <button class="btn-premium" onclick="handleUserLogin()">GİRİŞ YAP</button>
             </div>
-
             <div id="registerSection" style="display:none;">
                 <h2 style="font-family:'Orbitron'; margin-bottom:10px;">KAYIT OL</h2>
                 <p style="color:#888; margin-bottom:30px; font-size:14px;">BLI ekibine katılarak özel avantajlardan yararlan.</p>
@@ -690,7 +621,6 @@
     <div id="toast-master"></div>
 
     <script>
-    // --- 1. CONFIG & INITIALIZATION ---
     const firebaseConfig = { 
         apiKey: "AIzaSyB0PdRozDzBzSyuuNIRG67xg-W3UJBfJD8", 
         authDomain: "bliesports.firebaseapp.com", 
@@ -702,26 +632,50 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // ARAMA VERİTABANI - ÜRÜNLER VE OYUNLAR
+    // ARAMA VERİTABANINA BLI BASIC OVERSIZE TSHIRT EKLENDI
     const searchDatabase = [
         { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", keywords: "v1 pro mouse fare", type: "ürün", icon: "fa-solid fa-mouse" },
         { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", keywords: "forma jersey tshirt", type: "ürün", icon: "fa-solid fa-tshirt" },
         { id: 103, name: "BLI WIN 2026 CEKET", price: 1299, img: "file_0000000027a071fd8925b258d38214b4.png", link: "/ürünler/forma/bli-win-2026-limited-jacket/index.html", keywords: "ceket jacket", type: "ürün", icon: "fa-solid fa-jacket" },
+        { id: 104, name: "BLI BASIC OVERSIZE TSHIRT", price: 399, img: "basic-tshirt.png", link: "/ürünler/tshirt/basic-oversize/index.html", keywords: "basic oversize tshirt tişört", type: "ürün", icon: "fa-solid fa-shirt" },
         { id: 201, name: "A STRANGE MAN", type: "oyun", link: "https://astrangeman.bliesports.com.tr", keywords: "strange man oyun", icon: "fa-solid fa-gamepad" },
         { id: 202, name: "GOLD GUN", type: "oyun", link: "https://goldgun.bliesports.com.tr", keywords: "gold gun oyun", icon: "fa-solid fa-gun" },
         { id: 301, name: "BLI CLIENT", type: "yazılım", link: "/bliclient/index.html", keywords: "client yazılım", icon: "fa-solid fa-microchip" },
         { id: 401, name: "BLI AI", type: "yapay zeka", link: "http://ai.bliesports.com.tr", keywords: "ai yapay zeka", icon: "fa-solid fa-robot" }
     ];
 
+    // Öne Çıkan Ürünler (arama kutusu boşken gösterilecek)
+    const featuredProducts = [
+        { id: 101, name: "BLI V1 PRO MOUSE", price: 1899, img: "v1pro-banner.png", link: "/ürünler/mouse/bliv1pro/index.html", icon: "fa-solid fa-mouse" },
+        { id: 104, name: "BLI BASIC OVERSIZE TSHIRT", price: 399, img: "basic-tshirt.png", link: "/ürünler/tshirt/basic-oversize/index.html", icon: "fa-solid fa-shirt" },
+        { id: 102, name: "ELITE JERSEY V2", price: 749, img: "b_Sağ_alttaki_gemini_f.jpeg", link: "/ürünler/forma/classic/index.html", icon: "fa-solid fa-tshirt" }
+    ];
+
     let userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
 
-    // --- 2. ARAMA MOTORU ---
     function executeLiveSearch() {
         const query = document.getElementById('masterSearchInput').value.toLowerCase().trim();
         const resultsDiv = document.getElementById('searchResultsDisplay');
         
         if (query === "") {
-            resultsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:#aaa;"><i class="fa-solid fa-search" style="font-size:40px; margin-bottom:15px; display:block;"></i>Bir şeyler arayın...</div>';
+            // Boşsa öne çıkan ürünleri göster
+            resultsDiv.innerHTML = `
+                <div style="margin-bottom:30px;">
+                    <h3 style="font-family:'Orbitron'; margin-bottom:20px; font-size:18px;">🔥 ÖNE ÇIKAN ÜRÜNLER</h3>
+                    <div class="featured-grid">
+                        ${featuredProducts.map(item => `
+                            <div class="featured-card" onclick="navigateTo('${item.link}')">
+                                <i class="${item.icon}" style="font-size:40px; width:60px; text-align:center; color:#ff3333;"></i>
+                                <div style="flex:1">
+                                    <h4 style="font-family:'Orbitron'; font-size:14px;">${item.name}</h4>
+                                    <div class="featured-price">${item.price} TL</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
             return;
         }
 
@@ -753,12 +707,11 @@
         window.location.href = url;
     }
 
-    // --- 3. SEPET MOTORU ---
     function addToCart(id, name, price, img) {
         const product = { id, name, price, img };
         userCart.push(product);
         refreshCartDisplay();
-        pushNotification(name + " sepete eklendi kral!");
+        pushNotification(name + " sepete eklendi!");
         openSidePanel('cartPanel');
     }
 
@@ -771,7 +724,7 @@
         if(!list) return;
 
         if(userCart.length === 0) {
-            list.innerHTML = `<div style="text-align:center; padding-top:100px; color:#ccc;"><p>Sepetin boş birader.</p></div>`;
+            list.innerHTML = `<div style="text-align:center; padding-top:100px; color:#ccc;"><p>Sepetin boş.</p></div>`;
             if(badge) badge.innerText = "0";
             if(totalBox) totalBox.innerText = "0.00 TL";
         } else {
@@ -799,7 +752,6 @@
         refreshCartDisplay();
     }
 
-    // --- 4. PANEL & UI KONTROLLERİ ---
     function openSidePanel(id) {
         closeAllSidePanels();
         const panel = document.getElementById(id);
@@ -842,12 +794,11 @@
         } else {
             portal.classList.add('active');
             document.getElementById('masterSearchInput').value = '';
-            document.getElementById('searchResultsDisplay').innerHTML = '';
+            executeLiveSearch();
             document.getElementById('masterSearchInput').focus();
         }
     }
 
-    // Sekmeler arası sepet senkronizasyonu
     window.addEventListener('focus', () => {
         userCart = JSON.parse(localStorage.getItem('bli_user_cart')) || [];
         refreshCartDisplay();
@@ -858,7 +809,6 @@
         refreshCartDisplay();
     });
 
-    // --- 🚀 AÇILIŞ MOTORU ---
     window.addEventListener('load', () => {
         const progressBar = document.getElementById('load-progress-bar');
         const loader = document.getElementById('loader-overlay');
@@ -885,7 +835,6 @@
         }, 60);
     });
 
-    // Navbar scroll efekti
     window.addEventListener('scroll', () => {
         const navbar = document.getElementById('mainNavbar');
         if(window.scrollY > 50) {
@@ -895,6 +844,5 @@
         }
     });
     </script>
-
 </body>
 </html>
