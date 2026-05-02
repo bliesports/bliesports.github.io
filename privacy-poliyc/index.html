@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLI ESPORTS | Privacy & Data Protocol</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray: #0a0a0a;
+            --border: #222222;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-main: 'Inter', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--black); 
+            color: var(--white); 
+            font-family: var(--font-main); 
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 6%; background: var(--black); 
+            border-bottom: 2px solid var(--white); z-index: 1000;
+        }
+        .logo { font-family: var(--font-tech); font-weight: 900; font-size: 22px; letter-spacing: 3px; cursor: pointer; }
+
+        /* --- CONTENT WRAPPER --- */
+        .policy-container {
+            max-width: 1000px;
+            margin: 150px auto 100px;
+            padding: 0 5%;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .header-section { border-left: 5px solid var(--white); padding-left: 30px; margin-bottom: 80px; }
+        .header-section h1 { font-family: var(--font-tech); font-size: 50px; font-weight: 900; line-height: 1; text-transform: uppercase; }
+        .header-section p { font-family: 'JetBrains Mono'; color: #666; font-size: 14px; margin-top: 10px; }
+
+        /* --- POLICY SECTIONS --- */
+        .policy-content h2 { 
+            font-family: var(--font-tech); font-size: 22px; margin: 50px 0 20px; 
+            padding-bottom: 10px; border-bottom: 1px solid var(--border); 
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .policy-content p { color: #aaa; margin-bottom: 20px; font-size: 16px; text-align: justify; }
+
+        .policy-content ul { list-style: none; margin-bottom: 30px; }
+        .policy-content ul li { 
+            padding: 10px 0; border-bottom: 1px solid #111; 
+            display: flex; align-items: center; gap: 15px; color: #ccc;
+        }
+        .policy-content ul li::before { content: "//"; color: var(--white); font-family: 'JetBrains Mono'; font-weight: 900; }
+
+        .highlight-box {
+            background: #111; border: 1px solid var(--border);
+            padding: 30px; border-radius: 15px; margin: 40px 0;
+        }
+        .highlight-box h3 { font-family: var(--font-tech); font-size: 16px; margin-bottom: 15px; color: var(--white); }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 50px 0; text-align: center; font-family: 'JetBrains Mono'; font-size: 12px; color: #444;
+        }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: var(--white); border-radius: 0; }
+
+        @media (max-width: 768px) {
+            .header-section h1 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="location.href='index.html'">BLI ESPORTS</div>
+        <div style="font-family:'JetBrains Mono'; font-size:10px;">PROTOCOL: PRIVACY_SECURE</div>
+    </nav>
+
+    <div class="policy-container">
+        <section class="header-section">
+            <h1>GİZLİLİK VE VERİ<br>GÜVENLİĞİ PROTOKOLÜ</h1>
+            <p>Son Güncelleme: 02.05.2026 | Sürüm: 2.0.4/B</p>
+        </section>
+
+        <article class="policy-content">
+            <h2>1. VERİ SORUMLUSU VE YETKİLİ MERKEZ</h2>
+            <p>
+                İşbu Gizlilik Politikası, <strong>bliesports.com.tr</strong> (bundan böyle "Platform" olarak anılacaktır) üzerinden toplanan tüm kişisel verilerin işlenmesine ilişkin kuralları belirler. Platformun kurucusu ve tek veri sorumlusu <strong>Fatih Erol</strong> (bundan böyle "Yönetici" olarak anılacaktır) olup, veri toplama süreçleri 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) ve uluslararası veri güvenlik standartlarına tam uyumlu olarak yürütülmektedir.
+            </p>
+
+            <h2>2. TOPLANAN VERİLERİN NİTELİĞİ</h2>
+            <p>Platformu ziyaret ettiğinizde veya iletişim formlarını kullandığınızda aşağıdaki veriler dijital sistemlerimize kaydedilebilir:</p>
+            <ul>
+                <li><strong>Kimlik Verileri:</strong> Adınız, soyadınız ve operatör takma adınız.</li>
+                <li><strong>İletişim Verileri:</strong> E-posta adresiniz ve gönderdiğiniz mesaj içerikleri.</li>
+                <li><strong>Teknik Veriler:</strong> IP adresiniz, tarayıcı türünüz, işletim sistemi bilgileriniz ve erişim zaman damgaları.</li>
+                <li><strong>Kullanım Verileri:</strong> Platform içindeki tıklama oranları ve gezinme süresi.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h3>KRİTİK UYARI:</h3>
+                <p>Toplanan hiçbir veri, veri sahibi olan Fatih Erol'un onayı ve yasal zorunluluklar dışında üçüncü taraflarla ticari amaçla paylaşılmaz. BLI ESPORTS veri gizliliğini operasyonel bir zorunluluk olarak kabul eder.</p>
+            </div>
+
+            <h2>3. VERİ İŞLEME AMAÇLARI VE MEŞRUİYET</h2>
+            <p>
+                Kişisel verileriniz, BLI ESPORTS ekosisteminin geliştirilmesi, teknik sorunların çözülmesi, iletişim taleplerine yanıt verilmesi ve platform güvenliğinin (anti-DDOS, firewall yapılandırmaları vb.) sağlanması amacıyla işlenmektedir. Fatih Erol, verilerin işlenmesi sürecinde "verilerin minimum düzeyde tutulması" (data minimization) ilkesini benimser.
+            </p>
+
+            <h2>4. ÇEREZ (COOKIE) POLİTİKASI</h2>
+            <p>
+                Platform, kullanıcı deneyimini optimize etmek ve sistem performansını analiz etmek amacıyla çerezleri kullanır. Bu çerezler, oturum bilgilerinizi ve tercihlerinizi anonim olarak saklar. Tarayıcı ayarlarınızdan çerezleri reddetme hakkınız saklıdır ancak bu durum platformun bazı fütüristik özelliklerinin çalışmasını kısıtlayabilir.
+            </p>
+
+            <h2>5. VERİ SAKLAMA VE İMHA PROSEDÜRÜ</h2>
+            <p>
+                İletişim formları aracılığıyla iletilen veriler, Formspree (veya kullanılan aktif yönlendirme servisi) altyapısında güvenli bir şekilde saklanır. Fatih Erol, talebiniz üzerine veya verinin işlenme amacı ortadan kalktığında verilerinizi "Geri Dönülemez İmha" yöntemiyle sistemden temizlemeyi taahhüt eder.
+            </p>
+
+            <h2>6. VERİ SAHİBİNİN HAKLARI (KVKK MADDE 11)</h2>
+            <p>Platform kullanıcısı olarak Fatih Erol'a başvurarak şu haklarınızı kullanabilirsiniz:</p>
+            <ul>
+                <li>Verilerinizin işlenip işlenmediğini öğrenme.</li>
+                <li>İşlenmişse bilgi talep etme.</li>
+                <li>Verilerin amacına uygun kullanılıp kullanılmadığını kontrol etme.</li>
+                <li>Eksik veya yanlış işlenen verilerin düzeltilmesini isteme.</li>
+            </ul>
+
+            <h2>7. ÜÇÜNCÜ TARAF BAĞLANTILARI</h2>
+            <p>
+                Sitemiz, Cloudflare, GitHub veya Formspree gibi global servis sağlayıcıların altyapılarını kullanmaktadır. Bu servislerin kendi gizlilik politikaları mevcut olup, BLI ESPORTS bu dış bağlantıların veri işleme süreçlerinden sorumlu tutulamaz.
+            </p>
+
+            <div class="highlight-box">
+                <h3>YASAL TEMSİLCİ:</h3>
+                <p>Gizlilikle ilgili tüm talep ve itirazlarınız için doğrudan <strong>support@bliesports.com.tr</strong> adresi üzerinden Fatih Erol ile iletişime geçmeniz gerekmektedir.</p>
+            </div>
+        </article>
+
+        <footer>
+            &copy; 2026 BLI ESPORTS BY FATİH EROL. TÜM HAKLARI SİSTEMDE SAKLIDIR.
+        </footer>
+    </div>
+
+    <script>
+        // Sayfa içi yavaş kaydırma efekti
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
