@@ -208,20 +208,21 @@
             margin-left: auto;
             margin-right: auto;
         }
-
-        .banner-stack {
-            display: grid;
-            grid-template-columns: 1fr 1fr 0.8fr;
+.banner-stack {
+            display: flex;
             gap: 20px;
-            height: 550px;
+            height: 600px; /* PC için ideal dikey yükseklik */
+            margin-bottom: 50px;
         }
 
         .pro-banner {
+            flex: 1; /* Hepsini eşit genişliğe zorlar */
             position: relative;
-            border-radius: 20px;
+            border-radius: 30px; /* Daha yumuşak köşeler */
             overflow: hidden;
             cursor: pointer;
             background: #111;
+            transition: var(--transition-smooth);
         }
 
         .pro-banner img {
@@ -229,29 +230,38 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .pro-banner:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         .pro-banner:hover img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
+        /* MOBİL DÜZENLEME */
         @media (max-width: 1024px) {
-            .content-engine {
-                margin-top: 80px;
-                padding: 0 15px;
-            }
-
             .banner-stack {
-                display: flex;
-                flex-direction: column;
-                height: auto;
-                gap: 15px;
+                height: 500px;
+                overflow-x: auto; /* Mobilde yan yana kaydırılabilir yapar */
+                padding-bottom: 20px;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
             }
 
             .pro-banner {
-                height: 220px;
-                border-radius: 15px;
+                min-width: 85%; /* Mobilde kartlar daha belirgin olur */
+                flex: 0 0 auto;
+                scroll-snap-align: center;
+                border-radius: 20px;
+            }
+            
+            .content-engine {
+                margin-top: 100px;
+                padding: 0 20px;
             }
         }
 
@@ -488,17 +498,19 @@
         </div>
     </aside>
 
-    <main class="content-engine">
+  <main class="content-engine">
         <div class="banner-stack">
-            <!-- SOL: YATAY (MOUSE) -->
+            <!-- 1. KART: MOUSE -->
             <div class="pro-banner" onclick="location.href='/ürünler/mouse/bliv1pro/index.html'">
                 <img src="v1pro-banner.png" alt="BLI V1 PRO">
             </div>
-            <!-- ORTA: YATAY (FORMA) -->
+            
+            <!-- 2. KART: FORMA -->
             <div class="pro-banner" onclick="location.href='/ürünler/forma/classic/index.html'">
                 <img src="b_Sağ_alttaki_gemini_f.jpeg" alt="BLI ELITE JERSEY">
             </div>
-            <!-- SAĞ: DİKEY (EKSTRA) -->
+            
+            <!-- 3. KART: CEKET/EKSTRA -->
             <div class="pro-banner" onclick="location.href='/ürünler/ekstra/index.html'">
                 <img src="file_0000000027a071fd8925b258d38214b4.png" alt="BLI EXTRA">
             </div>
